@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>D:/changyou/workspace/firsttest/src/main/java</basedir>
+	<basePackage>com.mars</basePackage>
+	<db>
+		<dbName>app</dbName>
+		<user>app</user>
+		<pwd>app</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://10.10.1.15:6603/app?useUnicode=true&amp;characterEncoding=UTF-8</url>
+	</db>
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>mybatis</persistance>
+		<!-- 模块名称 -->
+		<name>ads</name>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
+		<savePath>D:/changyou/workspace/firsttest/resources/mapper/ads</savePath>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage>
+		<!-- 要生成文件的数据表列表 -->
+		<table name="ad_info">
+			<subTable name="ad_detail" parentProperty="adId" />
+			<subTable name="ad_info_os_ref" parentProperty="adId"/>
+		</table>
+		<!-- <table name="ad_info_os_ref" entityName="AdInfoOsRef"/>
+		<table name="ad_detail" /> -->
+	</module>
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>hibernate</persistance>
+		<!-- 模块名称 -->
+		<name>mall</name>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
+		<savePath>D:/changyou/workspace/firsttest/resources/mapper/mall</savePath>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage>
+		<!-- 要生成文件的数据表列表 -->
+		<table name="mall_goods_info" prefix="mall_">
+			<subTable name="mall_goods_file" parentProperty="goodsId"  prefix="mall_"/>
+		</table>
+		<table name="mall_goods_category" prefix="mall_" />
+	</module>
+	
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>jdbc</persistance>
+		<!-- 模块名称 -->
+		<name>senic</name>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
+		<savePath>D:/changyou/workspace/firsttest/resources/mapper/mall</savePath>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage>
+		<!-- 要生成文件的数据表列表 -->
+		<table name="senic_spot">
+		</table>
+	</module>
+	
+</configure>
