@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configure>
+	<!-- 生成的文件保存目录 -->
 	<basedir>D:/changyou/workspace/firsttest/src/main/java</basedir>
+	<!-- 基础包名 -->
 	<basePackage>com.mars</basePackage>
 	<db>
+		<!-- 数据库名 -->
 		<dbName>app</dbName>
+		<!-- 用户名 -->
 		<user>app</user>
+		<!-- 密码 -->
 		<pwd>app</pwd>
 		<driver>com.mysql.jdbc.Driver</driver>
 		<url>jdbc:mysql://10.10.1.15:6603/app?useUnicode=true&amp;characterEncoding=UTF-8</url>
