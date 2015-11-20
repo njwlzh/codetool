@@ -33,8 +33,8 @@
 		<viewPackage>view</viewPackage>
 		<!-- 要生成文件的数据表列表 -->
 		<table name="ad_info">
-			<subTable name="ad_detail" parentProperty="adId" />
-			<subTable name="ad_info_os_ref" parentProperty="adId"/>
+			<subTable name="ad_detail" parentField="ad_Id" refType="OneToOne"/>
+			<subTable name="ad_info_os_ref" parentField="ad_Id" refType="OneToMany"/>
 		</table>
 		<!-- <table name="ad_info_os_ref" entityName="AdInfoOsRef"/>
 		<table name="ad_detail" /> -->
@@ -58,7 +58,7 @@
 		<viewPackage>view</viewPackage>
 		<!-- 要生成文件的数据表列表 -->
 		<table name="mall_goods_info" prefix="mall_">
-			<subTable name="mall_goods_file" parentProperty="goodsId"  prefix="mall_"/>
+			<subTable name="mall_goods_file" parentField="goods_Id"  prefix="mall_" refType="OneToMany"/>
 		</table>
 		<table name="mall_goods_category" prefix="mall_" />
 	</module>

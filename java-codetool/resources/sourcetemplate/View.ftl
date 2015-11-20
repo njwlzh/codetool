@@ -6,15 +6,24 @@
     <DataType name="dt${entityCamelName}" parent="global:dt${entityCamelName}">
       <#if subTables??>
 		<#list subTables as sub>
+      	<#if sub.refType=="OneToOne">
+      <Reference name="${sub.entityName?uncap_first}">
+      	<Property name="dataType">dt${sub.entityCamelName}</Property>
+      	<#else>
       <Reference name="${sub.entityName?uncap_first}List">
         <Property name="dataType">[dt${sub.entityCamelName}]</Property>
+        </#if>
         <Property name="parameter">
           <Entity>
             <Property name="${primaryProperty}">${'$'}${'$'}{this.${sub.parentProperty!}}</Property>
           </Entity>
         </Property>
+        <#if sub.refType=="OneToOne">
+        <Property name="dataProvider">${sub.entityName}Action${'#'}load${sub.entityCamelName}</Property>
+        <#else>
         <Property name="dataProvider">${sub.entityName}Action${'#'}load${sub.entityCamelName}List</Property>
         <Property name="pageSize">20</Property>
+        </#if>
       </Reference>
 		</#list>
 	</#if>
@@ -99,6 +108,28 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
           </AutoFormElement>
           </#list>
         </AutoForm>
+        <#if subTables??>
+			<#list subTables as sub>
+				<#if sub.refType=="OneToOne">
+        <FieldSet>
+	      <Property name="caption">${sub.remark}</Property>
+	      <Buttons/>
+	      <Children>
+	        <AutoForm>
+	        <#list sub.columns as col>
+            <AutoFormElement>
+              <Property name="name">${col.propertyName}</Property>
+              <Property name="property">${col.propertyName}</Property>
+              <Editor/>
+            </AutoFormElement>
+            </#list>
+	        </AutoForm>
+	      </Children>
+	    </FieldSet>
+	    		</#if>
+	    	</#list>
+	    </#if>
+	    
       </Children>
       <Tools/>
     </Dialog>
@@ -111,6 +142,7 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
     
     <#if subTables??>
 		<#list subTables as sub>
+		<#if sub.refType=="OneToMany">
     <Container layoutConstraint="bottom">
       <Property name="height">200</Property>
       <ToolBar>
@@ -192,6 +224,7 @@ view.get(&quot;#dlg${sub.entityCamelName}&quot;).show();&#xD;
         <Tools/>
       </Dialog>
     </Container>
+    </#if>
     </#list>
     </#if>
   </View>

@@ -179,7 +179,8 @@ public class DataBase2File {
         	List<Table> subTables = new ArrayList<Table>();
         	for (TableConf tc : tbConf.getSubTables()) {
         		Table tb = getTable(tc,module,con);
-        		tb.setParentProperty(tc.getParentProperty());
+        		tb.setParentProperty(convertToFirstLetterLowerCaseCamelCase(tc.getParentField()));
+        		tb.setRefType(tc.getRefType());
         		subTables.add(tb);
         	}
         	table.setSubTables(subTables);
@@ -635,6 +636,7 @@ class Table {
     private List<String> importClassList=new ArrayList<String>();
     private List<Column> columns=new ArrayList<Column>();
     private List<Table> subTables = new ArrayList<Table>();
+    private String refType; //表间关联类型
       
     public String getPackageName() {
 		return packageName;
@@ -765,6 +767,29 @@ class Table {
 	public void setParentProperty(String parentProperty) {
 		this.parentProperty = parentProperty;
 	}
+
+	public String getRefType() {
+		return refType;
+	}
+
+	public void setRefType(String refType) {
+		this.refType = refType;
+	}
+
+	@Override
+	public String toString() {
+		return "Table [module=" + module + ", packageName=" + packageName
+				+ ", tableFullName=" + tableFullName + ", tableName="
+				+ tableName + ", entityName=" + entityName
+				+ ", entityCamelName=" + entityCamelName + ", remark=" + remark
+				+ ", primaryKey=" + primaryKey + ", primaryProperty="
+				+ primaryProperty + ", primaryPropertyType="
+				+ primaryPropertyType + ", primaryCamelProperty="
+				+ primaryCamelProperty + ", primaryKeyType=" + primaryKeyType
+				+ ", parentProperty=" + parentProperty + ", importClassList="
+				+ importClassList + ", columns=" + columns + ", subTables="
+				+ subTables + ", refType=" + refType + "]";
+	}
 	
 }  
 
@@ -818,6 +843,14 @@ class Column{
 	}
 	public void setPropertyCamelName(String propertyCamelName) {
 		this.propertyCamelName = propertyCamelName;
+	}
+	@Override
+	public String toString() {
+		return "Column [columnName=" + columnName + ", columnType="
+				+ columnType + ", remark=" + remark + ", propertyName="
+				+ propertyName + ", propertyType=" + propertyType
+				+ ", propertyCamelName=" + propertyCamelName
+				+ ", isPrimaryKey=" + isPrimaryKey + "]";
 	}
     
 }

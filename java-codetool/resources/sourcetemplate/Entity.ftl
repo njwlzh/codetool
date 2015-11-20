@@ -45,7 +45,11 @@ public class ${entityCamelName!} implements Serializable {
 	<#-- 生成子表属性 -->
 	<#if subTables??>
 		<#list subTables as sub>
+		<#if sub.refType=="OneToOne">
+	private ${sub.entityCamelName} ${sub.entityName?uncap_first};
+		<#else>
 	private List<${sub.entityCamelName}> ${sub.entityName?uncap_first}List;
+		</#if>
 		</#list>
 	</#if>
 	
@@ -71,6 +75,17 @@ public class ${entityCamelName!} implements Serializable {
 	<#-- 生成子表属性 -->
 	<#if subTables??>
 		<#list subTables as sub>
+		<#if sub.refType=="OneToOne"><#-- 一对一 -->
+	public void set${sub.entityCamelName}(${sub.entityCamelName} ${sub.entityName?uncap_first}){
+		this.${sub.entityName?uncap_first}=${sub.entityName?uncap_first};
+	}
+	<#if module.persistance=="hibernate">
+	@Transient
+	</#if>
+	public ${sub.entityCamelName} get${sub.entityCamelName}(){
+		return this.${sub.entityName?uncap_first};
+	}	
+		<#else><#-- 一对多 -->
 	public void set${sub.entityCamelName}List(List<${sub.entityCamelName}> ${sub.entityName?uncap_first}List){
 		this.${sub.entityName?uncap_first}List=${sub.entityName?uncap_first}List;
 	}
@@ -80,6 +95,7 @@ public class ${entityCamelName!} implements Serializable {
 	public List<${sub.entityCamelName}> get${sub.entityCamelName}List(){
 		return this.${sub.entityName?uncap_first}List;
 	}
+		</#if>
 		</#list>
 	</#if>
 	@Override

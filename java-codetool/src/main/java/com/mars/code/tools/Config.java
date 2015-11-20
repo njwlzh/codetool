@@ -126,9 +126,15 @@ public class Config {
 		if (prefix!=null) {
 			m.setPrefix(prefix.getValue());
 		}
-		Attribute parentProperty = XmlUtil.getAttribute(e, "parentProperty");
-		if (parentProperty!=null) {
-			m.setParentProperty(parentProperty.getValue());
+		Attribute parentField = XmlUtil.getAttribute(e, "parentField");
+		if (parentField!=null) {
+			m.setParentField(parentField.getValue());
+		}
+		Attribute refType =XmlUtil.getAttribute(e, "refType");
+		if (refType!=null) {
+			m.setRefType(refType.getValue());
+		} else {
+			m.setRefType("OneToMany"); //默认OneToMany
 		}
 		return m;
 	}
@@ -321,7 +327,8 @@ class TableConf{
 	private String name; //表名
 	private String prefix;//表前缀
 	private String entityName;//配置的实体类名
-	private String parentProperty;// 如果是主从表，则从表需设置该属性，表示父表的关联属性
+	private String parentField;// 如果是主从表，则从表需设置该属性，表示父表的关联属性
+	private String refType; //表关联类型，分为OneToOne,OneToMany等
 	
 	private List<TableConf> subTables = new ArrayList<TableConf>();//子表列表，即一对多的子表
 	
@@ -351,17 +358,24 @@ class TableConf{
 		this.subTables = subTables;
 	}
 	
-	public String getParentProperty() {
-		return parentProperty;
+	public String getParentField() {
+		return parentField;
 	}
-	public void setParentProperty(String parentProperty) {
-		this.parentProperty = parentProperty;
+	public void setParentField(String parentField) {
+		this.parentField = parentField;
+	}
+	
+	public String getRefType() {
+		return refType;
+	}
+	public void setRefType(String refType) {
+		this.refType = refType;
 	}
 	@Override
 	public String toString() {
 		return "TableConf [name=" + name + ", prefix=" + prefix
-				+ ", entityName=" + entityName + ", parentProperty="
-				+ parentProperty + ", subTables=" + subTables + "]";
+				+ ", entityName=" + entityName + ", parentField=" + parentField
+				+ ", refType=" + refType + ", subTables=" + subTables + "]";
 	}
 	
 }

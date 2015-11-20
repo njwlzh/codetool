@@ -1,6 +1,8 @@
 package ${basePackage}.${moduleName}.${actionPackage};
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -52,6 +54,17 @@ public class ${entityCamelName}Action extends BaseAction {
 		page.setEntityCount(paging.getEntityCount());
 	}
 	
+	@DataProvider
+	public ${entityCamelName} load${entityCamelName}(Map<String, Object> params){
+		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(1, 1);
+		${entityName}Service.load${entityCamelName}List(paging,params);
+		Collection<${entityCamelName}> list = paging.getEntities();
+		if (list.isEmpty()){
+			return null;
+		}
+		return list.iterator().next();
+	}
+	
 	/**
 	 * 保存${remark}
 	 * @param params 
@@ -69,10 +82,20 @@ public class ${entityCamelName}Action extends BaseAction {
 			}
 			<#if subTables??>
 				<#list subTables as sub>
+				<#if sub.refType=="OneToOne">
+			${sub.entityCamelName} ${sub.entityName}=${entityName}.get${sub.entityCamelName}();
+			if (${sub.entityName}!=null){
+				List<${sub.entityCamelName}> subList = new ArrayList<${sub.entityCamelName}>();
+				${sub.entityName}.set${sub.parentProperty?cap_first}(${entityName}.get${sub.parentProperty?cap_first}());
+				subList.add(${sub.entityName});
+				${sub.entityName}Action.save${sub.entityCamelName}(subList);
+			}
+				<#else>
 			List<${sub.entityCamelName}> ${sub.entityName}List=${entityName}.get${sub.entityCamelName}List();
 			if (${sub.entityName}List!=null && !${sub.entityName}List.isEmpty()){
 				${sub.entityName}Action.save${sub.entityCamelName}(${sub.entityName}List);
 			}
+				</#if>
 				</#list>
 			</#if>
 		}
