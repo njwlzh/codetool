@@ -59,6 +59,7 @@
 		<!-- 要生成文件的数据表列表 -->
 		<table name="mall_goods_info" prefix="mall_">
 			<subTable name="mall_goods_file" parentField="goods_Id"  prefix="mall_" refType="OneToMany"/>
+			<subTable name="mall_goods_content" parentField="goods_Id"  prefix="mall_" refType="OneToOne"/>
 		</table>
 		<table name="mall_goods_category" prefix="mall_" />
 	</module>

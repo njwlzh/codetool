@@ -138,15 +138,13 @@ public class DataBase2File {
     	String tableName =tbConf.getName();
         Table table = new Table(); 
         table.setTableFullName(tableName);
-        //table.setPackageName("com.mars.entity");
         table.setTableName(tableName);
         if (module.isDeleteTablePrefix() && !isEmpty(tbConf.getPrefix())){
         	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix(), ""));  
         }
         //table.setTableName(tableName);  
-        table.setPrimaryKey(getTablePrimaryKey(tableName, con));
-        table.setPrimaryProperty(convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
-        PreparedStatement ps = con.prepareStatement(" SELECT * FROM "+tableName);  
+        
+        /*PreparedStatement ps = con.prepareStatement(" SELECT * FROM "+tableName);  
         ResultSet rs = ps.executeQuery();  
         ResultSetMetaData rsmd = rs.getMetaData();  
         int columCount = rsmd.getColumnCount();  
@@ -166,7 +164,11 @@ public class DataBase2File {
         		table.getImportClassList().add(col.getPropertyType());
         	}
         	table.getColumns().add(col);
-        }  
+        } */ 
+        //获取表各字段的信息
+        getTableColumns(table,con);
+        table.setPrimaryKey(getTablePrimaryKey(tableName, con));
+        table.setPrimaryProperty(convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
         table.setRemark(getTableRemark(tableName, con));
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
         table.setPrimaryPropertyType(convertType(table.getPrimaryKeyType()));
@@ -185,11 +187,44 @@ public class DataBase2File {
         	}
         	table.setSubTables(subTables);
         }
-        rs.close();  
-        ps.close();  
+        //rs.close();  
+        //ps.close();  
           
         return table;  
     } 
+    
+    private void getTableColumns(Table table,Connection conn) throws SQLException {
+    	if (config.getDb().getDriver().toLowerCase().indexOf("mysql")!=-1) {
+			String sql="select * from information_schema.COLUMNS where TABLE_SCHEMA=? and TABLE_NAME=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,config.getDb().getDbName());
+			ps.setString(2,table.getTableFullName());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Column col = new Column();
+	        	String colName = rs.getString("column_name");
+	        	col.setColumnName(colName);
+	        	col.setColumnType(rs.getString("data_type"));
+	        	col.setRemark(rs.getString("column_comment"));
+	        	col.setPropertyName(convertToFirstLetterLowerCaseCamelCase(colName));
+	        	col.setPropertyType(convertType(col.getColumnType()));
+	        	col.setPropertyCamelName(convertToCamelCase(colName));
+	        	
+	        	String colKey = rs.getString("column_key");
+	        	if (!isEmpty(colKey) && colKey.toLowerCase().equals("pri")) {
+	        		col.setPrimaryKey(true);
+	        	}
+	        	if (col.getPropertyType().indexOf(".")!=-1 && !existsType(table.getImportClassList(),col.getPropertyType())) {
+	        		table.getImportClassList().add(col.getPropertyType());
+	        	}
+	        	table.getColumns().add(col);
+			}
+			rs.close();
+			ps.close();
+		} else { //其它数据库
+			
+		}
+    }
     
     private static boolean isEmpty(String str) {
     	if (str==null) {
