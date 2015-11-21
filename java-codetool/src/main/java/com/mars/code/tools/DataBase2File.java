@@ -204,7 +204,11 @@ public class DataBase2File {
 				Column col = new Column();
 	        	String colName = rs.getString("column_name");
 	        	col.setColumnName(colName);
-	        	col.setColumnType(rs.getString("data_type"));
+	        	String type = rs.getString("data_type").toUpperCase();
+	        	if (type.equals("TEXT")){
+	        		type="LONGVARCHAR";
+	        	}
+	        	col.setColumnType(type);
 	        	col.setRemark(rs.getString("column_comment"));
 	        	col.setPropertyName(convertToFirstLetterLowerCaseCamelCase(colName));
 	        	col.setPropertyType(convertType(col.getColumnType()));
@@ -241,39 +245,6 @@ public class DataBase2File {
     }
     
     /**
-     * 获取列注释
-     * @param tableName
-     * @param column
-     * @param conn
-     * @return
-     * @throws SQLException
-     */
-    public String getColumnRemark(String tableName,String column,Connection conn) throws SQLException {
-    	String remark="";
-    	if (config.getDb().getDriver().toLowerCase().indexOf("mysql")!=-1) {
-			String sql="show full fields from "+tableName;
-			sql="select column_comment from information_schema.COLUMNS where TABLE_SCHEMA=? and TABLE_NAME=? and column_name=?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1,config.getDb().getDbName());
-			ps.setString(2,tableName);
-			ps.setString(3,column);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				remark=rs.getString("column_comment");
-			}
-			rs.close();
-			ps.close();
-		} else {
-			DatabaseMetaData dbMeta = conn.getMetaData(); 
-			ResultSet rs = dbMeta.getColumns(null, null, tableName, null);
-			if (rs.next()) {
-				return rs.getString("REMARKS");
-			}
-		}
-		return remark;
-    }
-    
-    /**
 	 * 表主键
 	 * @param tableName
 	 * @return
@@ -290,7 +261,7 @@ public class DataBase2File {
 	/**
 	 * 主键类型
 	 * @param tableName
-	 * @param con
+	 * @param column 指定列名
 	 * @return
 	 * @throws SQLException
 	 */
