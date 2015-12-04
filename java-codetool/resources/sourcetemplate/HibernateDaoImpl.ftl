@@ -5,10 +5,10 @@ import java.util.Map;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import tt.wifi.common.Pagination;
-import tt.wifi.dao.HibernateDao;
+import com.jryq.mis.common.Pagination;
+import com.jryq.mis.dao.HibernateDao;
 
-import tt.wifi.utils.StringUtils;
+import com.jryq.mis.utils.StringUtils;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 <#list importClassList as imp>

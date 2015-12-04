@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
-import tt.wifi.common.Pagination;
-import tt.wifi.dao.JdbcDao;
+import com.jryq.mis.common.Pagination;
+import com.jryq.mis.dao.JdbcDao;
 
-import tt.wifi.utils.StringUtils;
+import com.jryq.mis.utils.StringUtils;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${entityPackage}.${mapperPackage}.${entityCamelName}RowMapper;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;

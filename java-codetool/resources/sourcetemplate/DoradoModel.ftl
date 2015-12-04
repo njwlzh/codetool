@@ -8,6 +8,14 @@
     <PropertyDef name="${col.propertyName}">
       <Property name="dataType">${type}</Property>
       <Property name="label">${col.remark}</Property>
+      <#if col.nullable==false && type!="DateTime">
+      <Property name="required">true</Property>
+      </#if>
+      <#if type=="String" && col.length gt 0>
+      <Validator name="validatorLength" type="length">
+        <Property name="maxLength">${col.length}</Property>
+      </Validator>
+      </#if>
     </PropertyDef>
     </#list>
   </DataType>

@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import tt.wifi.base.BaseAction;
-import tt.wifi.common.Pagination;
+import com.jryq.mis.base.BaseAction;
+import com.jryq.mis.common.Pagination;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 

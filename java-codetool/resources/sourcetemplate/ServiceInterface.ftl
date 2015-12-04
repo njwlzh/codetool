@@ -2,7 +2,7 @@ package ${basePackage}.${moduleName}.${servicePackage};
 
 import java.util.Map;
 
-import tt.wifi.common.Pagination;
+import com.jryq.mis.common.Pagination;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 
 /**

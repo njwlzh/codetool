@@ -54,6 +54,7 @@ public class DataBase2File {
         	StringBuffer sbModel = new StringBuffer("");
         	if (module.getTables()!=null) {
 	        	for (TableConf tbConf : module.getTables()) {
+	        		System.out.println(tbConf.getName());
 	        		Table table = getTable(tbConf,module, con);//获取一个表的相关信息
 	        		generateEntityFile(table, module);//通过成entity
 	                generateServiceFile(table, module);//生成service
@@ -213,6 +214,9 @@ public class DataBase2File {
 	        	col.setPropertyName(convertToFirstLetterLowerCaseCamelCase(colName));
 	        	col.setPropertyType(convertType(col.getColumnType()));
 	        	col.setPropertyCamelName(convertToCamelCase(colName));
+	        	col.setNullable(rs.getString("is_nullable").equals("YES"));
+	        	col.setLength(rs.getLong("character_maximum_length"));
+	        	
 	        	
 	        	String colKey = rs.getString("column_key");
 	        	if (!isEmpty(colKey) && colKey.toLowerCase().equals("pri")) {
@@ -808,6 +812,8 @@ class Column{
     private String propertyType;
     private String propertyCamelName; //首字大写的属性名
     private boolean isPrimaryKey;
+    private boolean isNullable;//是否允许为空
+    private Long length; //字段长度
 	public String getColumnName() {
 		return columnName;
 	}
@@ -850,13 +856,27 @@ class Column{
 	public void setPropertyCamelName(String propertyCamelName) {
 		this.propertyCamelName = propertyCamelName;
 	}
+	
+	public boolean isNullable() {
+		return isNullable;
+	}
+	public void setNullable(boolean isNullable) {
+		this.isNullable = isNullable;
+	}
+	public Long getLength() {
+		return length;
+	}
+	public void setLength(Long length) {
+		this.length = length;
+	}
 	@Override
 	public String toString() {
 		return "Column [columnName=" + columnName + ", columnType="
 				+ columnType + ", remark=" + remark + ", propertyName="
 				+ propertyName + ", propertyType=" + propertyType
 				+ ", propertyCamelName=" + propertyCamelName
-				+ ", isPrimaryKey=" + isPrimaryKey + "]";
+				+ ", isPrimaryKey=" + isPrimaryKey + ", isNullable="
+				+ isNullable + ", length=" + length + "]";
 	}
     
 }
