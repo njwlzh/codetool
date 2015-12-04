@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configure>
 	<!-- 生成的文件保存目录 -->
-	<basedir>D:/changyou/workspace/firsttest/src/main/java</basedir>
+	<basedir>D:/jryq/workspace/mis/src/main/java</basedir>
 	<!-- 基础包名 -->
-	<basePackage>com.mars</basePackage>
+	<basePackage>com.jryq.mis</basePackage>
 	<db>
 		<!-- 数据库名 -->
-		<dbName>app</dbName>
+		<dbName>jryq_db</dbName>
 		<!-- 用户名 -->
-		<user>app</user>
+		<user>jryq</user>
 		<!-- 密码 -->
-		<pwd>app</pwd>
+		<pwd>jryq</pwd>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://10.10.1.15:6603/app?useUnicode=true&amp;characterEncoding=UTF-8</url>
+		<url>jdbc:mysql://10.10.1.15:6603/jryq_db?useUnicode=true&amp;characterEncoding=UTF-8</url>
 	</db>
-	<module>
-		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+	<!-- <module>
+		数据持久层类型，分为hibernate, mybatis,jdbc
 		<persistance>mybatis</persistance>
-		<!-- 模块名称 -->
+		模块名称
 		<name>ads</name>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
-		<savePath>D:/changyou/workspace/firsttest/resources/mapper/ads</savePath>
+		模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下
+		<savePath>D:/jryq/workspace/mis/resources/mapper/ads</savePath>
 		<daoPackage>dao</daoPackage>
 		<daoImplPackage>impl</daoImplPackage>
 		<servicePackage>service</servicePackage>
@@ -31,23 +31,23 @@
 		<mapperPackage>mapper</mapperPackage>
 		<actionPackage>action</actionPackage>
 		<viewPackage>view</viewPackage>
-		<!-- 要生成文件的数据表列表 -->
+		要生成文件的数据表列表
 		<table name="ad_info">
 			<subTable name="ad_detail" parentField="ad_Id" refType="OneToOne"/>
 			<subTable name="ad_info_os_ref" parentField="ad_Id" refType="OneToMany"/>
 		</table>
-		<!-- <table name="ad_info_os_ref" entityName="AdInfoOsRef"/>
-		<table name="ad_detail" /> -->
-	</module>
+		<table name="ad_info_os_ref" entityName="AdInfoOsRef"/>
+		<table name="ad_detail" />
+	</module> -->
 	<module>
 		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
 		<persistance>hibernate</persistance>
 		<!-- 模块名称 -->
-		<name>mall</name>
+		<name>oa</name>
 		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
-		<savePath>D:/changyou/workspace/firsttest/resources/mapper/mall</savePath>
+		<savePath></savePath>
 		<daoPackage>dao</daoPackage>
 		<daoImplPackage>impl</daoImplPackage>
 		<servicePackage>service</servicePackage>
@@ -57,22 +57,26 @@
 		<actionPackage>action</actionPackage>
 		<viewPackage>view</viewPackage>
 		<!-- 要生成文件的数据表列表 -->
-		<table name="mall_goods_info" prefix="mall_">
-			<subTable name="mall_goods_file" parentField="goods_Id"  prefix="mall_" refType="OneToMany"/>
-			<subTable name="mall_goods_content" parentField="goods_Id"  prefix="mall_" refType="OneToOne"/>
+		<table name="oa_article_category" prefix="oa_">
 		</table>
-		<table name="mall_goods_category" prefix="mall_" />
+		<table name="oa_article_info" prefix="oa_">
+			<subTable name="oa_article_file" parentField="article_id"  prefix="oa_" refType="OneToMany"/>
+		</table>
+		<table name="oa_asset_info" prefix="oa_" >
+			<subTable name="oa_asset_history" parentField="asset_id" prifex="oa_" refType="OneToMany"/>
+		</table>
+		<table name="oa_user_info" prefix="oa_"/>
 	</module>
-	
+	<!-- 
 	<module>
-		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		数据持久层类型，分为hibernate, mybatis,jdbc
 		<persistance>jdbc</persistance>
-		<!-- 模块名称 -->
+		模块名称
 		<name>senic</name>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
-		<savePath>D:/changyou/workspace/firsttest/resources/mapper/mall</savePath>
+		模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下
+		<savePath>D:/jryq/workspace/mis/resources/mapper/mall</savePath>
 		<daoPackage>dao</daoPackage>
 		<daoImplPackage>impl</daoImplPackage>
 		<servicePackage>service</servicePackage>
@@ -81,9 +85,9 @@
 		<mapperPackage>mapper</mapperPackage>
 		<actionPackage>action</actionPackage>
 		<viewPackage>view</viewPackage>
-		<!-- 要生成文件的数据表列表 -->
+		要生成文件的数据表列表
 		<table name="senic_spot">
 		</table>
-	</module>
+	</module> -->
 	
 </configure>

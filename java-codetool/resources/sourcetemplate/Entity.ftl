@@ -40,7 +40,12 @@ public class ${entityCamelName!} implements Serializable {
 	<#assign type=col.propertyType>
 	<#assign type=type?replace("java.util.","")>
 	<#assign type=type?replace("java.math.","")>
-	private ${type!} ${col.propertyName};
+	<#assign defaultValue=col.defaultValue!>
+	
+	<#if type=="Date" && defaultValue?length gt 0>
+		<#assign defaultValue="new Date()">
+	</#if>
+	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};
 	</#list>
 	<#-- 生成子表属性 -->
 	<#if subTables??>

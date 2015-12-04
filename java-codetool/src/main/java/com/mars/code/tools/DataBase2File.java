@@ -216,7 +216,7 @@ public class DataBase2File {
 	        	col.setPropertyCamelName(convertToCamelCase(colName));
 	        	col.setNullable(rs.getString("is_nullable").equals("YES"));
 	        	col.setLength(rs.getLong("character_maximum_length"));
-	        	
+	        	col.setDefaultValue(rs.getString("column_default"));
 	        	
 	        	String colKey = rs.getString("column_key");
 	        	if (!isEmpty(colKey) && colKey.toLowerCase().equals("pri")) {
@@ -814,6 +814,8 @@ class Column{
     private boolean isPrimaryKey;
     private boolean isNullable;//是否允许为空
     private Long length; //字段长度
+    private Object defaultValue; //字段默认值
+    
 	public String getColumnName() {
 		return columnName;
 	}
@@ -869,6 +871,13 @@ class Column{
 	public void setLength(Long length) {
 		this.length = length;
 	}
+	
+	public Object getDefaultValue() {
+		return defaultValue;
+	}
+	public void setDefaultValue(Object defaultValue) {
+		this.defaultValue = defaultValue;
+	}
 	@Override
 	public String toString() {
 		return "Column [columnName=" + columnName + ", columnType="
@@ -876,7 +885,8 @@ class Column{
 				+ propertyName + ", propertyType=" + propertyType
 				+ ", propertyCamelName=" + propertyCamelName
 				+ ", isPrimaryKey=" + isPrimaryKey + ", isNullable="
-				+ isNullable + ", length=" + length + "]";
+				+ isNullable + ", length=" + length + ", defaultValue="
+				+ defaultValue + "]";
 	}
     
 }
