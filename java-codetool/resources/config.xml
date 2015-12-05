@@ -27,15 +27,13 @@
 		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
-	<!-- <module>
-		数据持久层类型，分为hibernate, mybatis,jdbc
-		<persistance>mybatis</persistance>
-		模块名称
-		<name>ads</name>
-		是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除
-		<isDeleteTablePrefix>true</isDeleteTablePrefix>
-		模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下
-		<savePath>D:/jryq/workspace/mis/resources/mapper/ads</savePath>
+	
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>hibernate</persistance>
+		<!-- 模块名称 -->
+		<name>oa/study</name>
+		<!-- 包名定义，覆盖全局设置 -->
 		<daoPackage>dao</daoPackage>
 		<daoImplPackage>impl</daoImplPackage>
 		<servicePackage>service</servicePackage>
@@ -44,32 +42,8 @@
 		<mapperPackage>mapper</mapperPackage>
 		<actionPackage>action</actionPackage>
 		<viewPackage>view</viewPackage>
-		要生成文件的数据表列表
-		<table name="ad_info">
-			<subTable name="ad_detail" parentField="ad_Id" refType="OneToOne"/>
-			<subTable name="ad_info_os_ref" parentField="ad_Id" refType="OneToMany"/>
-		</table>
-		<table name="ad_info_os_ref" entityName="AdInfoOsRef"/>
-		<table name="ad_detail" />
-	</module> -->
-	
-	<module>
-		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
-		<persistance>hibernate</persistance>
-		<!-- 模块名称 -->
-		<name>oa/study</name>
 		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
 		<savePath></savePath>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
-		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<daoPackage>dao</daoPackage>
-		<daoImplPackage>impl</daoImplPackage>
-		<servicePackage>service</servicePackage>
-		<serviceImplPackage>impl</serviceImplPackage>
-		<entityPackage>entity</entityPackage>
-		<mapperPackage>mapper</mapperPackage>
-		<actionPackage>action</actionPackage>
-		<viewPackage>view</viewPackage> -->
 		<!-- 要生成文件的数据表列表 -->
 		<table name="oa_article_category" prefix="oa_">
 			<table name="oa_article_info" prefix="oa_" parentField="cat_id" refType="OneToMany">
@@ -85,16 +59,6 @@
 		<name>oa/assets</name>
 		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
 		<savePath></savePath>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
-		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<daoPackage>dao</daoPackage>
-		<daoImplPackage>impl</daoImplPackage>
-		<servicePackage>service</servicePackage>
-		<serviceImplPackage>impl</serviceImplPackage>
-		<entityPackage>entity</entityPackage>
-		<mapperPackage>mapper</mapperPackage>
-		<actionPackage>action</actionPackage>
-		<viewPackage>view</viewPackage> -->
 		<!-- 要生成文件的数据表列表 -->
 		<table name="oa_equipment_info" prefix="oa_" >
 			<table name="oa_equipment_history" parentField="equipment_id" prefix="oa_" refType="OneToMany"/>
@@ -112,16 +76,6 @@
 		<name>oa/hrm</name>
 		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
 		<savePath></savePath>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
-		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<daoPackage>dao</daoPackage>
-		<daoImplPackage>impl</daoImplPackage>
-		<servicePackage>service</servicePackage>
-		<serviceImplPackage>impl</serviceImplPackage>
-		<entityPackage>entity</entityPackage>
-		<mapperPackage>mapper</mapperPackage>
-		<actionPackage>action</actionPackage>
-		<viewPackage>view</viewPackage> -->
 		<!-- 要生成文件的数据表列表 -->
 		<table name="oa_user_info" prefix="oa_"/>
 		<!-- 下属管理表-->
@@ -148,19 +102,6 @@
 		<name>oa/task</name>
 		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
 		<savePath></savePath>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
-		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<daoPackage>dao</daoPackage>
-		<daoImplPackage>impl</daoImplPackage>
-		<servicePackage>service</servicePackage>
-		<serviceImplPackage>impl</serviceImplPackage>
-		<entityPackage>entity</entityPackage>
-		<mapperPackage>mapper</mapperPackage>
-		<actionPackage>action</actionPackage>
-		<viewPackage>view</viewPackage> -->
-		<!-- 要生成文件的数据表列表 -->
-		
-		
 		<!-- 日程明细表-->
 		<table name="oa_calendar_info" prefix="oa_"/>
 		
