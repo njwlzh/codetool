@@ -8,7 +8,7 @@
     <PropertyDef name="${col.propertyName}">
       <Property name="dataType">${type}</Property>
       <Property name="label">${col.remark}</Property>
-      <#if col.nullable==false && type!="DateTime">
+      <#if col.nullable==false && type!="DateTime" && col.primaryKey==false>
       <Property name="required">true</Property>
       </#if>
       <#if type=="String" && col.length gt 0>

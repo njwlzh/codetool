@@ -14,6 +14,19 @@
 		<driver>com.mysql.jdbc.Driver</driver>
 		<url>jdbc:mysql://10.10.1.15:6603/jryq_db?useUnicode=true&amp;characterEncoding=UTF-8</url>
 	</db>
+	<!-- 定义全局文件包，各module中可以覆盖掉这些定义 -->
+	<packageSetting>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
 	<!-- <module>
 		数据持久层类型，分为hibernate, mybatis,jdbc
 		<persistance>mybatis</persistance>
@@ -39,15 +52,16 @@
 		<table name="ad_info_os_ref" entityName="AdInfoOsRef"/>
 		<table name="ad_detail" />
 	</module> -->
+	
 	<module>
 		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
 		<persistance>hibernate</persistance>
 		<!-- 模块名称 -->
-		<name>oa</name>
-		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
-		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<name>oa/study</name>
 		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
 		<savePath></savePath>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<daoPackage>dao</daoPackage>
 		<daoImplPackage>impl</daoImplPackage>
 		<servicePackage>service</servicePackage>
@@ -55,18 +69,112 @@
 		<entityPackage>entity</entityPackage>
 		<mapperPackage>mapper</mapperPackage>
 		<actionPackage>action</actionPackage>
-		<viewPackage>view</viewPackage>
+		<viewPackage>view</viewPackage> -->
 		<!-- 要生成文件的数据表列表 -->
 		<table name="oa_article_category" prefix="oa_">
 			<table name="oa_article_info" prefix="oa_" parentField="cat_id" refType="OneToMany">
 				<table name="oa_article_file" parentField="article_id"  prefix="oa_" refType="OneToMany"/>
 			</table>
 		</table>
-		<table name="oa_asset_info" prefix="oa_" >
-			<table name="oa_asset_history" parentField="asset_id" prifex="oa_" refType="OneToMany"/>
-		</table>
-		<table name="oa_user_info" prefix="oa_"/>
 	</module>
+	
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>hibernate</persistance>
+		<!-- 模块名称 -->
+		<name>oa/assets</name>
+		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
+		<savePath></savePath>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage> -->
+		<!-- 要生成文件的数据表列表 -->
+		<table name="oa_equipment_info" prefix="oa_" >
+			<table name="oa_equipment_history" parentField="equipment_id" prefix="oa_" refType="OneToMany"/>
+		</table>
+		<table name="oa_assets_info" prefix="oa_" >
+			<table name="oa_assets_history" parentField="assets_id" prefix="oa_" refType="OneToMany"/>
+		</table>
+		
+	</module>
+	
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>hibernate</persistance>
+		<!-- 模块名称 -->
+		<name>oa/hrm</name>
+		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
+		<savePath></savePath>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage> -->
+		<!-- 要生成文件的数据表列表 -->
+		<table name="oa_user_info" prefix="oa_"/>
+		<!-- 下属管理表-->
+		<table name="oa_under_manager" prefix="oa_"/>
+		
+		<!-- 岗位绩效表-->
+		<table name="oa_post_performance" prefix="oa_">
+			<!-- 绩效表-->
+			<table name="oa_performance" parentField="post_performance_id" prefix="oa_" refType="OneToMany"/>
+			<!-- 职员操行评定信息表-->
+			<table name="oa_user_performance" parentField="post_performance_id" prefix="oa_" refType="OneToMany">
+				<!-- 职员操行评定打分详细表-->
+				<table name="oa_evaluation_items" parentField="post_performance_id" prefix="oa_" refType="OneToMany"/>
+			</table>
+		</table>
+		<!-- 公告表-->
+		<table name="oa_notice" prefix="oa_"/>
+	</module>
+	
+	<module>
+		<!-- 数据持久层类型，分为hibernate, mybatis,jdbc -->
+		<persistance>hibernate</persistance>
+		<!-- 模块名称 -->
+		<name>oa/task</name>
+		<!-- 模块文件存放目录，可以为空，若指定了目录，则文件和子目录全部保存到该目录下 -->
+		<savePath></savePath>
+		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
+		<!-- <isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<actionPackage>action</actionPackage>
+		<viewPackage>view</viewPackage> -->
+		<!-- 要生成文件的数据表列表 -->
+		
+		
+		<!-- 日程明细表-->
+		<table name="oa_calendar_info" prefix="oa_"/>
+		
+		<!-- 任务计划表-->
+		<table name="oa_task_plan" prefix="oa_">
+			<!-- 月底任务分派明细表-->
+			<table name="oa_task_detail" parentField="task_planid" prefix="oa_" refType="OneToMany"/>
+			<!-- 任务安排表-->
+			<table name="oa_task_arrange" parentField="task_planid" prefix="oa_" refType="OneToMany"/>
+		</table>
+		
+		
+	</module>
+	
 	<!-- 
 	<module>
 		数据持久层类型，分为hibernate, mybatis,jdbc

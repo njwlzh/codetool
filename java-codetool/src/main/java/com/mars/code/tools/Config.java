@@ -17,6 +17,7 @@ public class Config {
 	private String basePackage; //包路径的前缀，如com.mars，后面则跟上模块名等
 	private Db db; //连接数据库的配置信息
 	private List<Module> modules; //要生成的代码模块列表
+	private PackageSetting packageSetting;
 	public String getBaseDir() {
 		return baseDir;
 	}
@@ -42,6 +43,12 @@ public class Config {
 		this.modules = modules;
 	}
 	
+	public PackageSetting getPackageSetting() {
+		return packageSetting;
+	}
+	public void setPackageSetting(PackageSetting packageSetting) {
+		this.packageSetting = packageSetting;
+	}
 	@Override
 	public String toString() {
 		return "Config [baseDir=" + baseDir + ", basePackage=" + basePackage
@@ -55,7 +62,7 @@ public class Config {
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
 		cfg.setBasePackage(XmlUtil.getChild(root, "basePackage").getTextTrim());
-		
+		//加载数据库配置
 		Element dbNode = XmlUtil.getChild(root, "db");
 		Db db = new Db();
 		db.setDriver(XmlUtil.getChild(dbNode, "driver").getTextTrim());
@@ -64,6 +71,19 @@ public class Config {
 		db.setUser(XmlUtil.getChild(dbNode, "user").getTextTrim());
 		db.setDbName(XmlUtil.getChild(dbNode, "dbName").getTextTrim());
 		cfg.setDb(db);
+		//加载包名设置
+		Element pkg = XmlUtil.getChild(root, "packageSetting");
+		PackageSetting pkgSetting=new PackageSetting();
+		pkgSetting.setActionPackage(XmlUtil.getChild(pkg, "actionPackage").getTextTrim());
+		pkgSetting.setViewPackage(XmlUtil.getChild(pkg, "viewPackage").getTextTrim());
+		pkgSetting.setEntityPackage(XmlUtil.getChild(pkg, "entityPackage").getTextTrim());
+		pkgSetting.setMapperPackage(XmlUtil.getChild(pkg, "mapperPackage").getTextTrim());
+		pkgSetting.setDaoPackage(XmlUtil.getChild(pkg, "daoPackage").getTextTrim());
+		pkgSetting.setDaoImplPackage(XmlUtil.getChild(pkg, "daoImplPackage").getTextTrim());
+		pkgSetting.setServicePackage(XmlUtil.getChild(pkg, "servicePackage").getTextTrim());
+		pkgSetting.setServiceImplPackage(XmlUtil.getChild(pkg, "serviceImplPackage").getTextTrim());
+		pkgSetting.setIsDeleteTablePrefix(Boolean.valueOf(XmlUtil.getChild(pkg, "isDeleteTablePrefix").getTextTrim()));
+		cfg.setPackageSetting(pkgSetting);
 		//加载module
 		List<Module> moduleList = new ArrayList<Module>();
 		List<Element> modules = XmlUtil.getChildElements(root, "module");
@@ -76,16 +96,25 @@ public class Config {
 				m.setPersistance(XmlUtil.getChild(e, "persistance").getTextTrim());
 			}
 			m.setName(XmlUtil.getChild(e, "name").getTextTrim());
-			m.setActionPackage(XmlUtil.getChild(e, "actionPackage").getTextTrim());
-			m.setDaoImplPackage(XmlUtil.getChild(e, "daoImplPackage").getTextTrim());
-			m.setDaoPackage(XmlUtil.getChild(e, "daoPackage").getTextTrim());
-			m.setDeleteTablePrefix(Boolean.valueOf(XmlUtil.getChild(e, "isDeleteTablePrefix").getTextTrim()));
-			m.setEntityPackage(XmlUtil.getChild(e, "entityPackage").getTextTrim());
-			m.setMapperPackage(XmlUtil.getChild(e, "mapperPackage").getTextTrim());
 			m.setSavePath(XmlUtil.getChild(e, "savePath").getTextTrim());
-			m.setServiceImplPackage(XmlUtil.getChild(e, "serviceImplPackage").getTextTrim());
-			m.setServicePackage(XmlUtil.getChild(e, "servicePackage").getTextTrim());
-			m.setViewPackage(XmlUtil.getChild(e, "viewPackage").getTextTrim());
+			Element elePkg = XmlUtil.getChild(e, "actionPackage");
+			m.setActionPackage(elePkg==null?pkgSetting.getActionPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "isDeleteTablePrefix");
+			m.setDeleteTablePrefix(elePkg==null?pkgSetting.getIsDeleteTablePrefix():Boolean.valueOf(elePkg.getTextTrim()));
+			elePkg=XmlUtil.getChild(e, "daoImplPackage");
+			m.setDaoImplPackage(elePkg==null?pkgSetting.getDaoImplPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "daoPackage");
+			m.setDaoPackage(elePkg==null?pkgSetting.getDaoPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "entityPackage");
+			m.setEntityPackage(elePkg==null?pkgSetting.getEntityPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "mapperPackage");
+			m.setMapperPackage(elePkg==null?pkgSetting.getMapperPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "serviceImplPackage");
+			m.setServiceImplPackage(elePkg==null?pkgSetting.getServiceImplPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "servicePackage");
+			m.setServicePackage(elePkg==null?pkgSetting.getServicePackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "viewPackage");
+			m.setViewPackage(elePkg==null?pkgSetting.getViewPackage():elePkg.getTextTrim());
 			//加载table
 			m.setTables(readTableConfList(e));
 			moduleList.add(m);
@@ -382,5 +411,76 @@ class TableConf{
 				+ ", entityName=" + entityName + ", parentField=" + parentField
 				+ ", refType=" + refType + ", subTables=" + subTables + "]";
 	}
-	
+}
+
+/**
+ * 定义全局表名设置
+ * @author mars.liu
+ *
+ */
+class PackageSetting{
+	private String daoPackage;
+	private String daoImplPackage;
+	private String servicePackage;
+	private String serviceImplPackage;
+	private String entityPackage;
+	private String mapperPackage;
+	private String actionPackage;
+	private String viewPackage;
+	private Boolean isDeleteTablePrefix;
+	public String getDaoPackage() {
+		return daoPackage;
+	}
+	public void setDaoPackage(String daoPackage) {
+		this.daoPackage = daoPackage;
+	}
+	public String getDaoImplPackage() {
+		return daoImplPackage;
+	}
+	public void setDaoImplPackage(String daoImplPackage) {
+		this.daoImplPackage = daoImplPackage;
+	}
+	public String getServicePackage() {
+		return servicePackage;
+	}
+	public void setServicePackage(String servicePackage) {
+		this.servicePackage = servicePackage;
+	}
+	public String getServiceImplPackage() {
+		return serviceImplPackage;
+	}
+	public void setServiceImplPackage(String serviceImplPackage) {
+		this.serviceImplPackage = serviceImplPackage;
+	}
+	public String getEntityPackage() {
+		return entityPackage;
+	}
+	public void setEntityPackage(String entityPackage) {
+		this.entityPackage = entityPackage;
+	}
+	public String getMapperPackage() {
+		return mapperPackage;
+	}
+	public void setMapperPackage(String mapperPackage) {
+		this.mapperPackage = mapperPackage;
+	}
+	public String getActionPackage() {
+		return actionPackage;
+	}
+	public void setActionPackage(String actionPackage) {
+		this.actionPackage = actionPackage;
+	}
+	public String getViewPackage() {
+		return viewPackage;
+	}
+	public void setViewPackage(String viewPackage) {
+		this.viewPackage = viewPackage;
+	}
+	public Boolean getIsDeleteTablePrefix() {
+		return isDeleteTablePrefix;
+	}
+	public void setIsDeleteTablePrefix(Boolean isDeleteTablePrefix) {
+		this.isDeleteTablePrefix = isDeleteTablePrefix;
+	}
+	 
 }

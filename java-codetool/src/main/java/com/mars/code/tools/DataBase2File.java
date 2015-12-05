@@ -3,10 +3,11 @@ package com.mars.code.tools;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -60,7 +61,8 @@ public class DataBase2File {
 	        		sbModel.append(genFile(table, module));
 	        	}
         	}
-        	writeModelFile(module.getName()+".model.xml", sbModel.toString());//生成model文件
+        	//System.out.println(sbModel.toString());
+        	writeModelFile(module.getName().split("/")[0]+".model.xml", sbModel.toString());//生成model文件
         }
         con.close();
         Long end = System.currentTimeMillis();
@@ -89,6 +91,7 @@ public class DataBase2File {
         		sb.append(genFile(subTb,module));
         	}
         }
+        //System.out.println(sb.toString());
         return sb;
     }
       
@@ -150,6 +153,7 @@ public class DataBase2File {
         if (module.isDeleteTablePrefix() && !isEmpty(tbConf.getPrefix())){
         	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix(), ""));  
         }
+        System.out.println(tbConf);
         //获取表各字段的信息
         getTableColumns(table,con);
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
@@ -348,7 +352,7 @@ public class DataBase2File {
      */
     private void setBaseInfo(JSONObject obj,Module module) {
     	obj.put("basePackage", config.getBasePackage());
-    	obj.put("moduleName", module.getName());
+    	obj.put("moduleName", module.getName().replace("/", "."));
     	obj.put("entityPackage", module.getEntityPackage());
     	obj.put("servicePackage", module.getServicePackage());
     	obj.put("serviceImplPackage", module.getServiceImplPackage());
@@ -366,7 +370,7 @@ public class DataBase2File {
     private void generateEntityFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+module.getName()+File.separator+module.getEntityPackage());
+    	File saveDir=getSaveFilePath(module,module.getEntityPackage());
     	if (!saveDir.exists()) {
     		saveDir.mkdirs();
     	}
@@ -378,16 +382,32 @@ public class DataBase2File {
     }
     
     /**
+     * 根据模块定义生成文件保存目录
+     * @param module
+     * @param packageName
+     * @return
+     */
+    private File getSaveFilePath(Module module,String packageName){
+    	String moduleName=module.getName().replace(".", "/");
+    	File saveDir;
+    	if (isEmpty(module.getSavePath())) {
+    		saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+packageName);
+    	} else {
+    		saveDir = new File(module.getSavePath(),moduleName+File.separator+packageName);
+    	}
+    	if (!saveDir.exists()) {
+    		saveDir.mkdirs();
+    	}
+    	return saveDir;
+    }
+    /**
      * 生成指定表映射的RowMapper类文件，用于jdbcTemplate的查询 
      * @param table 
      */  
     private void generateMapperFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+module.getName()+File.separator+module.getEntityPackage()+File.separator+module.getMapperPackage());
-    	if (!saveDir.exists()) {
-    		saveDir.mkdirs();
-    	}
+    	File saveDir=getSaveFilePath(module,module.getMapperPackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"RowMapper.java");
     	
     	String savePath =saveFile.getAbsolutePath();
@@ -402,20 +422,14 @@ public class DataBase2File {
     private void generateDaoFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+module.getName()+File.separator+module.getDaoPackage());
-    	if (!saveDir.exists()) {
-    		saveDir.mkdirs();
-    	}
+    	File saveDir=getSaveFilePath(module,module.getDaoPackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
     	String savePath =saveFile.getAbsolutePath();
     	FreemarkerUtil.createDoc(obj, "DaoInterface", savePath);
     	System.out.println("生成文件："+savePath);
     	//实现文件
     	if (!module.getPersistance().equals("mybatis")){
-    		File implDir = new File(saveDir,module.getDaoImplPackage());
-    		if (!implDir.exists()){
-    			implDir.mkdirs();
-    		}
+        	File implDir=getSaveFilePath(module,module.getDaoPackage()+File.separator+module.getDaoImplPackage());
 	    	String templateName = "HibernateDaoImpl";
 	    	if (module.getPersistance().equals("jdbc")) {
 	    		generateMapperFile(table, module);
@@ -452,19 +466,13 @@ public class DataBase2File {
     private void generateServiceFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+module.getName()+File.separator+module.getServicePackage());
-    	if (!saveDir.exists()) {
-    		saveDir.mkdirs();
-    	}
+    	File saveDir=getSaveFilePath(module,module.getServicePackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Service.java");
     	String savePath =saveFile.getAbsolutePath();
     	System.out.println("生成文件："+savePath);
     	FreemarkerUtil.createDoc(obj, "ServiceInterface", savePath);
     	//实现文件
-    	File implDir = new File(saveDir,module.getServiceImplPackage());
-    	if (!implDir.exists()){
-    		implDir.mkdirs();
-    	}
+    	File implDir=getSaveFilePath(module,module.getServicePackage()+File.separator+module.getServiceImplPackage());
     	File implFile = new File(implDir,table.getEntityCamelName()+"ServiceImpl.java");
     	String implPath =implFile.getAbsolutePath();
     	FreemarkerUtil.createDoc(obj, "ServiceImpl", implPath);
@@ -479,10 +487,7 @@ public class DataBase2File {
     private void generateActionFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+module.getName()+File.separator+module.getActionPackage());
-    	if (!saveDir.exists()) {
-    		saveDir.mkdirs();
-    	}
+    	File saveDir=getSaveFilePath(module,module.getActionPackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Action.java");
     	
     	String savePath =saveFile.getAbsolutePath();
@@ -490,10 +495,27 @@ public class DataBase2File {
     	System.out.println("生成文件："+savePath);
     }
     
+    /**
+     * 生成指定表对象对应的视图文件 
+     * @param table 
+     */  
+    private void generateViewFile(Table table,Module module) {
+    	JSONObject obj = (JSONObject)JSON.toJSON(table);
+    	setBaseInfo(obj,module);
+    	File saveDir=getSaveFilePath(module,module.getViewPackage());
+    	File saveFile = new File(saveDir,table.getEntityCamelName()+".view.xml");
+    	
+    	String savePath =saveFile.getAbsolutePath();
+    	System.out.println("生成文件："+savePath);
+    	FreemarkerUtil.createDoc(obj, "View", savePath);
+    }
+    
     private String generateDoradoModelString(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	return FreemarkerUtil.createString(obj,"DoradoModel");
+    	String str = FreemarkerUtil.createString(obj,"DoradoModel");
+    	//System.out.println(str);
+    	return str;
     }
     
     /**
@@ -518,6 +540,7 @@ public class DataBase2File {
         	} else {
         		content="<?xml version=\"1.0\" encoding=\"UTF-8\"?><Model>"+content+"</Model>";
         	}
+        	//System.out.println(content);
             fos = new FileOutputStream(modelFile);  
             OutputStreamWriter oWriter = new OutputStreamWriter(fos,"UTF-8");  
             //这个地方对流的编码不可或缺，使用main（）单独调用时，应该可以，但是如果是web请求导出时导出后word文档就会打不开，并且包XML文件错误。主要是编码格式不正确，无法解析。  
@@ -541,7 +564,7 @@ public class DataBase2File {
 	public static String readFile(File file) {
 		StringBuffer result = new StringBuffer();
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));// 构造一个BufferedReader类来读取文件
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));// 构造一个BufferedReader类来读取文件
 			String s = null;
 			while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行
 				result.append(s);
@@ -554,23 +577,7 @@ public class DataBase2File {
 		return result.toString();
 	}
     
-    /**
-     * 生成指定表对象对应的类文件 
-     * @param table 
-     */  
-    private void generateViewFile(Table table,Module module) {
-    	JSONObject obj = (JSONObject)JSON.toJSON(table);
-    	setBaseInfo(obj,module);
-    	File saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+module.getName()+File.separator+module.getViewPackage());
-    	if (!saveDir.exists()) {
-    		saveDir.mkdirs();
-    	}
-    	File saveFile = new File(saveDir,table.getEntityCamelName()+".view.xml");
-    	
-    	String savePath =saveFile.getAbsolutePath();
-    	System.out.println("生成文件："+savePath);
-    	FreemarkerUtil.createDoc(obj, "View", savePath);
-    }
+
       
     /* 
      * 表名转换为驼峰命名 
