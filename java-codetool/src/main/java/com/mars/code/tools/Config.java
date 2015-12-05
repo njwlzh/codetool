@@ -17,7 +17,7 @@ public class Config {
 	private String basePackage; //包路径的前缀，如com.mars，后面则跟上模块名等
 	private Db db; //连接数据库的配置信息
 	private List<Module> modules; //要生成的代码模块列表
-	private PackageSetting packageSetting;
+	private PackageSetting packageSetting; //全局包名设置
 	public String getBaseDir() {
 		return baseDir;
 	}
