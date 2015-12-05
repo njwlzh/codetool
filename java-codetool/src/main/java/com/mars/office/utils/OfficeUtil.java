@@ -15,12 +15,16 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+/**
+ * 导出数据到word文件，把word格式调整完成后，保存为xml结构的文件，然后用文本编辑器修改数据填充项
+ * @author mars.liu
+ *
+ */
 public class OfficeUtil {
     private static Configuration configuration = null;  
     

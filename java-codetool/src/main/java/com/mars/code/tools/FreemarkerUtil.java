@@ -18,6 +18,11 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+/**
+ * 模板代码生成工具类
+ * @author mars.liu
+ *
+ */
 public class FreemarkerUtil {
 private static Configuration configuration = null;  
     

@@ -24,7 +24,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
   
 /** 
- * 通过数据库表结构生成表对应的实体类以及根据entity,view,action、service和dao模板生成基本的相关文件 
+ * 通过数据库表结构生成表对应的实体类以及根据entity,view,action、service和dao模板生成基本的相关文件，支持深度主从表关系<br>
+ * 后期可考虑抽像出一些接口来实现更多的持久层、展现层框架 
+ * @author mars.liu
  */  
 public class DataBase2File {
 	
@@ -134,9 +136,10 @@ public class DataBase2File {
         return tbConfList;  
     }  
       
-    /* 
+    /**
      * 获取指定表信息并封装成Table对象 
-     * @param tableName 
+     * @param tbConf 
+     * @param module
      * @param con 
      */  
     private Table getTable(TableConf tbConf,Module module, Connection con) throws SQLException {
@@ -172,6 +175,12 @@ public class DataBase2File {
         return table;  
     } 
     
+    /**
+     * 获取数据表的所有字段
+     * @param table
+     * @param conn
+     * @throws SQLException
+     */
     private void getTableColumns(Table table,Connection conn) throws SQLException {
     	if (config.getDb().getDriver().toLowerCase().indexOf("mysql")!=-1) {
 			String sql="select * from information_schema.COLUMNS where TABLE_SCHEMA=? and TABLE_NAME=?";
@@ -227,7 +236,7 @@ public class DataBase2File {
     }
     
     /**
-	 * 表主键
+	 * 获取表主键
 	 * @param tableName
 	 * @return
 	 * @throws SQLException
@@ -332,7 +341,11 @@ public class DataBase2File {
           
         return javaType;  
     }  
-    
+    /**
+     * 将模块信息转换为json结构
+     * @param obj
+     * @param module
+     */
     private void setBaseInfo(JSONObject obj,Module module) {
     	obj.put("basePackage", config.getBasePackage());
     	obj.put("moduleName", module.getName());

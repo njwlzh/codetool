@@ -9,7 +9,7 @@ import org.dom4j.Element;
 
 /**
  * 读取配置文件
- * @author Administrator
+ * @author mars.liu
  *
  */
 public class Config {
@@ -94,21 +94,16 @@ public class Config {
 		return cfg;
 	}
 	
+	/**
+	 * 以递归方式读取主从表关系
+	 * @param module
+	 * @return
+	 */
 	private static List<TableConf> readTableConfList(Element module){
 		List<TableConf> tableList = new ArrayList<TableConf>();
 		List<Element> tables = XmlUtil.getChildElements(module, "table");
 		for (Element e : tables) {
 			TableConf m = initTableConf(e);
-			/*
-			//获取子表
-			List<Element> subTables = XmlUtil.getChildElements(e, "subTable");
-			if (subTables!=null) {
-				for (Element el : subTables) {
-					TableConf sub = initTableConf(el);
-					m.getSubTables().add(sub);
-				}
-			}
-			*/
 			List<TableConf> subTables = readTableConfList(e);
 			if (subTables!=null && !subTables.isEmpty()) {
 				m.getSubTables().addAll(subTables);
@@ -117,7 +112,11 @@ public class Config {
 		}
 		return tableList;
 	}
-	
+	/**
+	 * 初始化配置的表格信息
+	 * @param e
+	 * @return
+	 */
 	private static TableConf initTableConf(Element e){
 		TableConf m = new TableConf();
 		Attribute attr = XmlUtil.getAttribute(e, "entityName");

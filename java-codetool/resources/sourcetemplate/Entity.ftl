@@ -41,11 +41,14 @@ public class ${entityCamelName!} implements Serializable {
 	<#assign type=type?replace("java.util.","")>
 	<#assign type=type?replace("java.math.","")>
 	<#assign defaultValue=col.defaultValue!>
-	
-	<#if type=="Date" && defaultValue?length gt 0>
-		<#assign defaultValue="new Date()">
-	<#elseif type=="Long" && defaultValue?length gt 0>
-		<#assign defaultValue=defaultValue+"L">
+	<#if defaultValue?length gt 0>
+		<#if type=="Date">
+			<#assign defaultValue="new Date()">
+		<#elseif type=="Long">
+			<#assign defaultValue=defaultValue+"L">
+		<#elseif type=="Double">
+			<#assign defaultValue=defaultValue+"d">
+		</#if>
 	</#if>
 	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};
 	</#list>
