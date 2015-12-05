@@ -58,12 +58,12 @@
 		<viewPackage>view</viewPackage>
 		<!-- 要生成文件的数据表列表 -->
 		<table name="oa_article_category" prefix="oa_">
-		</table>
-		<table name="oa_article_info" prefix="oa_">
-			<subTable name="oa_article_file" parentField="article_id"  prefix="oa_" refType="OneToMany"/>
+			<table name="oa_article_info" prefix="oa_" parentField="cat_id" refType="OneToMany">
+				<table name="oa_article_file" parentField="article_id"  prefix="oa_" refType="OneToMany"/>
+			</table>
 		</table>
 		<table name="oa_asset_info" prefix="oa_" >
-			<subTable name="oa_asset_history" parentField="asset_id" prifex="oa_" refType="OneToMany"/>
+			<table name="oa_asset_history" parentField="asset_id" prifex="oa_" refType="OneToMany"/>
 		</table>
 		<table name="oa_user_info" prefix="oa_"/>
 	</module>

@@ -99,6 +99,7 @@ public class Config {
 		List<Element> tables = XmlUtil.getChildElements(module, "table");
 		for (Element e : tables) {
 			TableConf m = initTableConf(e);
+			/*
 			//获取子表
 			List<Element> subTables = XmlUtil.getChildElements(e, "subTable");
 			if (subTables!=null) {
@@ -106,6 +107,11 @@ public class Config {
 					TableConf sub = initTableConf(el);
 					m.getSubTables().add(sub);
 				}
+			}
+			*/
+			List<TableConf> subTables = readTableConfList(e);
+			if (subTables!=null && !subTables.isEmpty()) {
+				m.getSubTables().addAll(subTables);
 			}
 			tableList.add(m);
 		}

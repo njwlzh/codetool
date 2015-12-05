@@ -51,31 +51,11 @@ public class DataBase2File {
         		module.setTables(getAllTables(module.getName()+"%"));
         	}
         	//系统的model文件
-        	StringBuffer sbModel = new StringBuffer("");
+        	StringBuffer sbModel = new StringBuffer();
         	if (module.getTables()!=null) {
 	        	for (TableConf tbConf : module.getTables()) {
-	        		System.out.println(tbConf.getName());
 	        		Table table = getTable(tbConf,module, con);//获取一个表的相关信息
-	        		generateEntityFile(table, module);//通过成entity
-	                generateServiceFile(table, module);//生成service
-	                generateActionFile(table,module);//生成action
-	                generateViewFile(table,module);//生成view
-	                generateDaoFile(table, module);//生成dao
-	              //生成model的数据块
-	                sbModel.append(generateDoradoModelString(table, module));
-	                //生成子表对象
-	                if (!table.getSubTables().isEmpty()) {
-	                	for (Table tb : table.getSubTables()) {
-	                		generateEntityFile(tb, module);//通过成entity
-	    	                generateServiceFile(tb, module);//生成service
-	    	                generateActionFile(tb,module);//生成action
-	    	                generateViewFile(tb,module);//生成view
-	    	                generateDaoFile(tb, module);//生成dao
-	    	              //生成model的数据块
-	    	                sbModel.append(generateDoradoModelString(tb, module));
-	                	}
-	                }
-                	
+	        		sbModel.append(genFile(table, module));
 	        	}
         	}
         	writeModelFile(module.getName()+".model.xml", sbModel.toString());//生成model文件
@@ -84,7 +64,31 @@ public class DataBase2File {
         Long end = System.currentTimeMillis();
         System.out.println("Generate Success! total time = "+(end-start));
         System.out.println("Please check: " + config.getBaseDir());
-    }  
+    } 
+    
+    /**
+     * 递归生成所有文件代码，子表可以重叠
+     * @param tb
+     * @param module
+     * @return
+     */
+    private StringBuffer genFile(Table tb,Module module) {
+    	StringBuffer sb = new StringBuffer();
+    	generateEntityFile(tb, module);//通过成entity
+        generateServiceFile(tb, module);//生成service
+        generateActionFile(tb,module);//生成action
+        generateViewFile(tb,module);//生成view
+        generateDaoFile(tb, module);//生成dao
+        //生成model的数据块
+        String modleString = (generateDoradoModelString(tb, module));
+        sb.append(modleString);
+        if (!tb.getSubTables().isEmpty()) {
+        	for (Table subTb : tb.getSubTables()){
+        		sb.append(genFile(subTb,module));
+        	}
+        }
+        return sb;
+    }
       
     /* 
      * 连接数据库获取所有表信息 
@@ -143,29 +147,6 @@ public class DataBase2File {
         if (module.isDeleteTablePrefix() && !isEmpty(tbConf.getPrefix())){
         	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix(), ""));  
         }
-        //table.setTableName(tableName);  
-        
-        /*PreparedStatement ps = con.prepareStatement(" SELECT * FROM "+tableName);  
-        ResultSet rs = ps.executeQuery();  
-        ResultSetMetaData rsmd = rs.getMetaData();  
-        int columCount = rsmd.getColumnCount();  
-        for(int i=1; i<=columCount; i++) {
-        	Column col = new Column();
-        	String colName = rsmd.getColumnName(i).trim();
-        	col.setColumnName(colName);
-        	col.setColumnType(rsmd.getColumnTypeName(i).trim());
-        	col.setRemark(getColumnRemark(tableName,colName,con));
-        	col.setPropertyName(convertToFirstLetterLowerCaseCamelCase(colName));
-        	col.setPropertyType(convertType(col.getColumnType()));
-        	col.setPropertyCamelName(convertToCamelCase(colName));
-        	if (table.getPrimaryKey().equals(colName)) {
-        		col.setPrimaryKey(true);
-        	}
-        	if (col.getPropertyType().indexOf(".")!=-1 && !existsType(table.getImportClassList(),col.getPropertyType())) {
-        		table.getImportClassList().add(col.getPropertyType());
-        	}
-        	table.getColumns().add(col);
-        } */ 
         //获取表各字段的信息
         getTableColumns(table,con);
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
@@ -188,9 +169,6 @@ public class DataBase2File {
         	}
         	table.setSubTables(subTables);
         }
-        //rs.close();  
-        //ps.close();  
-          
         return table;  
     } 
     
@@ -553,7 +531,6 @@ public class DataBase2File {
 			BufferedReader br = new BufferedReader(new FileReader(file));// 构造一个BufferedReader类来读取文件
 			String s = null;
 			while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行
-				//result = result + "\n" + s;
 				result.append(s);
 				result.append("\n");
 			}
