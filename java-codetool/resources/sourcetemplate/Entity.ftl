@@ -44,6 +44,8 @@ public class ${entityCamelName!} implements Serializable {
 	
 	<#if type=="Date" && defaultValue?length gt 0>
 		<#assign defaultValue="new Date()">
+	<#elseif type=="Long" && defaultValue?length gt 0>
+		<#assign defaultValue=defaultValue+"L">
 	</#if>
 	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};
 	</#list>
