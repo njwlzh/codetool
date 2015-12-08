@@ -6,7 +6,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import com.jryq.mis.common.Pagination;
-import com.jryq.mis.dao.HibernateDao;
+import com.jryq.mis.common.dao.HibernateDao;
 
 import com.jryq.mis.utils.StringUtils;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
