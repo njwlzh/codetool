@@ -60,7 +60,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);
 		page.setEntities(list);
 		<#else>
-		${entityName}Dao.find${entityCamelName}List(page,params);
+		${entityName}Dao.find${entityCamelName}ListByJdbc(page,params);
 		</#if>
 	}
 

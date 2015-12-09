@@ -57,9 +57,9 @@
 		<persistance>hibernate</persistance>
 		<name>oa/hrm</name>
 		<savePath></savePath>
-		<!-- <table name="oa_user_info" prefix="oa_">
+		<table name="oa_user_info" prefix="oa_">
 			<table name="oa_user_info_history" prefix="oa_" parentField="user_id" refType="OneToMany" />
-		</table> -->
+		</table>
 		<table name="oa_under_manager" prefix="oa_"/>
 		
 		<table name="oa_post_performance" prefix="oa_">
@@ -88,7 +88,7 @@
 		<persistance>hibernate</persistance>
 		<name>oa/hrm</name>
 		<savePath></savePath>
-		<!-- <table name="oa_dept_info" prefix="oa_"/> -->
+		<table name="oa_dept_info" prefix="oa_"/>
 		<table name="oa_post_info" prefix="oa_"/>
 	</module>
 </configure>

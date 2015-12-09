@@ -75,7 +75,7 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 	@Override
 	public void find${entityCamelName}ListByJdbc(Pagination<${entityCamelName}> page,
 			Map<String, Object> params) {
-		StringBuffer sql=new StringBuffer(" from ${tableName} where 1=1 ");
+		StringBuffer sql=new StringBuffer(" from ${tableName} a where 1=1 ");
 		List<Object> paramList = new ArrayList<Object>();
 		<#list columns as field>
 		<#assign type=field.propertyType>
@@ -90,12 +90,12 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 		</#if>
 		<#if field.propertyType?index_of("String")!=-1>
 		if (StringUtils.isNotEmpty(${field.propertyName})){
-			sql.append(" and ${field.columnName}=? ");
+			sql.append(" and a.${field.columnName}=? ");
 			paramList.add(${field.propertyName});
 		}
 		<#else>
 		if (${field.propertyName}!=null){
-			sql.append(" and ${field.columnName}=? ");
+			sql.append(" and a.${field.columnName}=? ");
 			paramList.add(${field.propertyName});
 		}
 		</#if>
@@ -104,7 +104,7 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 		Integer total = jdbcTemplate.queryForObject(countSql,paramList.toArray(),Integer.class);
 		page.setEntityCount(total);
 		if (total>0){
-			sql.insert(0,"select * ").append(" order by ${primaryKey} desc limit ?,?");
+			sql.insert(0,"select * ").append(" order by a.${primaryKey} desc limit ?,?");
 			paramList.add(page.getFirstEntityIndex());
 			paramList.add(page.getPageSize());
 			page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
