@@ -1,4 +1,4 @@
-package ${basePackage}.${moduleName}.${entityPackage}.${mapperPackage};
+package ${basePackage}.${moduleName}.${daoPackage}.${mapperPackage};
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;

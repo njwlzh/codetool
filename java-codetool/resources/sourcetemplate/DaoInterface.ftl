@@ -53,6 +53,9 @@ public interface ${entityCamelName}Dao {
 	 </#if>
 	${ret} find${entityCamelName}List(<#if module.persistance == 'mybatis'>@Param(value="page") </#if>Pagination<${entityCamelName}> page,<#if module.persistance == 'mybatis'>@Param(value="map") </#if>Map<String,Object> params);
 
+	${ret} find${entityCamelName}ListByJdbc(<#if module.persistance == 'mybatis'>@Param(value="page") </#if>Pagination<${entityCamelName}> page,<#if module.persistance == 'mybatis'>@Param(value="map") </#if>Map<String,Object> params);
+
+
 	<#if module.persistance=="mybatis">
 	Integer count${entityCamelName}(@Param(value="map") Map<String,Object> params);
 	</#if>

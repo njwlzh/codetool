@@ -407,7 +407,7 @@ public class DataBase2File {
     private void generateMapperFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,module.getMapperPackage());
+    	File saveDir=getSaveFilePath(module,module.getDaoPackage()+File.separator+module.getMapperPackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"RowMapper.java");
     	
     	String savePath =saveFile.getAbsolutePath();
@@ -431,8 +431,8 @@ public class DataBase2File {
     	if (!module.getPersistance().equals("mybatis")){
         	File implDir=getSaveFilePath(module,module.getDaoPackage()+File.separator+module.getDaoImplPackage());
 	    	String templateName = "HibernateDaoImpl";
+	    	generateMapperFile(table, module);
 	    	if (module.getPersistance().equals("jdbc")) {
-	    		generateMapperFile(table, module);
 	    		templateName="JdbcDaoImpl";
 	    	}
 	    	File implFile = new File(implDir,table.getEntityCamelName()+"DaoImpl.java");
