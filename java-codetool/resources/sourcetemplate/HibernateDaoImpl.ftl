@@ -104,7 +104,7 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 		Integer total = jdbcTemplate.queryForObject(countSql,paramList.toArray(),Integer.class);
 		page.setEntityCount(total);
 		if (total>0){
-			sql.insert(0,"select * ").append(" order by a.${primaryKey} desc limit ?,?");
+			sql.insert(0,"select a.* ").append(" order by a.${primaryKey} desc limit ?,?");
 			paramList.add(page.getFirstEntityIndex());
 			paramList.add(page.getPageSize());
 			page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
