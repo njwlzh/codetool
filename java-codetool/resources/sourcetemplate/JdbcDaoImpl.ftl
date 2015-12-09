@@ -63,7 +63,7 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 	public void find${entityCamelName}List(Pagination<${entityCamelName}> page,
 			Map<String, Object> params) {
 			
-		StringBuffer sql=new StringBuffer(" from ${tableName} where 1=1 ");
+		StringBuffer sql=new StringBuffer(" from ${tableFullName} where 1=1 ");
 		List<Object> paramList = new ArrayList<Object>();
 		<#list columns as field>
 		<#assign type=field.propertyType>

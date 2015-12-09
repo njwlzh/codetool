@@ -75,7 +75,7 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 	@Override
 	public void find${entityCamelName}ListByJdbc(Pagination<${entityCamelName}> page,
 			Map<String, Object> params) {
-		StringBuffer sql=new StringBuffer(" from ${tableName} a where 1=1 ");
+		StringBuffer sql=new StringBuffer(" from ${tableFullName} a where 1=1 ");
 		List<Object> paramList = new ArrayList<Object>();
 		<#list columns as field>
 		<#assign type=field.propertyType>
