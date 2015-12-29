@@ -8,7 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jryq.mis.common.Pagination;
+import ${basePackage}.common.Pagination;
 
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;

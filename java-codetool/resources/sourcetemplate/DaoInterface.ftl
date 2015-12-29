@@ -2,7 +2,7 @@ package ${basePackage}.${moduleName}.${daoPackage};
 
 import java.util.Map;
 
-import com.jryq.mis.common.Pagination;
+import ${basePackage}.common.Pagination;
 <#if module.persistance == 'mybatis'>
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

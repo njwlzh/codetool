@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-import com.jryq.mis.common.Pagination;
-import com.jryq.mis.common.dao.HibernateDao;
+import ${basePackage}.common.Pagination;
+import ${basePackage}.common.dao.HibernateDao;
 
-import com.jryq.mis.utils.StringUtils;
+import ${basePackage}.utils.StringUtils;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 import ${basePackage}.${moduleName}.${daoPackage}.rowmapper.${entityCamelName}RowMapper;

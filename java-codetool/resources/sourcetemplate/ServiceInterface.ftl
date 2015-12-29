@@ -2,7 +2,7 @@ package ${basePackage}.${moduleName}.${servicePackage};
 
 import java.util.Map;
 
-import com.jryq.mis.common.Pagination;
+import ${basePackage}.common.Pagination;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 
 /**

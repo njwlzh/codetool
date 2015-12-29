@@ -7,8 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import com.jryq.mis.base.BaseAction;
-import com.jryq.mis.common.Pagination;
+import ${basePackage}.base.BaseAction;
+import ${basePackage}.common.Pagination;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 

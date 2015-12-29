@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
-import com.jryq.mis.common.Pagination;
-import com.jryq.mis.dao.JdbcDao;
+import ${basePackage}.common.Pagination;
+import ${basePackage}.dao.JdbcDao;
 
-import com.jryq.mis.utils.StringUtils;
+import ${basePackage}.utils.StringUtils;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${entityPackage}.${mapperPackage}.${entityCamelName}RowMapper;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
