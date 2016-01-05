@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configure>
 	<!-- 生成的文件保存目录 -->
-	<basedir>D:/jryq/workspace/mis/src/main/java</basedir>
+	<basedir>F:/mars/projects/shuapiao/src/main/java</basedir>
 	<!-- 基础包名 -->
-	<basePackage>com.jryq.mis</basePackage>
+	<basePackage>com.mars</basePackage>
 	<db>
 		<!-- 数据库名 -->
-		<dbName>jryq_db</dbName>
+		<dbName>shuapiao</dbName>
 		<!-- 用户名 -->
-		<user>jryq</user>
+		<user>shuapiao</user>
 		<!-- 密码 -->
-		<pwd>jryq</pwd>
+		<pwd>123456</pwd>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://10.10.1.15:6603/jryq_db?useUnicode=true&amp;characterEncoding=UTF-8</url>
+		<url>jdbc:mysql://localhost/shuapiao?useUnicode=true&amp;characterEncoding=UTF-8</url>
 	</db>
 	<!-- 定义全局文件包，各module中可以覆盖掉这些定义 -->
 	<packageSetting>
@@ -29,66 +29,12 @@
 	</packageSetting>
 	
 	<module>
-		<persistance>hibernate</persistance>
-		<name>oa/study</name>
+		<persistance>mybatis</persistance>
+		<name>shuapiao</name>
 		<savePath></savePath>
-		<table name="oa_article_category" prefix="oa_">
-			<table name="oa_article_info" prefix="oa_" parentField="cat_id" refType="OneToMany">
-				<table name="oa_article_file" parentField="article_id"  prefix="oa_" refType="OneToMany"/>
-			</table>
-		</table>
-	</module>
-	
-	 
-	<module>
-		<persistance>hibernate</persistance>
-		<name>oa/assets</name>
-		<savePath></savePath>
-		<table name="oa_equipment_info" prefix="oa_" >
-			<table name="oa_equipment_history" parentField="equipment_id" prefix="oa_" refType="OneToMany"/>
-		</table>
-		<table name="oa_assets_info" prefix="oa_" >
-			<table name="oa_assets_history" parentField="assets_id" prefix="oa_" refType="OneToMany"/>
-		</table>
-		
-	</module>
-	
-	<module>
-		<persistance>hibernate</persistance>
-		<name>oa/hrm</name>
-		<savePath></savePath>
-		<table name="oa_user_info" prefix="oa_">
-			<table name="oa_user_info_history" prefix="oa_" parentField="user_id" refType="OneToMany" />
-		</table>
-		<table name="oa_under_manager" prefix="oa_"/>
-		
-		<table name="oa_post_performance" prefix="oa_">
-			<table name="oa_performance" parentField="post_performance_id" prefix="oa_" refType="OneToMany"/>
-			<table name="oa_user_performance" parentField="post_performance_id" prefix="oa_" refType="OneToMany">
-				<table name="oa_evaluation_items" parentField="post_performance_id" prefix="oa_" refType="OneToMany"/>
-			</table>
-		</table>
-		<table name="oa_notice" prefix="oa_"/>
-	</module>
-	
-	<module>
-		<persistance>hibernate</persistance>
-		<name>oa/task</name>
-		<savePath></savePath>
-		<table name="oa_calendar_info" prefix="oa_"/>
-		
-		<table name="oa_task_plan" prefix="oa_">
-			<table name="oa_task_detail" parentField="task_planid" prefix="oa_" refType="OneToMany"/>
-			<table name="oa_task_arrange" parentField="task_planid" prefix="oa_" refType="OneToMany"/>
+		<table name="user_vote_info" prefix="">
 		</table>
 	</module>
 	
 	
-	 <module>
-		<persistance>hibernate</persistance>
-		<name>oa/hrm</name>
-		<savePath></savePath>
-		<table name="oa_dept_info" prefix="oa_"/>
-		<table name="oa_post_info" prefix="oa_"/>
-	</module>
 </configure>

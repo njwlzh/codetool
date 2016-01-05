@@ -447,7 +447,9 @@ public class DataBase2File {
     		if (!isEmpty(module.getSavePath())){ //配置了模块文件保存，则把文件全部生成到此目录下
     			saveDir = new File(module.getSavePath());
     		} else {
-    			saveDir = new File(config.getBaseDir()+ File.separator + "resources/mapper" + File.separator+module.getName());
+    			saveDir = new File(config.getBaseDir());
+    			saveDir = saveDir.getParentFile();
+    			saveDir = new File(saveDir, "resources/mapper" + File.separator+module.getName());
     		}
     		if (!saveDir.exists()) {
         		saveDir.mkdirs();
