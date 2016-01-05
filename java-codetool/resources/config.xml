@@ -5,12 +5,23 @@
 	<!-- 基础包名 -->
 	<basePackage>com.mars</basePackage>
 	<db>
+		<!-- 数据库类型，目前支持mysql, oracle, sqlserver，默认为mysql -->
+		<dbType>mysql</dbType>
 		<!-- 数据库名 -->
 		<dbName>shuapiao</dbName>
 		<!-- 用户名 -->
 		<user>shuapiao</user>
 		<!-- 密码 -->
 		<pwd>123456</pwd>
+		<!-- 
+		oracle驱动和url连接
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<url>jdbc:oracle:thin:@127.0.0.1:1521:数据库名</url>
+		
+		sqlserver 驱动和连接字符串
+		<driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+		<url>jdbc:sqlserver://localhost:1433;DatabaseName=mydb</url>
+		 -->
 		<driver>com.mysql.jdbc.Driver</driver>
 		<url>jdbc:mysql://localhost/shuapiao?useUnicode=true&amp;characterEncoding=UTF-8</url>
 	</db>
@@ -27,12 +38,15 @@
 		<!-- 是否删除表前缀，如果table上设置了prefix，则根据该配置决定是否删除 -->
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
-	
+	<!-- 
+	module的persistance支持三种类型：hibernate, mybatis, jdbc 
+	table节点支持多级子表关联
+	-->
 	<module>
 		<persistance>mybatis</persistance>
 		<name>shuapiao</name>
 		<savePath></savePath>
-		<table name="user_vote_info" prefix="">
+		<table name="news_info" prefix="">
 		</table>
 	</module>
 	

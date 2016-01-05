@@ -197,8 +197,13 @@ public class DataBase2File {
 	        	String colName = rs.getString("column_name");
 	        	col.setColumnName(colName);
 	        	String type = rs.getString("data_type").toUpperCase();
-	        	if (type.equals("TEXT")){
+	        	type=type.replace(" UNSIGNED","");
+	            if (type.equals("INT")) {
+	            	type="INTEGER";
+	            } else if (type.equals("TEXT")){
 	        		type="LONGVARCHAR";
+	        	} else if (type.equals("DATETIME")) {
+	        		type="DATE";
 	        	}
 	        	col.setColumnType(type);
 	        	col.setRemark(rs.getString("column_comment"));
@@ -263,7 +268,7 @@ public class DataBase2File {
 	public String getColumnType(Table table,String column) throws SQLException{
 		String colType="";
 		for (Column col : table.getColumns()) {
-			if (col.getColumnName().equals(column)) {
+			if (col.getColumnName().equalsIgnoreCase(column)) {
 				return col.getColumnType();
 			}
 		}
@@ -433,7 +438,7 @@ public class DataBase2File {
 	    	String templateName = "HibernateDaoImpl";
 	    	generateMapperFile(table, module);
 	    	if (module.getPersistance().equals("jdbc")) {
-	    		templateName="JdbcDaoImpl";
+	    		templateName="JdbcDaoImpl_"+config.getDb().getDbType();
 	    	}
 	    	File implFile = new File(implDir,table.getEntityCamelName()+"DaoImpl.java");
 	    	String implPath =implFile.getAbsolutePath();
@@ -456,7 +461,7 @@ public class DataBase2File {
         	}
     		File implFile = new File(saveDir,table.getEntityCamelName()+"Mapper.xml");
 	    	String implPath =implFile.getAbsolutePath();
-	    	FreemarkerUtil.createDoc(obj, "MyBatis", implPath);
+	    	FreemarkerUtil.createDoc(obj, "MyBatis_"+config.getDb().getDbType(), implPath);
 	    	System.out.println("生成文件："+implPath);
     	}
     }

@@ -65,6 +65,14 @@ public class Config {
 		//加载数据库配置
 		Element dbNode = XmlUtil.getChild(root, "db");
 		Db db = new Db();
+		String dbType;
+		Element elemDbType=XmlUtil.getChild(dbNode, "dbType");
+		if (elemDbType==null) {
+			dbType="mysql";
+		} else {
+			dbType=elemDbType.getTextTrim();
+		}
+		db.setDbType(dbType);
 		db.setDriver(XmlUtil.getChild(dbNode, "driver").getTextTrim());
 		db.setPwd(XmlUtil.getChild(dbNode, "pwd").getTextTrim());
 		db.setUrl(XmlUtil.getChild(dbNode, "url").getTextTrim());
@@ -184,11 +192,19 @@ public class Config {
  *
  */
 class Db{
+	private String dbType;
 	private String user;
 	private String pwd;
 	private String driver;
 	private String url;
 	private String dbName;
+	
+	public String getDbType() {
+		return dbType;
+	}
+	public void setDbType(String dbType) {
+		this.dbType = dbType;
+	}
 	public String getUser() {
 		return user;
 	}
@@ -223,8 +239,9 @@ class Db{
 	
 	@Override
 	public String toString() {
-		return "Db [user=" + user + ", pwd=" + pwd + ", driver=" + driver
-				+ ", url=" + url + ", dbName=" + dbName + "]";
+		return "Db [dbType=" + dbType + ", user=" + user + ", pwd=" + pwd
+				+ ", driver=" + driver + ", url=" + url + ", dbName=" + dbName
+				+ "]";
 	}
 	
 }

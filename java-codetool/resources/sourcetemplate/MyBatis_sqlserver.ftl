@@ -5,13 +5,7 @@
     <id column="${primaryKey}" property="${primaryProperty}" jdbcType="${primaryKeyType}" />
     <#list columns as col>
     <#if !col.primaryKey>
-    <#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
-    <#if jdbcType=="INT">
-    <#assign jdbcType="INTEGER">
-    <#elseif jdbcType=="DATETIME">
-    <#assign jdbcType="DATE">
-    </#if>
-    <result column="${col.columnName}" property="${col.propertyName}" jdbcType="${jdbcType}" />
+    <result column="${col.columnName}" property="${col.propertyName}" jdbcType="${col.columnType}" />
     </#if>
     </#list>
   </resultMap>
@@ -23,10 +17,8 @@
   <insert id="save${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
   	insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) 
   	values (<#list columns as col>
-  	<#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
-    <#if jdbcType=="INT">
-    <#assign jdbcType="INTEGER">
-    <#elseif jdbcType=="DATETIME">
+  	<#assign jdbcType=col.columnType>
+    <#if jdbcType=="DATETIME">
     <#assign jdbcType="DATE">
     </#if>
   	<#if col_index gt 0 && !col.primaryKey>
@@ -42,14 +34,8 @@
   <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
   	update ${tableFullName} set <#list columns as col>
   	<#if col_index gt 0>,</#if>
-  	<#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
-    <#if jdbcType=="INT">
-    <#assign jdbcType="INTEGER">
-    <#elseif jdbcType=="DATETIME">
-    <#assign jdbcType="DATE">
-    </#if>
-  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${jdbcType}}
-  	</#list> 
+  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${col.columnType}}
+  	</#list>
   	where ${primaryKey!}=${'#'}{${primaryProperty!},jdbcType=${primaryKeyType!}}
   </update>
   
@@ -62,33 +48,21 @@
   </select>
   
   <select id="find${entityCamelName}List" resultMap="BaseResultMap">
-  	select top ${'#'}{page.pageSize} o.* from (select row_number() over(order by orderColumn) as rownumber,* from (
+  	select top ${'#'}{page.pageSize} o.* from (select row_number() over(order by ${primaryKey!}) as rownumber,* from (
   	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
   	<#list columns as col>
-  	<#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
-    <#if jdbcType=="INT">
-    <#assign jdbcType="INTEGER">
-    <#elseif jdbcType=="DATETIME">
-    <#assign jdbcType="DATE">
-    </#if>
   	<if test="map.${col.propertyName}!=null">
-  	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${jdbcType}}
+  	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
   	order by ${primaryKey!} desc
   	) as o where rownumber>${'#'}{page.firstEntityIndex}
   </select>
-  <select id="count${entityCamelName}" resultType="INTEGER">
+  <select id="count${entityCamelName}" resultType="int">
   	select count(*) from ${tableFullName} where 1=1
   	<#list columns as col>
   	<if test="map.${col.propertyName}!=null">
-  	<#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
-    <#if jdbcType=="INT">
-    <#assign jdbcType="INTEGER">
-    <#elseif jdbcType=="DATETIME">
-    <#assign jdbcType="DATE">
-    </#if>
-  	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${jdbcType}}
+  	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
   </select>
