@@ -49,10 +49,12 @@
 view.get(&quot;#dlgEdit&quot;).show();&#xD;
 </ClientEvent>
         <Property name="caption">新增</Property>
+        <Property name="icon">url(>skin>common/icons.gif) -120px -0px</Property>
       </ToolBarButton>
       <ToolBarButton id="btnEdit">
         <ClientEvent name="onClick">view.get(&quot;#dlgEdit&quot;).show();</ClientEvent>
         <Property name="caption">修改</Property>
+        <Property name="icon">url(>skin>common/icons.gif) -300px -60px</Property>
       </ToolBarButton>
       <ToolBarButton id="btnDelete">
         <ClientEvent name="onClick">dorado.MessageBox.confirm(&quot;确定要删除吗？&quot;,function(){&#xD;
@@ -66,6 +68,7 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
 });&#xD;
 </ClientEvent>
         <Property name="caption">删除</Property>
+        <Property name="icon">url(>skin>common/icons.gif) -140px -0px</Property>
       </ToolBarButton>
     </ToolBar>
     <DataGrid id="dg${entityCamelName}">
@@ -90,11 +93,13 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
 });&#xD;
 </ClientEvent>
           <Property name="caption">保存</Property>
+          <Property name="icon">url(>skin>common/icons.gif) -20px -0px</Property>
         </Button>
         <Button>
           <ClientEvent name="onClick">self.get(&quot;parent&quot;).close();&#xD;
 </ClientEvent>
           <Property name="caption">取消</Property>
+          <Property name="icon">url(>skin>common/icons.gif) -40px -0px</Property>
         </Button>
       </Buttons>
       <Children>
