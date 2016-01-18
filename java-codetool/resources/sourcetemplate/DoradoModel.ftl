@@ -7,7 +7,7 @@
 	<#assign type=type?replace("java.math.","")>
     <PropertyDef name="${col.propertyName}">
       <Property name="dataType">${type}</Property>
-      <Property name="label">${col.remark}</Property>
+      <Property name="label">${col.remark!}</Property>
       <#if col.nullable==false && type!="DateTime" && col.primaryKey==false>
       <Property name="required">true</Property>
       </#if>

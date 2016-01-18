@@ -11,39 +11,39 @@ import org.apache.ibatis.annotations.Param;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 
 /**
- * ${remark}操作相关
+ * ${remark!}操作相关
  */
 public interface ${entityCamelName}Dao {
 	
 	public final static String BEAN_ID="${entityName}Dao";
 	
 	/**
-	 * 新增保存${remark}
+	 * 新增保存${remark!}
 	 * @param info
 	 */
 	void save${entityCamelName}(${entityCamelName} ${entityName});
 	
 	/**
-	 * 修改${remark}
+	 * 修改${remark!}
 	 * @param info
 	 */
 	void update${entityCamelName}(${entityCamelName} ${entityName});
 
 	/**
-	 * 删除${remark}
+	 * 删除${remark!}
 	 * @param info
 	 */
 	void delete${entityCamelName}(${entityCamelName} ${entityName});
 	
 	/**
-	 * 根据编号查询${remark}细信息
+	 * 根据编号查询${remark!}细信息
 	 * @param placeId
 	 * @return
 	 */
 	${entityCamelName} findById(${primaryPropertyType} ${primaryProperty});
 	
 	/**
-	 * 根据不同条件组合查询${remark}，可分页查询
+	 * 根据不同条件组合查询${remark!}，可分页查询
 	 * @param page
 	 * @param 
 	 */

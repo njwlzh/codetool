@@ -15,12 +15,10 @@
   </sql>
   
   <insert id="save${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
-  	insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) 
+  	insert into ${tableFullName} (<#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>) 
   	values (<#list columns as col>
-  	<#if col_index gt 0 && !col.primaryKey>
   	${'#'}{${col.propertyName},jdbcType=${col.columnType}}
-  	</#if>
-  	<#if !col.primaryKey && col_index lt columns?size-1>,</#if>
+  	<#if col_index lt columns?size-1>,</#if>
   	</#list>)
   </insert>
   

@@ -22,7 +22,7 @@ import ${imp!};
 </#if>
 
 /**
-* ${remark}
+* ${remark!}
 */
 <#if module.persistance=="hibernate">
 @Entity

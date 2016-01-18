@@ -1,4 +1,4 @@
-package com.mars.code.tools;
+package com.mars.code.tools.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;

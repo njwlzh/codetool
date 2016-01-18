@@ -1,4 +1,4 @@
-package com.mars.code.tools;
+package com.mars.code.tools.utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

@@ -25,7 +25,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
 </#if>
 
 /**
- * ${remark}
+ * ${remark!}
  *
  */
 @Component
@@ -41,7 +41,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	</#if>
 	
 	/**
-	 * 查询${remark}
+	 * 查询${remark!}
 	 * @param params 参数列表
 	 * @param page
 	 */
@@ -65,7 +65,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 保存${remark}
+	 * 保存${remark!}
 	 * @param params 
 	 */
 	@DataResolver

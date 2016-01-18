@@ -18,7 +18,7 @@ import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 
 /**
- * ${remark}操作相关
+ * ${remark!}操作相关
  */
 @Service(${entityCamelName}Service.BEAN_ID)
 public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service {

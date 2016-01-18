@@ -6,24 +6,29 @@
 	<basePackage>com.mars</basePackage>
 	<db>
 		<!-- 数据库类型，目前支持mysql, oracle, sqlserver，默认为mysql -->
-		<dbType>mysql</dbType>
+		<dbType>oracle</dbType>
 		<!-- 数据库名 -->
-		<dbName>shuapiao</dbName>
+		<dbName>xe</dbName>
 		<!-- 用户名 -->
 		<user>shuapiao</user>
 		<!-- 密码 -->
-		<pwd>123456</pwd>
+		<pwd>a123456</pwd>
 		<!-- 
 		oracle驱动和url连接
+		-->
 		<driver>oracle.jdbc.driver.OracleDriver</driver>
-		<url>jdbc:oracle:thin:@127.0.0.1:1521:数据库名</url>
+		<url>jdbc:oracle:thin:@127.0.0.1:1521:xe</url>
+	
 		
-		sqlserver 驱动和连接字符串
+		<!-- sqlserver 驱动和连接字符串 -->
+		<!-- 
 		<driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
-		<url>jdbc:sqlserver://localhost:1433;DatabaseName=mydb</url>
+		<url>jdbc:sqlserver://localhost:1433;DatabaseName=hms</url>
 		 -->
+		 <!-- 
 		<driver>com.mysql.jdbc.Driver</driver>
 		<url>jdbc:mysql://localhost/shuapiao?useUnicode=true&amp;characterEncoding=UTF-8</url>
+		 -->
 	</db>
 	<!-- 定义全局文件包，各module中可以覆盖掉这些定义 -->
 	<packageSetting>
@@ -46,7 +51,7 @@
 		<persistance>mybatis</persistance>
 		<name>shuapiao</name>
 		<savePath></savePath>
-		<table name="news_info" prefix="">
+		<table name="content_info" prefix="">
 		</table>
 	</module>
 	
