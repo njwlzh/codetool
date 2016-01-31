@@ -17,7 +17,7 @@ import ${imp};
 </#list>
 
 /**
- * ${remark}操作相关
+ * ${remark!}操作相关
  */
 @Repository(${entityCamelName}Dao.BEAN_ID)
 public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelName}Dao {
