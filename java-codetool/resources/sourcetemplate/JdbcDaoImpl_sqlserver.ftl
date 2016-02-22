@@ -24,7 +24,7 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 
 	@Override
 	public void save${entityCamelName}(${entityCamelName} ${entityName}) {
-		String sql="insert into ${tableName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col><#if col_index gt 0 && !col.primaryKey>?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>)";
+		String sql="insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col><#if col_index gt 0 && !col.primaryKey>?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>)";
 		List<Object> params = new ArrayList<Object>();
 		<#list columns as col>
 		<#if !col.primaryKey>
@@ -36,7 +36,7 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 
 	@Override
 	public void update${entityCamelName}(${entityCamelName} ${entityName}) {
-		String sql="update ${tableName} set <#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}=?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list> where ${primaryKey}=? ";
+		String sql="update ${tableFullName} set <#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}=?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list> where ${primaryKey}=? ";
 		List<Object> params = new ArrayList<Object>();
 		<#list columns as col>
 		<#if !col.primaryKey>
@@ -49,13 +49,13 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 
 	@Override
 	public void delete${entityCamelName}(${entityCamelName} ${entityName}) {
-		String sql="delete from ${tableName} where ${primaryKey}=?";
+		String sql="delete from ${tableFullName} where ${primaryKey}=?";
 		jdbcTemplate.update(sql, new Object[]{${entityName}.get${primaryCamelProperty}()});
 	}
 
 	@Override
 	public ${entityCamelName} findById(${primaryPropertyType} ${primaryProperty}) {
-		String sql = "select * from ${tableName} where ${primaryKey}=?";
+		String sql = "select * from ${tableFullName} where ${primaryKey}=?";
 		return (${entityCamelName})jdbcTemplate.queryForObject(sql,new Object[]{${primaryProperty}},new ${entityCamelName}RowMapper());
 	}
 

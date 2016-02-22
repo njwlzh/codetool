@@ -59,8 +59,10 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		page.setEntityCount(total);
 		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);
 		page.setEntities(list);
-		<#else>
+		<#elseif module.persistance=="hibernate">
 		${entityName}Dao.find${entityCamelName}ListByJdbc(page,params);
+		<#else>
+		${entityName}Dao.find${entityCamelName}List(page,params);
 		</#if>
 	}
 

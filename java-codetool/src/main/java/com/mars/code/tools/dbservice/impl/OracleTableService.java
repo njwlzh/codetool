@@ -76,7 +76,7 @@ public class OracleTableService implements ITableService {
         table.setTableFullName(tableName);
         table.setTableName(tableName);
         if (module.isDeleteTablePrefix() && !CodeUtil.isEmpty(tbConf.getPrefix())){
-        	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix(), ""));  
+        	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix().toLowerCase(), ""));  
         }
         System.out.println(tbConf);
         //获取表各字段的信息
