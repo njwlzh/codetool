@@ -111,6 +111,7 @@ public class OracleTableService implements ITableService {
      * @throws SQLException
      */
     public void getTableColumns(Table table,Connection conn) throws SQLException {
+    	String primaryKey = getTablePrimaryKey(table.getTableFullName(),conn);
     	//查询表主键
     	List<String> priCols=new ArrayList<String>();
 		String sql="select cu.* from user_cons_columns cu, user_constraints au where cu.constraint_name = au.constraint_name and "
@@ -147,13 +148,18 @@ public class OracleTableService implements ITableService {
 	        	String type = rs.getString("data_type").toUpperCase();
 	            type=CodeUtil.convertJdbcType(type);
 	        	col.setColumnType(type);
-	        	col.setRemark(rs.getString("comments"));
 	        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(colName));
+	        	//System.out.println(table.getTableFullName()+":::"+colName+":::"+col.getColumnType());
 	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));
-	        	col.setNullable(rs.getString("nullable").equals("YES"));
 	        	col.setLength(rs.getLong("data_length"));
+	        	col.setNullable(rs.getString("nullable").equals("YES"));
 	        	col.setDefaultValue(rs.getString("data_default"));
+	        	col.setRemark(rs.getString("comments"));
+	        	
+	        	if (colName.equalsIgnoreCase(primaryKey)) {
+	        		col.setPrimaryKey(true);
+	        	}
 	        	
 	        	//String colKey = rs.getString("column_key");
 	        	//if (!isPrimaryKey(priCols,colKey)) {
@@ -166,6 +172,7 @@ public class OracleTableService implements ITableService {
 			}
 			rs.close();
 			ps.close();
+			
 			
     }
     /**
@@ -186,10 +193,12 @@ public class OracleTableService implements ITableService {
     public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
 		DatabaseMetaData dbMeta = con.getMetaData(); 
 		ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
+		String columnName=null;
 		if (rs.next()){
-			return (rs.getString("COLUMN_NAME"));
+			columnName = (rs.getString("COLUMN_NAME"));
 		}
-		return null;
+		rs.close();
+		return columnName;
 	}
 	/**
 	 * 主键类型

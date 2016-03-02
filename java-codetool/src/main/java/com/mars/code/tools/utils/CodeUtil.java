@@ -44,12 +44,12 @@ public class CodeUtil {
     public static String convertType(String databaseType) {  
         String javaType = "";  
           
-        String databaseTypeStr = databaseType.trim().toLowerCase();  
+        String databaseTypeStr = databaseType.trim().toLowerCase();
         if(databaseTypeStr.startsWith("int")||databaseTypeStr.equals("smallint")) {  
             javaType = "Integer";  
         } else if(databaseTypeStr.equals("char")) {  
             javaType = "String";  
-        } else if(databaseTypeStr.equals("number")) {  
+        } else if(databaseTypeStr.equals("number") || databaseTypeStr.equals("numeric")) {  
             javaType = "Integer";  
         } else if(databaseTypeStr.indexOf("varchar")!=-1) {  
             javaType = "String";  
