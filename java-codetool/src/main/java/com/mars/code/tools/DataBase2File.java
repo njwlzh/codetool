@@ -179,12 +179,16 @@ public class DataBase2File {
     	File saveDir=getSaveFilePath(module,module.getDaoPackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
     	String savePath =saveFile.getAbsolutePath();
-    	FreemarkerUtil.createDoc(obj, "DaoInterface", savePath);
+    	String templateName="DaoInterface";
+    	if (module.getPersistance().equals("jpa")) {
+    		templateName="DaoInterface_jpa";
+    	}
+    	FreemarkerUtil.createDoc(obj, templateName, savePath);
     	System.out.println("生成文件："+savePath);
     	//实现文件
     	if (!module.getPersistance().equals("mybatis")){
         	File implDir=getSaveFilePath(module,module.getDaoPackage()+File.separator+module.getDaoImplPackage());
-	    	String templateName = "HibernateDaoImpl";
+	    	templateName = "HibernateDaoImpl";
 	    	generateMapperFile(table, module);
 	    	if (module.getPersistance().equals("jdbc")) {
 	    		templateName="JdbcDaoImpl_"+config.getDb().getDbType();
@@ -197,7 +201,7 @@ public class DataBase2File {
     	/**
     	 * 如果是mybatis，则生成mytabis的xml配置文件
     	 */
-    	else {
+    	else if (!module.getPersistance().equals("jpa")) {
     		if (!CodeUtil.isEmpty(module.getSavePath())){ //配置了模块文件保存，则把文件全部生成到此目录下
     			saveDir = new File(module.getSavePath());
     		} else {
@@ -231,7 +235,11 @@ public class DataBase2File {
     	File implDir=getSaveFilePath(module,module.getServicePackage()+File.separator+module.getServiceImplPackage());
     	File implFile = new File(implDir,table.getEntityCamelName()+"ServiceImpl.java");
     	String implPath =implFile.getAbsolutePath();
-    	FreemarkerUtil.createDoc(obj, "ServiceImpl", implPath);
+    	String templateName="ServiceImpl";
+    	if (module.getPersistance().equals("jpa")) {
+    		templateName="ServiceImpl_jpa";
+    	}
+    	FreemarkerUtil.createDoc(obj, templateName, implPath);
     	System.out.println("生成文件："+implPath);
     } 
     
