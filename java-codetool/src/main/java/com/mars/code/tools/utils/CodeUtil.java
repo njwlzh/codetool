@@ -45,11 +45,16 @@ public class CodeUtil {
         String javaType = "";  
           
         String databaseTypeStr = databaseType.trim().toLowerCase();
-        if(databaseTypeStr.startsWith("int")||databaseTypeStr.equals("smallint")) {  
+        if(databaseTypeStr.startsWith("int")
+        		||databaseTypeStr.equals("smallint")
+        		|| databaseTypeStr.equals("tinyint")
+        		) {  
             javaType = "Integer";  
         } else if(databaseTypeStr.equals("char")) {  
             javaType = "String";  
-        } else if(databaseTypeStr.equals("number") || databaseTypeStr.equals("numeric")) {  
+        } else if(databaseTypeStr.equals("number") 
+        		|| databaseTypeStr.equals("numeric")
+        		) {  
             javaType = "Integer";  
         } else if(databaseTypeStr.indexOf("varchar")!=-1) {  
             javaType = "String";  

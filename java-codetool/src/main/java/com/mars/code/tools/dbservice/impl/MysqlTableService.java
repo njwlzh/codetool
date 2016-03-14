@@ -110,7 +110,7 @@ public class MysqlTableService implements ITableService {
      * @throws SQLException
      */
     public void getTableColumns(Table table,Connection conn) throws SQLException {
-    	if (config.getDb().getDriver().toLowerCase().indexOf("mysql")!=-1) {
+    	if (config.getDb().getDbType().equals("mysql")) {
 			String sql="select * from information_schema.COLUMNS where TABLE_SCHEMA=? and TABLE_NAME=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1,config.getDb().getDbName());

@@ -4,7 +4,7 @@ import java.io.Serializable;
 <#if subTables?size gt 0>
 import java.util.List;
 </#if>
-<#if module.persistance=="hibernate">
+<#if module.persistance=="hibernate" || module.persistance=="jpa">
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +24,7 @@ import ${imp!};
 /**
 * ${remark!}
 */
-<#if module.persistance=="hibernate">
+<#if module.persistance=="hibernate" || module.persistance=="jpa">
 @Entity
 @Table(name="${tableFullName!}")
 </#if>
@@ -70,7 +70,7 @@ public class ${entityCamelName!} implements Serializable {
 	public void set${col.propertyCamelName}(${type} ${col.propertyName}){
 		this.${col.propertyName}=${col.propertyName};
 	}
-	<#if module.persistance=="hibernate">
+	<#if module.persistance=="hibernate" || module.persistance=="jpa">
 	<#if col.primaryKey>
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -89,7 +89,7 @@ public class ${entityCamelName!} implements Serializable {
 	public void set${sub.entityCamelName}(${sub.entityCamelName} ${sub.entityName?uncap_first}){
 		this.${sub.entityName?uncap_first}=${sub.entityName?uncap_first};
 	}
-	<#if module.persistance=="hibernate">
+	<#if module.persistance=="hibernate" || module.persistance=="jpa">
 	@Transient
 	</#if>
 	public ${sub.entityCamelName} get${sub.entityCamelName}(){
@@ -99,7 +99,7 @@ public class ${entityCamelName!} implements Serializable {
 	public void set${sub.entityCamelName}List(List<${sub.entityCamelName}> ${sub.entityName?uncap_first}List){
 		this.${sub.entityName?uncap_first}List=${sub.entityName?uncap_first}List;
 	}
-	<#if module.persistance=="hibernate">
+	<#if module.persistance=="hibernate" || module.persistance=="jpa">
 	@Transient
 	</#if>
 	public List<${sub.entityCamelName}> get${sub.entityCamelName}List(){

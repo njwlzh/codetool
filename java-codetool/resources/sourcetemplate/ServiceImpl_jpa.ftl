@@ -1,9 +1,6 @@
 package ${basePackage}.${moduleName}.${servicePackage}.${serviceImplPackage};
 
 import java.util.Map;
-<#if module.persistance=="mybatis">
-import java.util.List;
-</#if>
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import ${basePackage}.common.Pagination;
 
-import javax.annotation.Resource;
-
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
@@ -31,7 +26,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 
 	Logger logger = LoggerFactory.getLogger(${entityCamelName}ServiceImpl.class);
 
-	@Resource(name=${entityCamelName}Dao.BEAN_ID)
+	@Autowired
 	private ${entityCamelName}Dao ${entityName}Dao;
 
 	@Override
@@ -54,24 +49,8 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		return ${entityName}Dao.findOne(${primaryProperty});
 	}
 
-	public void load${entityCamelName}List1(Pagination<${entityCamelName}> page,
-			Map<String, Object> params) {
-		<#if module.persistance=="mybatis">
-		Integer total = ${entityName}Dao.count${entityCamelName}(params);
-		if (total==0){
-			return;
-		}
-		page.setEntityCount(total);
-		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);
-		page.setEntities(list);
-		<#elseif module.persistance=="hibernate">
-		${entityName}Dao.find${entityCamelName}ListByJdbc(page,params);
-		<#else>
-		${entityName}Dao.find${entityCamelName}List(page,params);
-		</#if>
-	}
 	@Override
-	public void load${entityCamelName}List(Pagination<${entityCamelName}> page,
+	public void load${entityCamelName}List(Pagination<${entityCamelName}> paging,
 			Map<String, Object> params) {
 		
 		Page<${entityCamelName}> p =  ${entityName}Dao.findAll(new PageRequest(paging.getPageNo(),paging.getPageSize(),new Sort(new Order(Direction. DESC,"${primaryProperty}"))));

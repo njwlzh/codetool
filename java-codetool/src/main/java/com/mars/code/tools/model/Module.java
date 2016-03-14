@@ -14,6 +14,7 @@ public class Module {
 	private String persistance; //
 	private boolean isDeleteTablePrefix; //是否删除表前缀
 	private String savePath; //默认保存目录，文件保存到该目录下，暂时不使用此属性值
+	private String framework;//使用前端框架，可设置为dorado和mvc，mvc表示使用spring-mvc
 	private String daoPackage;
 	private String daoImplPackage;
 	private String servicePackage;
@@ -111,16 +112,23 @@ public class Module {
 		this.myBatisPackage = mybatisPackage;
 	}
 	
+	public String getFramework() {
+		return framework;
+	}
+	public void setFramework(String framework) {
+		this.framework = framework;
+	}
 	@Override
 	public String toString() {
 		return "Module [name=" + name + ", persistance=" + persistance
 				+ ", isDeleteTablePrefix=" + isDeleteTablePrefix
-				+ ", savePath=" + savePath + ", daoPackage=" + daoPackage
-				+ ", daoImplPackage=" + daoImplPackage + ", servicePackage="
-				+ servicePackage + ", serviceImplPackage=" + serviceImplPackage
+				+ ", savePath=" + savePath + ", framework=" + framework
+				+ ", daoPackage=" + daoPackage + ", daoImplPackage="
+				+ daoImplPackage + ", servicePackage=" + servicePackage
+				+ ", serviceImplPackage=" + serviceImplPackage
 				+ ", entityPackage=" + entityPackage + ", actionPackage="
 				+ actionPackage + ", viewPackage=" + viewPackage
-				+ ", mapperPackage=" + mapperPackage + ", mybatisPackage="
+				+ ", mapperPackage=" + mapperPackage + ", myBatisPackage="
 				+ myBatisPackage + ", tables=" + tables + "]";
 	}
 }

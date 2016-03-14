@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 import ${basePackage}.common.Pagination;
-import ${basePackage}.dao.JdbcDao;
+import ${basePackage}.common.dao.JdbcDao;
 
 import ${basePackage}.utils.StringUtils;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
-import ${basePackage}.${moduleName}.${entityPackage}.${mapperPackage}.${entityCamelName}RowMapper;
+import ${basePackage}.${moduleName}.${daoPackage}.${mapperPackage}.${entityCamelName}RowMapper;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 <#list importClassList as imp>
 import ${imp};

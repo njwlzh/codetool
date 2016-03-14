@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.mars.code.tools.Config;
 import com.mars.code.tools.model.Module;
 import com.mars.code.tools.model.Table;
 import com.mars.code.tools.model.TableConf;
@@ -17,6 +18,8 @@ import com.mars.code.tools.model.TableConf;
  *
  */
 public interface ITableService {
+	
+	void setConfig(Config config);
 	
 	/**
      * 连接数据库获取所有表信息 

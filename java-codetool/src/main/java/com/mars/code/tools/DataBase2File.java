@@ -31,8 +31,8 @@ import com.mars.code.tools.utils.FreemarkerUtil;
  */  
 public class DataBase2File {
 	
-	private static Config config=null;
-	static{
+	private Config config=null;
+	public DataBase2File(){
 		config = Config.loadConfig();
 	}
 	
@@ -48,6 +48,7 @@ public class DataBase2File {
         System.out.println("Generating..."); 
         Long start=System.currentTimeMillis();
         tableService = TableServiceFactory.getInstance(config.getDb().getDbType());
+        tableService.setConfig(config);
         Class.forName(config.getDb().getDriver());  
         Connection con = DriverManager.getConnection(config.getDb().getUrl(), config.getDb().getUser(),config.getDb().getPwd());  
         for (Module module : config.getModules()) {
@@ -65,7 +66,9 @@ public class DataBase2File {
 	        	}
         	}
         	//System.out.println(sbModel.toString());
-        	writeModelFile(module.getName().split("/")[0]+".model.xml", sbModel.toString());//生成model文件
+        	if ("dorado".equals(module.getFramework())) {
+        		writeModelFile(module.getName().split("/")[0]+".model.xml", sbModel.toString());//生成model文件
+        	}
         }
         con.close();
         Long end = System.currentTimeMillis();
@@ -80,19 +83,21 @@ public class DataBase2File {
      * @return
      */
     private StringBuffer genFile(Table tb,Module module) {
-    	StringBuffer sb = new StringBuffer();
     	generateEntityFile(tb, module);//通过成entity
         generateServiceFile(tb, module);//生成service
         generateActionFile(tb,module);//生成action
         generateViewFile(tb,module);//生成view
         generateDaoFile(tb, module);//生成dao
-        //生成model的数据块
-        String modleString = (generateDoradoModelString(tb, module));
-        sb.append(modleString);
-        if (!tb.getSubTables().isEmpty()) {
-        	for (Table subTb : tb.getSubTables()){
-        		sb.append(genFile(subTb,module));
-        	}
+        StringBuffer sb = new StringBuffer();
+        //若是使用dorado框架，则生成model的数据块
+        if ("dorado".equals(module.getFramework())) {
+	        String modleString = (generateDoradoModelString(tb, module));
+	        sb.append(modleString);
+	        if (!tb.getSubTables().isEmpty()) {
+	        	for (Table subTb : tb.getSubTables()){
+	        		sb.append(genFile(subTb,module));
+	        	}
+	        }
         }
         //System.out.println(sb.toString());
         return sb;
@@ -180,13 +185,13 @@ public class DataBase2File {
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
     	String savePath =saveFile.getAbsolutePath();
     	String templateName="DaoInterface";
-    	if (module.getPersistance().equals("jpa")) {
-    		templateName="DaoInterface_jpa";
+    	if ("jpa".equals(module.getPersistance())) {
+    		templateName="DaoInterface_"+module.getPersistance();
     	}
     	FreemarkerUtil.createDoc(obj, templateName, savePath);
     	System.out.println("生成文件："+savePath);
     	//实现文件
-    	if (!module.getPersistance().equals("mybatis")){
+    	if (!module.getPersistance().equals("mybatis") && !module.getPersistance().equals("jpa")){
         	File implDir=getSaveFilePath(module,module.getDaoPackage()+File.separator+module.getDaoImplPackage());
 	    	templateName = "HibernateDaoImpl";
 	    	generateMapperFile(table, module);
@@ -201,7 +206,7 @@ public class DataBase2File {
     	/**
     	 * 如果是mybatis，则生成mytabis的xml配置文件
     	 */
-    	else if (!module.getPersistance().equals("jpa")) {
+    	else if (module.getPersistance().equals("mybatis")) {
     		if (!CodeUtil.isEmpty(module.getSavePath())){ //配置了模块文件保存，则把文件全部生成到此目录下
     			saveDir = new File(module.getSavePath());
     		} else {
@@ -254,8 +259,12 @@ public class DataBase2File {
     	File saveDir=getSaveFilePath(module,module.getActionPackage());
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Action.java");
     	
+    	String templateName="Action";
+    	if (module.getFramework().equals("mvc")) {
+    		templateName="Action_"+module.getFramework();
+    	}
     	String savePath =saveFile.getAbsolutePath();
-    	FreemarkerUtil.createDoc(obj, "Action", savePath);
+    	FreemarkerUtil.createDoc(obj, templateName, savePath);
     	System.out.println("生成文件："+savePath);
     }
     
@@ -348,7 +357,7 @@ public class DataBase2File {
 	}
     
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {  
-        DataBase2File reverser = new DataBase2File();  
+        DataBase2File reverser = new DataBase2File(); 
         reverser.generateFiles(); 
           
     }  

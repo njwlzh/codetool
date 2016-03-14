@@ -63,7 +63,7 @@ public class Config {
 	public static Config loadConfig(){
 		Config cfg = new Config();
 		
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-oracle-coupon.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
@@ -111,6 +111,8 @@ public class Config {
 			}
 			m.setName(XmlUtil.getChild(e, "name").getTextTrim());
 			m.setSavePath(XmlUtil.getChild(e, "savePath").getTextTrim());
+			m.setFramework(XmlUtil.getChild(e, "framework").getTextTrim());
+			
 			Element elePkg = XmlUtil.getChild(e, "actionPackage");
 			m.setActionPackage(elePkg==null?pkgSetting.getActionPackage():elePkg.getTextTrim());
 			elePkg = XmlUtil.getChild(e, "isDeleteTablePrefix");
