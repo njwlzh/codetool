@@ -50,7 +50,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param page
 	 */
 	@RequestMapping(value = "/${entityCamelName}List")
-	public ModelAndView loadCouponActivityInfoList(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
+	public ModelAndView load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
 		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}List");
 		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(10, page);
 		Map<String,Object> params = new HashMap<String, Object>();
@@ -65,9 +65,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/show${entityCamelName}")
-	public ModelAndView load${entityName}(String id){
+	public ModelAndView load${entityName}(${primaryPropertyType} ${primaryProperty}){
 		ModelAndView mv = new ModelAndView("/${moduleName}/show${entityCamelName}");
-		${entityCamelName} ${entityName} = ${entityName}Service.loadById(id);
+		${entityCamelName} ${entityName} = ${entityName}Service.loadById(${primaryProperty});
 		mv.addObject("${entityName}",${entityName});
 		return mv;
 	}
@@ -91,9 +91,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	
 
 	@RequestMapping(value="/toEdit${entityCamelName}")
-	public ModelAndView toEditActivity(String id){
+	public ModelAndView toEdit${entityCamelName}(${primaryPropertyType} ${primaryProperty}){
 		ModelAndView mv = new ModelAndView("/${moduleName}/edit${entityName}");
-		${entityCamelName} ${entityName}= ${entityName}Service.loadById(id);
+		${entityCamelName} ${entityName}= ${entityName}Service.loadById(${primaryProperty});
 		mv.addObject("${entityName}",${entityName});
 		return mv;
 	}

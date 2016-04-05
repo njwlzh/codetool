@@ -63,7 +63,7 @@ public class Config {
 	public static Config loadConfig(){
 		Config cfg = new Config();
 		
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-oracle-coupon.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-oracle-redair.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
