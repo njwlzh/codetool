@@ -49,7 +49,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param params 参数列表
 	 * @param page
 	 */
-	@RequestMapping(value = "/${entityCamelName}List")
+	@RequestMapping(value = "/${entityName}List")
 	public ModelAndView load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
 		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}List");
 		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(10, page);
