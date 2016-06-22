@@ -88,16 +88,20 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 		}
 		</#if>
 		</#list>
-		String countSql = "select count(*) "+sql.toString();
-		Integer total = jdbcTemplate.queryForObject(countSql,paramList.toArray(),Integer.class);
-		page.setEntityCount(total);
-		if (total>0){
-			sql.insert(0,"select top ? o.* from (select row_number() over(order by orderColumn) as rownumber,* from (select * ").append(" order by ${primaryKey} desc");
-			sql.append(") as o where rownumber>?");
-			paramList.add(0,page.getPageSize());
-			paramList.add(page.getFirstEntityIndex());
+		if (page.getPageSize()>0){
+			String countSql = "select count(*) "+sql.toString();
+			Integer total = jdbcTemplate.queryForObject(countSql,paramList.toArray(),Integer.class);
+			page.setEntityCount(total);
+			if (total>0){
+				sql.insert(0,"select top ? o.* from (select row_number() over(order by orderColumn) as rownumber,* from (select * ").append(" order by ${primaryKey} desc");
+				sql.append(") as o where rownumber>?");
+				paramList.add(0,page.getPageSize());
+				paramList.add(page.getFirstEntityIndex());
+				page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
+			}
+		} else {
+			sql.insert(0,"select * ").append(" order by ${primaryKey} desc");
 			page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
-			
 		}
 	}
 

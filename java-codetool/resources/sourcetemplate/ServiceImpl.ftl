@@ -52,17 +52,19 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	public void load${entityCamelName}List(Pagination<${entityCamelName}> page,
 			Map<String, Object> params) {
 		<#if module.persistance=="mybatis">
-		Integer total = ${entityName}Dao.count${entityCamelName}(params);
-		if (total==0){
-			return;
+		if (page.getPageSize()>0){
+			Integer total = ${entityName}Dao.count${entityCamelName}(params);
+			if (total==0){
+				return;
+			}
+			page.setEntityCount(total);
 		}
-		page.setEntityCount(total);
 		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);
 		page.setEntities(list);
 		<#elseif module.persistance=="hibernate">
-		${entityName}Dao.find${entityCamelName}ListByJdbc(page,params);
-		<#else>
 		${entityName}Dao.find${entityCamelName}List(page,params);
+		<#else>
+		${entityName}Dao.find${entityCamelName}ListByJdbc(page,params);
 		</#if>
 	}
 

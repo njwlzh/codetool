@@ -83,23 +83,22 @@ public class DataBase2File {
      * @return
      */
     private StringBuffer genFile(Table tb,Module module) {
-    	generateEntityFile(tb, module);//通过成entity
+    	generateEntityFile(tb, module);//生成entity
         generateServiceFile(tb, module);//生成service
         generateActionFile(tb,module);//生成action
-        generateViewFile(tb,module);//生成view
         generateDaoFile(tb, module);//生成dao
+        if ("dorado".equals(module.getFramework())) {
+        	generateViewFile(tb,module);//生成view
+        }
         StringBuffer sb = new StringBuffer();
         //若是使用dorado框架，则生成model的数据块
-        if ("dorado".equals(module.getFramework())) {
-	        String modleString = (generateDoradoModelString(tb, module));
-	        sb.append(modleString);
-	        if (!tb.getSubTables().isEmpty()) {
-	        	for (Table subTb : tb.getSubTables()){
-	        		sb.append(genFile(subTb,module));
-	        	}
-	        }
+        String modleString = (generateDoradoModelString(tb, module));
+        sb.append(modleString);
+        if (!tb.getSubTables().isEmpty()) {
+        	for (Table subTb : tb.getSubTables()){
+        		sb.append(genFile(subTb,module));
+        	}
         }
-        //System.out.println(sb.toString());
         return sb;
     }
       

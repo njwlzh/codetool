@@ -100,13 +100,16 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 		}
 		</#if>
 		</#list>
-		String countSql = "select count(*) "+sql.toString();
-		Integer total = jdbcTemplate.queryForObject(countSql,paramList.toArray(),Integer.class);
-		page.setEntityCount(total);
-		if (total>0){
+		if (page.getPageSize()>=0){
+			String countSql = "select count(*) "+sql.toString();
+			Integer total = jdbcTemplate.queryForObject(countSql,paramList.toArray(),Integer.class);
+			page.setEntityCount(total);
 			sql.insert(0,"select a.* ").append(" order by a.${primaryKey} desc limit ?,?");
 			paramList.add(page.getFirstEntityIndex());
 			paramList.add(page.getPageSize());
+			page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
+		} else {
+			sql.insert(0,"select a.* ").append(" order by a.${primaryKey} desc");
 			page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
 			
 		}

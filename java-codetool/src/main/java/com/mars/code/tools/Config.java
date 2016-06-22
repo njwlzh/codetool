@@ -63,7 +63,10 @@ public class Config {
 	public static Config loadConfig(){
 		Config cfg = new Config();
 		
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-oracle-redair.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-wangsheng-mis.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-wangsheng-wap.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-redair-mall-mysql.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop-mysql.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());

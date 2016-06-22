@@ -57,7 +57,9 @@
   	</if>
     </#list>
   	order by ${primaryKey!} desc
+  	<if test="page.pageSize>0">
   	limit ${'#'}{page.firstEntityIndex},${'#'}{page.pageSize}
+  	</if>
   </select>
   <select id="count${entityCamelName}" resultType="int">
   	select count(*) from ${tableFullName} where 1=1
