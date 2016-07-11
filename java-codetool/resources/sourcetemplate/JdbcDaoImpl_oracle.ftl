@@ -100,7 +100,7 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 				page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
 			}
 		} else {
-			sql.insert(0,select * ").append(" order by ${primaryKey} desc");
+			sql.insert(0,"select * ").append(" order by ${primaryKey} desc");
 			page.setEntities(jdbcTemplate.query(sql.toString(),paramList.toArray(),new ${entityCamelName}RowMapper()));
 			
 		}

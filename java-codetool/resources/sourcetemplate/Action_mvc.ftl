@@ -49,9 +49,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param params 参数列表
 	 * @param page
 	 */
-	@RequestMapping(value = "/${entityName}List")
+	@RequestMapping(value = "/list${entityCamelName}")
 	public ModelAndView load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
-		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}List");
+		ModelAndView mv = new ModelAndView("/${moduleName}/list${entityCamelName}");
 		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(10, page);
 		Map<String,Object> params = new HashMap<String, Object>();
 		${entityName}Service.load${entityCamelName}List(paging,params);
@@ -84,7 +84,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/save${entityCamelName}",method=RequestMethod.POST)
 	public ModelAndView save${entityCamelName}(${entityCamelName} ${entityName}){
-		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/${entityName}List");
+		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
 		${entityName}Service.save${entityCamelName}(${entityName});
 		return mv;
 	}
@@ -92,7 +92,7 @@ public class ${entityCamelName}Action extends BaseAction {
 
 	@RequestMapping(value="/toEdit${entityCamelName}")
 	public ModelAndView toEdit${entityCamelName}(${primaryPropertyType} ${primaryProperty}){
-		ModelAndView mv = new ModelAndView("/${moduleName}/edit${entityName}");
+		ModelAndView mv = new ModelAndView("/${moduleName}/edit${entityCamelName}");
 		${entityCamelName} ${entityName}= ${entityName}Service.loadById(${primaryProperty});
 		mv.addObject("${entityName}",${entityName});
 		return mv;
@@ -105,8 +105,19 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/update${entityCamelName}",method=RequestMethod.POST)
 	public ModelAndView update${entityCamelName}(${entityCamelName} ${entityName}){
-		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/${entityName}List");
+		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
 		${entityName}Service.update${entityCamelName}(${entityName});
+		return mv;
+	}
+	/**
+	 * 删除${remark!}
+	 * @param ${entityCamelName}
+	 * @return
+	 */
+	@RequestMapping(value = "/remove${entityCamelName}",method=RequestMethod.POST)
+	public ModelAndView remove${entityCamelName}(HttpServletRequest req,${entityCamelName} ${entityName}){
+		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
+		${entityName}Service.remove${entityCamelName}(${entityName});
 		return mv;
 	}
 

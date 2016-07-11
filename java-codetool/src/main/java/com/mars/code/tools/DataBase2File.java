@@ -89,6 +89,8 @@ public class DataBase2File {
         generateDaoFile(tb, module);//生成dao
         if ("dorado".equals(module.getFramework())) {
         	generateViewFile(tb,module);//生成view
+        } else if ("mvc".equals(module.getFramework())) {
+        	generateJspFile(tb,module);//生成jsp
         }
         StringBuffer sb = new StringBuffer();
         //若是使用dorado框架，则生成model的数据块
@@ -280,6 +282,25 @@ public class DataBase2File {
     	String savePath =saveFile.getAbsolutePath();
     	System.out.println("生成文件："+savePath);
     	FreemarkerUtil.createDoc(obj, "View", savePath);
+    }
+    
+
+    /**
+     * 生成指定表对象对应的视图文件 
+     * @param table 
+     */  
+    private void generateJspFile(Table table,Module module) {
+    	String[] actions = {"add","edit","list"};
+    	JSONObject obj = (JSONObject)JSON.toJSON(table);
+    	setBaseInfo(obj,module);
+    	File saveDir=getSaveFilePath(module,module.getViewPackage());
+    	for (String action : actions) {
+	    	File saveFile = new File(saveDir,action+table.getEntityCamelName()+".jsp");
+	    	
+	    	String savePath =saveFile.getAbsolutePath();
+	    	System.out.println("生成文件："+savePath);
+	    	FreemarkerUtil.createDoc(obj, "jsp/"+action, savePath);
+    	}
     }
     
     /**
