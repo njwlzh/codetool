@@ -65,7 +65,7 @@ public class Config {
 		
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-wangsheng-mis.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-wangsheng-wap.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-redair-mall-mysql.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop-mysql.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		

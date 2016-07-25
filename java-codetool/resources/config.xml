@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:/mars/workspace/carclubs-wap/src/main/java</basedir>
+	<basePackage>com.lanmeigroup.carclubs</basePackage>
+	<db>
+		<dbName>lanmei</dbName>
+		<user>lanmei</user>
+		<pwd>lanmei</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost:3306/lanmei?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>mybatis</persistance>
+		<name>wap</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="cms_category"></table>
+		<table name="cms_article"/>
+	</module>
+</configure>
