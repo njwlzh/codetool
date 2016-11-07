@@ -47,7 +47,10 @@
   	</if>
     </#list>
   	order by ${primaryKey!} desc
-  	) a where ROWNUM<=(${'#'}{page.firstEntityIndex}+${'#'}{page.pageSize})) where rn>${'#'}{page.firstEntityIndex}
+  	) a where 
+  	<![CDATA[
+  	ROWNUM<=(${'#'}{page.firstEntityIndex}+${'#'}{page.pageSize})) where rn>${'#'}{page.firstEntityIndex}
+  	]]>
   </select>
   <select id="count${entityCamelName}" resultType="int">
   	select count(*) from ${tableFullName} where 1=1

@@ -43,8 +43,8 @@
                 <div class="page-header position-relative">
                     <div class="header-title">
                     	<form action="${"$"}{contextPath}/goods/list${entityCamelName}" method="get">
-                        <a class="btn btn-info" href="${"$"}{contextPath}/goods/list${entityCamelName}?${primaryProperty }=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-search"></i> 所有列表</a>
-                        <a class="btn btn-primary" href="${"$"}{contextPath}/goods/toAdd${entityCamelName}?${primaryProperty}=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-plus"></i> 添加</a>
+                        <a class="btn btn-info" href="${"$"}{contextPath}/${moduleName}/list${entityCamelName}?${primaryProperty }=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-search"></i> 所有列表</a>
+                        <a class="btn btn-primary" href="${"$"}{contextPath}/${moduleName}/toAdd${entityCamelName}?${primaryProperty}=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-plus"></i> 添加</a>
                         </form>
                     </div>
                 </div>
@@ -55,9 +55,6 @@
                         <div class="col-xs-12 col-md-12">
                             <div class="widget">
                                 <div class="widget-body no-padding">
-                                	<!-- 
-                                	<table class="table table-bordered table-hover table-striped" id="searchable">
-                                	-->
                                     <table class="table table-bordered table-hover table-striped">
                                         <thead class="bordered-darkorange">
                                             <tr role="row">
@@ -70,7 +67,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${'$'}{paging.entities}" var="restrict" varStatus="idx">
+                                            <c:forEach items="${'$'}{paging.entities}" var="${entityName}" varStatus="idx">
 	                                            <tr>
 	                                             <#if columns??>
 													<#list columns as col>
@@ -85,6 +82,21 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    
+                                    <div class="row DTTTFooter">
+					                	<div class="col-sm-6">
+					                		<div aria-live="polite" role="status" id="simpledatatable_info" class="dataTables_info">共${"$"}{paging.pageCount}页-- ${"$"}{paging.entityCount }条数据</div></div>
+					                		<div class="col-sm-6">
+					                			<div id="simpledatatable_paginate" class="dataTables_paginate paging_bootstrap">
+									             	<c:set var="currentPage" value="${"$"}{paging.pageNo}" />
+													<c:set var="totalPage" value="${"$"}{paging.pageCount}" />
+													<c:set var="actionUrl" value="${"$"}{contextPath }/${moduleName}/list${entityCamelName}?page=" />
+													<c:set var="urlParas" value="" />
+					                				<%@include file="../common/paginate.jsp" %>
+					                			</div>
+					                		</div>
+				                	</div>
+				                	
                                 </div>
                             </div>
                         </div>

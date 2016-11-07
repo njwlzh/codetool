@@ -33,24 +33,35 @@
                             <i class="fa fa-home"></i>
                             <a href="${"$"}{contextPath}/index">主页</a>
                         </li>
-                        <li class="active">增加${remark!}</li>
+                        <li class="active">添加${remark!}</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
+                <!-- Page Header -->
+                <div class="page-header position-relative">
+                    <div class="header-title" style="padding: 3px;">
+                    	<a href="${"$"}{contextPath}/${moduleName}/list${entityCamelName}" class="btn btn-info"><span class="fa fa-chevron-left"></span>返回</a>
+					</div>
+                </div>
+                <!-- /Page Header -->
                 <!-- Page Body -->
                 <div class="page-body">
                     <div class="row">
                         <div>
                             <div class="widget radius-bordered">
                                 <div class="widget-body">
-                                    <form id="updateForm" action="${"$"}{contextPath}/${moduleName}/save${entityCamelName}" method="post" class="form-horizontal">
+                                    <form id="updateForm" action="${"$"}{contextPath}/${moduleName}/save${entityCamelName}" method="post" class="form-horizontal" onsubmit="return checkForm()">
                                         <div class="form-title"></div>
                                         <#if columns??>
 										<#list columns as col>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">${col.remark!}</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="${col.propertyName}" value="" placeholder="请输入${col.remark!}" />
+                                                <#if col.length gt 100>
+                                            	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}></textarea>
+                                            	<#else>
+                                                <input type="text" class="form-control" name="${col.propertyName}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} />
+                                            	</#if>
                                             </div>
                                         </div>
                                         </#list>
@@ -75,7 +86,31 @@
         <!-- /Page Container -->
         <!-- Main Container -->
     </div>
-
+    <script src="${"$"}{contextPath}/static/jquery-1.7.2.min.js"></script>
+	<script>
+        function checkForm(){
+        	var inputs=$(":text,select,textarea");
+        	var isok=true;
+        	var msg=[];
+        	$.each(inputs,function(i,obj){
+        		var $obj=$(obj);
+        		var val=$.trim($obj.val());
+        		var require=typeof($obj.attr("require"))!="undefined";
+        		if (require && val==""){
+        			isok=false;
+        			var label=$obj.parent().parent().find(".control-label").html();
+        			if (label){
+	        			label=label.replace(/[:：]/g,"");
+	        			msg.push(label+"不能为空");
+        			}
+        		}
+        	});
+        	if (!isok) {
+        		alert(msg.join("\n"));
+        	}
+        	return isok;
+        }
+    </script>
 </body>
 <!--  /Body -->
 </html>

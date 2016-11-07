@@ -56,7 +56,10 @@
   	</if>
     </#list>
   	order by ${primaryKey!} desc
-  	) as o where rownumber>${'#'}{page.firstEntityIndex}
+  	) as o where 
+  	<![CDATA[
+  	rownumber>${'#'}{page.firstEntityIndex}
+  	]]>
   </select>
   <select id="count${entityCamelName}" resultType="int">
   	select count(*) from ${tableFullName} where 1=1

@@ -61,7 +61,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	
 	/**
 	 * 显示${remark!}详情
-	 * @param activityId
+	 * @param ${primaryProperty}
 	 * @return
 	 */
 	@RequestMapping(value = "/show${entityCamelName}")

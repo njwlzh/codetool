@@ -9,7 +9,9 @@ public class CodeUtil {
      */  
     public static String convertToCamelCase(String str) {  
         String result = "";  
-  
+        if (str==null) {
+        	return "";
+        }
         String[] strArr = str.trim().split("_");  
         for(String s : strArr) {  
             if(s.length()>1) {  

@@ -21,11 +21,14 @@ import ${imp};
  */
 @Repository(${entityCamelName}Dao.BEAN_ID)
 public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelName}Dao {
-
 	@Override
 	public void save${entityCamelName}(${entityCamelName} ${entityName}) {
-		String sql="insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col><#if col_index gt 0 && !col.primaryKey>?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>)";
+		String sql="insert into ${tableFullName} (<#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col>?<#if col_index lt columns?size-1>,</#if></#list>)";
+		<#if primaryKey??>
+		${entityName}.set${primaryCamelProperty}(getSequenceByName("${tableFullName}_SEQ"));
+		</#if>
 		List<Object> params = new ArrayList<Object>();
+		params.add(${entityName}.get${primaryCamelProperty}());
 		<#list columns as col>
 		<#if !col.primaryKey>
 		params.add(${entityName}.get${col.propertyCamelName}());
