@@ -53,7 +53,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	public void load${entityCamelName}List(Pagination<${entityCamelName}> paging,
 			Map<String, Object> params) {
 		
-		Page<${entityCamelName}> p =  ${entityName}Dao.findAll(new PageRequest(paging.getPageNo(),paging.getPageSize(),new Sort(new Order(Direction. DESC,"${primaryProperty}"))));
+		Page<${entityCamelName}> p =  ${entityName}Dao.findAll(new PageRequest(paging.getPageNo()-1,paging.getPageSize(),new Sort(new Order(Direction. DESC,"${primaryProperty}"))));
 		paging.setEntities(p.getContent());
 		paging.setEntityCount((int)p.getTotalElements());
 	}

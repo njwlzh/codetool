@@ -6,9 +6,8 @@
 <!-- Head -->
 <head>
     <meta charset="utf-8" />
-	<title>红航后台管理系统</title>
+	<title>后台管理系统</title>
 
-	<meta name="description" content="公告列表" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -36,7 +35,7 @@
                 <!-- Page Header -->
                 <div class="page-header position-relative">
                     <div class="header-title">
-                    	<form action="${"$"}{contextPath}/goods/list${entityCamelName}" method="get">
+                    	<form action="${"$"}{contextPath}/${moduleName}/list${entityCamelName}" method="get">
                         <a class="btn btn-info" href="${"$"}{contextPath}/${moduleName}/list${entityCamelName}?${primaryProperty }=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-search"></i> 所有列表</a>
                         <a class="btn btn-primary" href="${"$"}{contextPath}/${moduleName}/toAdd${entityCamelName}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-plus"></i> 添加</a>
                         </form>
@@ -69,8 +68,8 @@
 	                                            	</#list>
 	                                             </#if>
 	                                                <td align="center">
-	                                                	<a href="${"$"}{contextPath}/goods/remove${entityCamelName}?${primaryProperty}=${'$'}{${entityName}.${primaryProperty}}" target="_self" class="btn btn-danger btn-xs lock"><i class="fa fa-lock"></i> 删除</a>
-	                                                	<a href="${"$"}{contextPath}/goods/toEdit${entityCamelName}?${primaryProperty}=${'$'}{${entityName}.${primaryProperty}}" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+	                                                	<a href="${"$"}{contextPath}/${moduleName}/remove${entityCamelName}?${primaryProperty}=${'$'}{${entityName}.${primaryProperty}}" target="_self" class="btn btn-danger btn-xs lock"><i class="fa fa-lock"></i> 删除</a>
+	                                                	<a href="${"$"}{contextPath}/${moduleName}/toEdit${entityCamelName}?${primaryProperty}=${'$'}{${entityName}.${primaryProperty}}" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
 	                                                </td>
 	                                            </tr>
                                             </c:forEach>

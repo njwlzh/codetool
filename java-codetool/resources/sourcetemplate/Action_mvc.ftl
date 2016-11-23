@@ -54,6 +54,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	@RequestMapping(value = "/list${entityCamelName}")
 	public ModelAndView load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
 		ModelAndView mv = new ModelAndView("/${moduleName}/list${entityCamelName}");
+		if (page<1){
+			page=1;
+		}
 		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(10, page);
 		Map<String,Object> params = new HashMap<String, Object>();
 		${entityName}Service.load${entityCamelName}List(paging,params);
