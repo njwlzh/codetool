@@ -12,14 +12,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="${"$"}{contextPath}/public/page/images/ico/redair_favicon.ico">
 
    	<jsp:include page="../../common/css.jsp" />
-    <!-- dataTables -->
-    <link href="${"$"}{contextPath}/public/plugins/assets/css/dataTables.bootstrap.css" rel="stylesheet" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/skins.min.js"></script>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -44,7 +38,7 @@
                     <div class="header-title">
                     	<form action="${"$"}{contextPath}/goods/list${entityCamelName}" method="get">
                         <a class="btn btn-info" href="${"$"}{contextPath}/${moduleName}/list${entityCamelName}?${primaryProperty }=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-search"></i> 所有列表</a>
-                        <a class="btn btn-primary" href="${"$"}{contextPath}/${moduleName}/toAdd${entityCamelName}?${primaryProperty}=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-plus"></i> 添加</a>
+                        <a class="btn btn-primary" href="${"$"}{contextPath}/${moduleName}/toAdd${entityCamelName}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-plus"></i> 添加</a>
                         </form>
                     </div>
                 </div>
@@ -109,14 +103,7 @@
         <!-- Main Container -->
     </div>
 
-   	<jsp:include page="../../common/js.jsp" />
-
-    <!--Page Related Scripts-->
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/datatable/jquery.dataTables.min.js"></script>
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/datatable/ZeroClipboard.js"></script>
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/datatable/dataTables.tableTools.min.js"></script>
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/datatable/dataTables.bootstrap.min.js"></script>
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/datatable/datatables-init.js"></script>
+   	<%@include file="../common/admin_js.jsp" %>
     <script>
         InitiateSearchableDataTable.init();
     </script>

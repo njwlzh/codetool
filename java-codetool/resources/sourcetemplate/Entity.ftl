@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 <#if subTables?size gt 0>
 import javax.persistence.Transient;
 </#if>
@@ -48,6 +50,13 @@ public class ${entityCamelName!} implements Serializable {
 			<#assign defaultValue=defaultValue+"L">
 		<#elseif type=="Double">
 			<#assign defaultValue=defaultValue+"d">
+		</#if>
+	</#if>
+	<#if col.nullable==false && (module.persistance=="hibernate" || module.persistance=="jpa")>
+		<#if type=="String">
+	@NotEmpty(message="${col.remark!}不能为空")
+		<#else>
+	@NotNull(message="${col.remark!}不能为空")	
 		</#if>
 	</#if>
 	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};

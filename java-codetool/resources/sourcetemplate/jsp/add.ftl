@@ -12,12 +12,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="shortcut icon" href="${"$"}{contextPath}/public/page/images/ico/redair_favicon.ico">
 
-    <jsp:include page="../../common/css.jsp" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="${"$"}{contextPath}/public/plugins/assets/js/skins.min.js"></script>
+    <jsp:include page="../common/admin_css.jsp" />
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -86,7 +82,7 @@
         <!-- /Page Container -->
         <!-- Main Container -->
     </div>
-    <script src="${"$"}{contextPath}/static/jquery-1.7.2.min.js"></script>
+    <%@include file="../common/admin_js.jsp" %>
 	<script>
         function checkForm(){
         	var inputs=$(":text,select,textarea");

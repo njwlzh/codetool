@@ -76,7 +76,7 @@ public class CodeUtil {
             javaType = "java.util.Date";  
         } else if(databaseTypeStr.equals("datetime")) {  
             javaType = "java.util.Date";  
-        } else if(databaseTypeStr.equals("timestamp")) {  
+        } else if(databaseTypeStr.startsWith("timestamp")) {  
             javaType = "java.util.Date";  
         } else if(databaseTypeStr.equals("year")) {  
             javaType = "java.util.Date";  

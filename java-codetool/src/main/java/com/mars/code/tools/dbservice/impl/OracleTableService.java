@@ -153,7 +153,7 @@ public class OracleTableService implements ITableService {
 	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));
 	        	col.setLength(rs.getLong("data_length"));
-	        	col.setNullable(rs.getString("nullable").equals("YES"));
+	        	col.setNullable(rs.getString("nullable").equals("YES") || rs.getString("nullable").equals("Y"));
 	        	col.setDefaultValue(rs.getString("data_default"));
 	        	col.setRemark(rs.getString("comments"));
 	        	

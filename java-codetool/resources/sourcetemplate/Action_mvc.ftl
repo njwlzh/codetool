@@ -6,7 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
+<#if module.persistance=="hibernate" || module.persistance=="jpa">
+import javax.validation.Valid;
+</#if>
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -82,8 +84,12 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param ${entityName}
 	 * @return
 	 */
+	<#assign validate="">
+	<#if module.persistance=="hibernate" || module.persistance=="jpa">
+	<#assign validate="@Valid ">
+	</#if>
 	@RequestMapping(value = "/save${entityCamelName}",method=RequestMethod.POST)
-	public ModelAndView save${entityCamelName}(${entityCamelName} ${entityName}){
+	public ModelAndView save${entityCamelName}(${validate}${entityCamelName} ${entityName}){
 		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
 		${entityName}Service.save${entityCamelName}(${entityName});
 		return mv;
@@ -103,8 +109,12 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param ${entityCamelName}
 	 * @return
 	 */
+	 <#assign validate="">
+	<#if module.persistance=="hibernate" || module.persistance=="jpa">
+	<#assign validate="@Valid ">
+	</#if>
 	@RequestMapping(value = "/update${entityCamelName}",method=RequestMethod.POST)
-	public ModelAndView update${entityCamelName}(${entityCamelName} ${entityName}){
+	public ModelAndView update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
 		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
 		${entityName}Service.update${entityCamelName}(${entityName});
 		return mv;
