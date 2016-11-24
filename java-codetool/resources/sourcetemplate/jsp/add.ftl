@@ -51,7 +51,7 @@
                                         <#if columns??>
 										<#list columns as col>
                                         <div class="form-group">
-                                            <label class="col-md-2 col-sm-2 control-label">${col.remark!}</label>
+                                            <label class="col-md-2 col-sm-2 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
                                             <div class="col-md-6 col-sm-6">
                                                 <#if col.length gt 100>
                                             	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}></textarea>
