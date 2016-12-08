@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao" >
   <resultMap id="BaseResultMap" type="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}" >
-    <id column="${primaryKey}" property="${primaryProperty}" jdbcType="${primaryKeyType}" />
+    <id column="${primaryKey!}" property="${primaryProperty}" jdbcType="${primaryKeyType}" />
     <#list columns as col>
     <#if !col.primaryKey>
     <result column="${col.columnName}" property="${col.propertyName}" jdbcType="${col.columnType}" />

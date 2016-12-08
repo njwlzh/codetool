@@ -191,8 +191,12 @@ public class OracleTableService implements ITableService {
     }
     
     public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
-		DatabaseMetaData dbMeta = con.getMetaData(); 
-		ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
+		//DatabaseMetaData dbMeta = con.getMetaData(); 
+		//ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
+		String sql="select a.constraint_name,a.column_name from user_cons_columns a, user_constraints b  where a.constraint_name = b.constraint_name  and b.constraint_type = 'P' and a.table_name = ?";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, tableName.toUpperCase());
+		ResultSet rs = stmt.executeQuery();
 		String columnName=null;
 		if (rs.next()){
 			columnName = (rs.getString("COLUMN_NAME"));
