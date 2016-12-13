@@ -57,7 +57,7 @@
                                             	<#if col.length gt 100>
                                             	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}>${'$'}{${entityName}.${col.propertyName}}</textarea>
                                             	<#else>
-                                                <input type="text" class="form-control" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} />
+                                                <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} />
                                             	</#if>
                                             </div>
                                         </div>
@@ -107,6 +107,12 @@
         	}
         	return isok;
         }
+        $(document).ready(function(){
+       		$('.datepicker').datepicker({
+       			format: 'yyyy-mm-dd',
+       			weekStart: 1
+       		});
+       	});
     </script>
 </body>
 <!--  /Body -->

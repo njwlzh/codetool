@@ -3,10 +3,10 @@ package com.mars.code.tools.model;
 public class Column {
     
     private String columnName;
-    private String columnType;
+    private String columnType; //数据表的类型
     private String remark;
     private String propertyName; //属性名，首字小写
-    private String propertyType;
+    private String propertyType; //属性的java type
     private String propertyCamelName; //首字大写的属性名
     private boolean isPrimaryKey;
     private boolean isNullable;//是否允许为空

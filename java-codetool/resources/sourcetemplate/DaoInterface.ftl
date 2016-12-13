@@ -18,34 +18,34 @@ public interface ${entityCamelName}Dao {
 	public final static String BEAN_ID="${entityName}Dao";
 	
 	/**
-	 * 新增保存${remark!}
-	 * @param info
+	 * 保存新增的${remark!}
+	 * @param info 要保存的${remark!}对象
 	 */
 	void save${entityCamelName}(${entityCamelName} ${entityName});
 	
 	/**
 	 * 修改${remark!}
-	 * @param info
+	 * @param info 要保存的${remark!}对象
 	 */
 	void update${entityCamelName}(${entityCamelName} ${entityName});
 
 	/**
 	 * 删除${remark!}
-	 * @param info
+	 * @param info 要删除的${remark!}对象，只需传入主键ID即可
 	 */
 	void delete${entityCamelName}(${entityCamelName} ${entityName});
 	
 	/**
 	 * 根据编号查询${remark!}细信息
-	 * @param placeId
+	 * @param ${primaryProperty} ${remark!}编号
 	 * @return
 	 */
 	${entityCamelName} findById(${primaryPropertyType} ${primaryProperty});
 	
 	/**
 	 * 根据不同条件组合查询${remark!}，可分页查询
-	 * @param page
-	 * @param 
+	 * @param page 分页对象
+	 * @param params 查询参数，key为${entityCamelName}类属性名
 	 */
 	 <#assign ret="void">
 	 <#if module.persistance=="mybatis">
