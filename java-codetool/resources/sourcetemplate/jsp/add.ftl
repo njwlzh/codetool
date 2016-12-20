@@ -1,7 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${"$"}{pageContext.request.contextPath}" />
+<%@include file="../../common/jstl.jsp" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
@@ -13,7 +11,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <jsp:include page="../common/admin_css.jsp" />
+    <%@include file="../common/admin_css.jsp" %>
 </head>
 <!-- /Head -->
 <!-- Body -->
