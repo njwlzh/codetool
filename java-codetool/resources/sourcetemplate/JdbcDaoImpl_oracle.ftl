@@ -25,7 +25,7 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 	public void save${entityCamelName}(${entityCamelName} ${entityName}) {
 		String sql="insert into ${tableFullName} (<#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col>?<#if col_index lt columns?size-1>,</#if></#list>)";
 		<#if primaryKey??>
-		${entityName}.set${primaryCamelProperty}(getSequenceByName("${tableFullName}_SEQ"));
+		${entityName}.set${primaryCamelProperty}(getSequenceByName("SEQ_${tableFullName}"));
 		</#if>
 		List<Object> params = new ArrayList<Object>();
 		params.add(${entityName}.get${primaryCamelProperty}());

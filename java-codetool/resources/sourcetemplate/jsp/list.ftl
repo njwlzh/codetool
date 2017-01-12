@@ -35,7 +35,7 @@
                 <div class="page-header position-relative">
                     <div class="header-title">
                     	<form action="${"$"}{contextPath}/${moduleName}/list${entityCamelName}" method="get">
-                        <a class="btn btn-info" href="${"$"}{contextPath}/${moduleName}/list${entityCamelName}?${primaryProperty }=${"$"}{param.${primaryProperty}}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-search"></i> 所有列表</a>
+                        <a class="btn btn-info" href="${"$"}{contextPath}/${moduleName}/list${entityCamelName}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-search"></i> 所有列表</a>
                         <a class="btn btn-primary" href="${"$"}{contextPath}/${moduleName}/toAdd${entityCamelName}" style="margin-top:5px;margin-left:10px;"><i class="fa fa-plus"></i> 添加</a>
                         </form>
                     </div>

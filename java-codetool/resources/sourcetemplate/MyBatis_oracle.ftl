@@ -31,7 +31,7 @@
   </update>
   
   <delete id="delete${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
-  	delete from ${tableFullName} where ${primaryKey}=${'#'}{${primaryProperty},jdbcType=${primaryKeyType}}
+  	delete from ${tableFullName} where ${primaryKey!}=${'#'}{${primaryProperty},jdbcType=${primaryKeyType}}
   </delete>
   
   <select id="findById" resultMap="BaseResultMap" parameterType="${primaryPropertyType}">
@@ -47,9 +47,14 @@
   	</if>
     </#list>
   	order by ${primaryKey!} desc
-  	) a where 
+  	) a 
+  	<if test="page.pageSize>0">
   	<![CDATA[
-  	ROWNUM<=(${'#'}{page.firstEntityIndex}+${'#'}{page.pageSize})) where rn>${'#'}{page.firstEntityIndex}
+  	 where ROWNUM<=(#{page.firstEntityIndex}+#{page.pageSize})
+  	]]>
+  	</if>
+  	<![CDATA[
+  	) where rn > ${'#'}{page.firstEntityIndex}
   	]]>
   </select>
   <select id="count${entityCamelName}" resultType="int">
