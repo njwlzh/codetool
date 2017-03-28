@@ -65,7 +65,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2"></label>
                                             <div class="col-sm-offset-1 col-sm-8">
-                                                <input class="btn btn-primary shiny" type="submit" value="&nbsp;保存&nbsp;" />
+                                                <input class="btn btn-primary shiny" type="submit" id="btnSubmit" value="&nbsp;保存&nbsp;" />
                                             </div>
                                         </div>
                                     </form>
@@ -84,25 +84,27 @@
 	<script>
         function checkForm(){
         	var inputs=$(":text,select,textarea");
-        	var isok=true;
         	var msg=[];
         	$.each(inputs,function(i,obj){
         		var $obj=$(obj);
         		var val=$.trim($obj.val());
         		var require=typeof($obj.attr("require"))!="undefined";
         		if (require && val==""){
-        			isok=false;
         			var label=$obj.parent().parent().find(".control-label").html();
         			if (label){
-	        			label=label.replace(/[:：]/g,"");
+	        			label=label.replace(/[:：]/g,"").replace("(*)","");
 	        			msg.push(label+"不能为空");
         			}
         		}
         	});
-        	if (!isok) {
+        	if (msg.length>0) {
         		alert(msg.join("\n"));
+        		return false;
+        	} else {
+        		$("#btnSubmit").val("正在提交...");
+        		$("#btnSubmit").attr("disabled","disabled");
+        		return true;
         	}
-        	return isok;
         }
         $(document).ready(function(){
        		$('.datepicker').datepicker({

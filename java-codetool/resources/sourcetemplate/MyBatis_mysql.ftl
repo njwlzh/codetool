@@ -5,7 +5,7 @@
     <id column="${primaryKey}" property="${primaryProperty}" jdbcType="${primaryKeyType}" />
     <#list columns as col>
     <#if !col.primaryKey>
-    <result column="${col.columnName}" property="${col.propertyName}" jdbcType="${col.columnType}" />
+    <result column="${col.columnName}" property="${col.propertyName}" jdbcType="${col.columnType}" <#if col.columnType == 'DATE' || col.columnType=='TIMESTAMP'>javaType="java.util.Date"</#if> />
     </#if>
     </#list>
   </resultMap>
