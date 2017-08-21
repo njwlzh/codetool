@@ -50,7 +50,7 @@
   	) a 
   	<if test="page.pageSize>0">
   	<![CDATA[
-  	 where ROWNUM<=(#{page.firstEntityIndex}+#{page.pageSize})
+  	 where ROWNUM<=(${'#'}{page.firstEntityIndex}+${'#'}{page.pageSize})
   	]]>
   	</if>
   	<![CDATA[
