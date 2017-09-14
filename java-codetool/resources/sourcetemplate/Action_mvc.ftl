@@ -78,8 +78,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	@RequestMapping(value="/toAdd${entityCamelName}")
-	public String toAdd${entityCamelName}(){
-		return "/${moduleName}/add${entityCamelName}";
+	public ModelAndView toAdd${entityCamelName}(){
+		ModelAndView mv = new ModelAndView("/${moduleName}/add${entityCamelName}");
+		return mv;
 	}
 	
 	/**
