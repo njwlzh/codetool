@@ -5,7 +5,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class MysqlTableService implements ITableService {
      */  
     public List<TableConf> getAllTables(String pattern) {  
         if (CodeUtil.isEmpty(pattern)) {
-        	pattern="*";
+        	pattern="%";
         }
         List<TableConf> tbConfList = new ArrayList<TableConf>();
         Connection con = null;  
@@ -80,12 +79,24 @@ public class MysqlTableService implements ITableService {
         System.out.println(tbConf);
         //获取表各字段的信息
         getTableColumns(table,con);
-        table.setPrimaryKey(getTablePrimaryKey(tableName, con));
-        table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
+        
+        //取主键列表
+        List<String> keys = getTablePrimaryKeys(tableName, con);
+        /*List<Column> primaryKeyList = new ArrayList<Column>();
+        for (String key : keys){
+        	Column col = new Column();
+        	col.setColumnName(key);
+        	col.setColumnType(getColumnType(table, key));
+        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(key));
+        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(key));
+        	col.setPropertyType(CodeUtil.convertType(key));
+        	
+        	primaryKeyList.add(col);
+        }
+        table.setPrimaryKeyList(primaryKeyList);*/
+        table.setPrimaryKeyList(getPrimaryColumns(table, keys));
+        
         table.setRemark(getTableRemark(tableName, con));
-        table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
-        table.setPrimaryPropertyType(CodeUtil.convertType(table.getPrimaryKeyType()));
-        table.setPrimaryCamelProperty(CodeUtil.convertToCamelCase(table.getPrimaryKey()));
         table.setEntityCamelName(CodeUtil.isEmpty(tbConf.getEntityName())?CodeUtil.convertToCamelCase(table.getTableName()):tbConf.getEntityName());
         table.setEntityName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getTableName()));
         table.setModule(module);
@@ -101,7 +112,29 @@ public class MysqlTableService implements ITableService {
         	table.setSubTables(subTables);
         }
         return table;  
-    } 
+    }
+    
+    private List<Column> getPrimaryColumns(Table table,List<String> keys){
+    	List<Column> primaryKeyList = new ArrayList<Column>();
+    	for (String key : keys){
+    		for (Column col : table.getColumns()){
+    			if (key.equalsIgnoreCase(col.getColumnName())){
+    				primaryKeyList.add(col);
+    				break;
+    			}
+    		}
+    		/*
+        	Column col = new Column();
+        	col.setColumnName(key);
+        	col.setColumnType(getColumnType(table, key));
+        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(key));
+        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(key));
+        	col.setPropertyType(CodeUtil.convertType(key));
+        	primaryKeyList.add(col);
+    		 */
+        }
+    	return primaryKeyList;
+    }
     
     /**
      * 获取数据表的所有字段
@@ -130,6 +163,7 @@ public class MysqlTableService implements ITableService {
 	        	col.setNullable(rs.getString("is_nullable").equals("YES"));
 	        	col.setLength(rs.getLong("character_maximum_length"));
 	        	col.setDefaultValue(rs.getString("column_default"));
+	        	col.setIdentity("auto_increment".equalsIgnoreCase(rs.getString("extra")));
 	        	
 	        	String colKey = rs.getString("column_key");
 	        	if (!CodeUtil.isEmpty(colKey) && colKey.toLowerCase().equals("pri")) {
@@ -147,14 +181,23 @@ public class MysqlTableService implements ITableService {
 		}
     }
     
-    public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
+    public List<String> getTablePrimaryKeys(String tableName, Connection con) throws SQLException{
 		DatabaseMetaData dbMeta = con.getMetaData(); 
 		ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
-		if (rs.next()){
-			return (rs.getString("COLUMN_NAME"));
+		List<String> keys = new ArrayList<String>();
+		while (rs.next()){
+			keys.add(rs.getString("COLUMN_NAME"));
 		}
-		return null;
+		return keys;
 	}
+    
+    public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
+    	List<String> keys = getTablePrimaryKeys(tableName, con);
+    	if (keys.size()>0){
+    		return keys.get(0);
+    	}
+    	return null;
+    }
 	/**
 	 * 主键类型
 	 * @param tableName

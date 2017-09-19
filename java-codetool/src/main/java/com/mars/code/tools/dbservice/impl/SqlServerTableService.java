@@ -80,6 +80,7 @@ public class SqlServerTableService implements ITableService {
         //获取表各字段的信息
         getTableColumns(table,con);
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
+        table.setPrimaryKeys(getTablePrimaryKeys(tableName, con));
         table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
         table.setRemark(getTableRemark(tableName, con));
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
@@ -171,6 +172,7 @@ public class SqlServerTableService implements ITableService {
 	        	if (col.getPropertyType().indexOf(".")!=-1 && !CodeUtil.existsType(table.getImportClassList(),col.getPropertyType())) {
 	        		table.getImportClassList().add(col.getPropertyType());
 	        	}
+	        	col.setIdentity("y".equalsIgnoreCase(rs.getString("seq")));
 	        	table.getColumns().add(col);
 			}
 			rs.close();
@@ -178,14 +180,25 @@ public class SqlServerTableService implements ITableService {
 			
     }
     
+
     public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
-		DatabaseMetaData dbMeta = con.getMetaData(); 
-		ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
-		if (rs.next()){
-			return (rs.getString("COLUMN_NAME"));
-		}
-		return null;
-	}
+    	List<String> keys = getTablePrimaryKeys(tableName, con);
+    	if (keys.size()>0){
+    		return keys.get(0);
+    	}
+    	return null;
+    }
+    
+    public List<String> getTablePrimaryKeys(String tableName, Connection con) throws SQLException{
+    	List<String> keys = new ArrayList<String>();
+    	DatabaseMetaData dbMeta = con.getMetaData(); 
+    	ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
+    	if (rs.next()){
+    		keys.add(rs.getString("COLUMN_NAME"));
+    	}
+    	rs.close();
+    	return keys;
+    }
 	/**
 	 * 主键类型
 	 * @param tableName

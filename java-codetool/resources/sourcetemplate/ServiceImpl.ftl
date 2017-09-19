@@ -44,8 +44,8 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	}
 
 	@Override
-	public ${entityCamelName} loadById(${primaryPropertyType} ${primaryProperty}) {
-		return ${entityName}Dao.findById(${primaryProperty});
+	public ${entityCamelName} loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>);
+		return ${entityName}Dao.findByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 	}
 
 	@Override

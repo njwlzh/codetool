@@ -49,6 +49,14 @@ public interface ITableService {
 	 * @throws SQLException
 	 */
 	String getTablePrimaryKey(String tableName, Connection con) throws SQLException;
+	/**
+	 * 取表的联合主键
+	 * @param tableName
+	 * @param con
+	 * @return
+	 * @throws SQLException
+	 */
+	List<String> getTablePrimaryKeys(String tableName, Connection con) throws SQLException;
 	
 	/**
 	 * 获取字段类型

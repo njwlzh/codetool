@@ -12,6 +12,7 @@ public class Column {
     private boolean isNullable;//是否允许为空
     private Long length; //字段长度
     private Object defaultValue; //字段默认值
+    private boolean identity=false;//是否自增长字段
     
 	public String getColumnName() {
 		return columnName;
@@ -75,15 +76,20 @@ public class Column {
 	public void setDefaultValue(Object defaultValue) {
 		this.defaultValue = defaultValue;
 	}
+	
+	public boolean getIdentity() {
+		return identity;
+	}
+	public void setIdentity(boolean identity) {
+		this.identity = identity;
+	}
+	
 	@Override
 	public String toString() {
-		return "Column [columnName=" + columnName + ", columnType="
-				+ columnType + ", remark=" + remark + ", propertyName="
-				+ propertyName + ", propertyType=" + propertyType
-				+ ", propertyCamelName=" + propertyCamelName
-				+ ", isPrimaryKey=" + isPrimaryKey + ", isNullable="
-				+ isNullable + ", length=" + length + ", defaultValue="
-				+ defaultValue + "]";
+		return "Column [columnName=" + columnName + ", columnType=" + columnType + ", remark=" + remark
+				+ ", propertyName=" + propertyName + ", propertyType=" + propertyType + ", propertyCamelName="
+				+ propertyCamelName + ", isPrimaryKey=" + isPrimaryKey + ", isNullable=" + isNullable + ", length="
+				+ length + ", defaultValue=" + defaultValue + ", identity=" + identity + "]";
 	}
     
 }

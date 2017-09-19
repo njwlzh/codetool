@@ -63,10 +63,19 @@ public class Config {
 	public static Config loadConfig(){
 		Config cfg = new Config();
 		
-		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-wangsheng-mis.xml"));
-		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-wangsheng-wap.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop-mysql.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-b2c.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-back.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kmair-questionaire.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kmair-insurance.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-pubinfo.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-ymy.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-camp-admin.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-simplelife.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kmair-member.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-hr.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
@@ -173,7 +182,7 @@ public class Config {
 		}
 		Attribute name = XmlUtil.getAttribute(e, "name");
 		if (name!=null) {
-			m.setName(name.getValue());
+			m.setName(name.getValue().toUpperCase());
 		}
 		Attribute prefix = XmlUtil.getAttribute(e, "prefix");
 		if (prefix!=null) {

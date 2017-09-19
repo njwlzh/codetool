@@ -12,10 +12,13 @@ public class Table {
     private String entityCamelName; //完整实体类名
     private String remark; //表注释
     private String primaryKey;//主键
+    private List<String> primaryKeys; //联合主键
     private String primaryProperty;//主键属性名
     private String primaryPropertyType; //主键属性类型
     private String primaryCamelProperty;
     private String primaryKeyType;//主键类型
+    
+    private List<Column> primaryKeyList;
     
     private String parentProperty; //若为子表，则此属性为上级表的属性
     
@@ -162,18 +165,30 @@ public class Table {
 		this.refType = refType;
 	}
 
+	public List<String> getPrimaryKeys() {
+		return primaryKeys;
+	}
+
+	public void setPrimaryKeys(List<String> primaryKeys) {
+		this.primaryKeys = primaryKeys;
+	}
+
+	public List<Column> getPrimaryKeyList() {
+		return primaryKeyList;
+	}
+
+	public void setPrimaryKeyList(List<Column> primaryKeyList) {
+		this.primaryKeyList = primaryKeyList;
+	}
+
 	@Override
 	public String toString() {
-		return "Table [module=" + module + ", packageName=" + packageName
-				+ ", tableFullName=" + tableFullName + ", tableName="
-				+ tableName + ", entityName=" + entityName
-				+ ", entityCamelName=" + entityCamelName + ", remark=" + remark
-				+ ", primaryKey=" + primaryKey + ", primaryProperty="
-				+ primaryProperty + ", primaryPropertyType="
-				+ primaryPropertyType + ", primaryCamelProperty="
-				+ primaryCamelProperty + ", primaryKeyType=" + primaryKeyType
-				+ ", parentProperty=" + parentProperty + ", importClassList="
-				+ importClassList + ", columns=" + columns + ", subTables="
-				+ subTables + ", refType=" + refType + "]";
+		return "Table [module=" + module + ", packageName=" + packageName + ", tableFullName=" + tableFullName
+				+ ", tableName=" + tableName + ", entityName=" + entityName + ", entityCamelName=" + entityCamelName
+				+ ", remark=" + remark + ", primaryKey=" + primaryKey + ", primaryKeys=" + primaryKeys
+				+ ", primaryProperty=" + primaryProperty + ", primaryPropertyType=" + primaryPropertyType
+				+ ", primaryCamelProperty=" + primaryCamelProperty + ", primaryKeyType=" + primaryKeyType
+				+ ", primaryKeyList=" + primaryKeyList + ", parentProperty=" + parentProperty + ", importClassList="
+				+ importClassList + ", columns=" + columns + ", subTables=" + subTables + ", refType=" + refType + "]";
 	}
 }

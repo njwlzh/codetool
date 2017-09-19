@@ -67,8 +67,8 @@
 	                                            	</#list>
 	                                             </#if>
 	                                                <td align="center">
-	                                                	<a href="${"$"}{contextPath}/${moduleName}/remove${entityCamelName}?${primaryProperty}=${'$'}{${entityName}.${primaryProperty}}" target="_self" class="btn btn-danger btn-xs lock"><i class="fa fa-lock"></i> 删除</a>
-	                                                	<a href="${"$"}{contextPath}/${moduleName}/toEdit${entityCamelName}?${primaryProperty}=${'$'}{${entityName}.${primaryProperty}}" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+	                                                	<a href="${"$"}{contextPath}/${moduleName}/remove${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${entityName}.${col.propertyName}}</#list>" target="_self" class="btn btn-danger btn-xs lock"><i class="fa fa-lock"></i> 删除</a>
+	                                                	<a href="${"$"}{contextPath}/${moduleName}/toEdit${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${entityName}.${col.propertyName}}</#list>" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
 	                                                </td>
 	                                            </tr>
                                             </c:forEach>

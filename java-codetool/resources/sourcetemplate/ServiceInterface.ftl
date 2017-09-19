@@ -32,10 +32,12 @@ public interface ${entityCamelName}Service {
 	
 	/**
 	 * 根据编号查询${remark!}细信息
-	 * @param ${primaryProperty}
+	 <#list primaryKeyList as col>
+	 * @param ${col.propertyName}
+	 </#list>
 	 * @return 返回查询到的对象，未查询到返回null
 	 */
-	${entityCamelName} loadById(${primaryPropertyType} ${primaryProperty});
+	${entityCamelName} loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>);
 	
 	/**
 	 * 根据不同条件组合查询${remark!}，可分页查询

@@ -24,12 +24,11 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 
 	@Override
 	public void save${entityCamelName}(${entityCamelName} ${entityName}) {
-		String sql="insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col><#if col_index gt 0 && !col.primaryKey>?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>)";
+		//String sql="insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.primaryKey>${col.columnName}</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col><#if col_index gt 0 && !col.primaryKey>?</#if><#if !col.primaryKey && col_index lt columns?size-1>,</#if></#list>)";
+		String sql="insert into ${tableFullName} (<#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>) values (<#list columns as col>?<#if col_index lt columns?size-1>,</#if></#list>)";
 		List<Object> params = new ArrayList<Object>();
 		<#list columns as col>
-		<#if !col.primaryKey>
 		params.add(${entityName}.get${col.propertyCamelName}());
-		</#if>
 		</#list>
 		jdbcTemplate.update(sql, params.toArray());
 	}
@@ -54,7 +53,12 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 	}
 
 	@Override
-	public ${entityCamelName} findById(${primaryPropertyType} ${primaryProperty}) {
+	${entityCamelName} findByKey(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType} ${col.propertyName}</#list>){
+		String sql = "select * from ${tableFullName} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=?</#list>";
+		return (${entityCamelName})jdbcTemplate.queryForObject(sql,new Object[]{<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}</#list>},new ${entityCamelName}RowMapper());
+	}
+	@Override
+	public ${entityCamelName} findById1(${primaryPropertyType} ${primaryProperty}) {
 		String sql = "select * from ${tableFullName} where ${primaryKey}=?";
 		return (${entityCamelName})jdbcTemplate.queryForObject(sql,new Object[]{${primaryProperty}},new ${entityCamelName}RowMapper());
 	}

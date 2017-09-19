@@ -45,20 +45,24 @@
                             <div class="widget radius-bordered">
                                 <div class="widget-body">
                                     <form action="${"$"}{contextPath}/${moduleName}/update${entityCamelName}" method="post" class="form-horizontal" onsubmit="return checkForm()">
-                                        <input type="hidden" name="${primaryProperty}" value="${'$'}{${entityName}.${primaryProperty}}"/>
+                                        <#list primaryKeyList as col>
+                                        <input type="hidden" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}"/>
+                                        </#list>
                                         <div class="form-title"></div>
                                         <#if columns??>
 										<#list columns as col>
-                                        <div class="form-group">
-                                            <label class="col-md-2 col-sm-2 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
-                                            <div class="col-md-6 col-sm-6">
-                                            	<#if col.length gt 100>
-                                            	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}>${'$'}{${entityName}.${col.propertyName}}</textarea>
-                                            	<#else>
-                                                <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} />
-                                            	</#if>
-                                            </div>
-                                        </div>
+											<#if !col.primaryKey>
+	                                        <div class="form-group">
+	                                            <label class="col-md-2 col-sm-2 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
+	                                            <div class="col-md-6 col-sm-6">
+	                                            	<#if col.length gt 100>
+	                                            	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}>${'$'}{${entityName}.${col.propertyName}}</textarea>
+	                                            	<#else>
+	                                                <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} />
+	                                            	</#if>
+	                                            </div>
+	                                        </div>
+	                                        </#if>
                                         </#list>
                                         </#if>
                                         <div class="form-title"></div>

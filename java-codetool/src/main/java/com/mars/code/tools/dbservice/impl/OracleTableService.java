@@ -82,6 +82,7 @@ public class OracleTableService implements ITableService {
         //获取表各字段的信息
         getTableColumns(table,con);
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
+        table.setPrimaryKeys(getTablePrimaryKeys(tableName, con));
         table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
         table.setRemark(getTableRemark(tableName, con));
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
@@ -111,7 +112,7 @@ public class OracleTableService implements ITableService {
      * @throws SQLException
      */
     public void getTableColumns(Table table,Connection conn) throws SQLException {
-    	String primaryKey = getTablePrimaryKey(table.getTableFullName(),conn);
+    	List<String> primaryKeys = getTablePrimaryKeys(table.getTableFullName(),conn);
     	//查询表主键
     	List<String> priCols=new ArrayList<String>();
 		String sql="select cu.* from user_cons_columns cu, user_constraints au where cu.constraint_name = au.constraint_name and "
@@ -157,8 +158,11 @@ public class OracleTableService implements ITableService {
 	        	col.setDefaultValue(rs.getString("data_default"));
 	        	col.setRemark(rs.getString("comments"));
 	        	
-	        	if (colName.equalsIgnoreCase(primaryKey)) {
-	        		col.setPrimaryKey(true);
+	        	for (String primaryKey : primaryKeys){
+		        	if (colName.equalsIgnoreCase(primaryKey)) {
+		        		col.setPrimaryKey(true);
+		        		break;
+		        	}
 	        	}
 	        	
 	        	//String colKey = rs.getString("column_key");
@@ -190,20 +194,30 @@ public class OracleTableService implements ITableService {
     	return false;
     }
     
+
     public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
-		//DatabaseMetaData dbMeta = con.getMetaData(); 
-		//ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
-		String sql="select a.constraint_name,a.column_name from user_cons_columns a, user_constraints b  where a.constraint_name = b.constraint_name  and b.constraint_type = 'P' and a.table_name = ?";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, tableName.toUpperCase());
-		ResultSet rs = stmt.executeQuery();
-		String columnName=null;
-		if (rs.next()){
-			columnName = (rs.getString("COLUMN_NAME"));
-		}
-		rs.close();
-		return columnName;
-	}
+    	List<String> keys = getTablePrimaryKeys(tableName, con);
+    	if (keys.size()>0){
+    		return keys.get(0);
+    	}
+    	return null;
+    }
+    
+    public List<String> getTablePrimaryKeys(String tableName, Connection con) throws SQLException{
+    	//DatabaseMetaData dbMeta = con.getMetaData(); 
+    	//ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
+    	List<String> keys = new ArrayList<String>();
+    	String sql="select a.constraint_name,a.column_name from user_cons_columns a, user_constraints b  where a.constraint_name = b.constraint_name  and b.constraint_type = 'P' and a.table_name = ?";
+    	PreparedStatement stmt = con.prepareStatement(sql);
+    	stmt.setString(1, tableName.toUpperCase());
+    	ResultSet rs = stmt.executeQuery();
+    	while (rs.next()){
+    		keys.add(rs.getString("COLUMN_NAME"));
+    	}
+    	rs.close();
+    	stmt.close();
+    	return keys;
+    }
 	/**
 	 * 主键类型
 	 * @param tableName

@@ -66,13 +66,15 @@ public class ${entityCamelName}Action extends BaseAction {
 	
 	/**
 	 * 显示${remark!}详情
-	 * @param ${primaryProperty}
+	 <#list primaryKeyList as col>
+	 * @param ${col.propertyName}
+	 </#list>
 	 * @return
 	 */
 	@RequestMapping(value = "/show${entityCamelName}")
-	public ModelAndView load${entityName}(${primaryPropertyType} ${primaryProperty}){
+	public ModelAndView load${entityName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		ModelAndView mv = new ModelAndView("/${moduleName}/show${entityCamelName}");
-		${entityCamelName} ${entityName} = ${entityName}Service.loadById(${primaryProperty});
+		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		mv.addObject("${entityName}",${entityName});
 		return mv;
 	}
@@ -101,9 +103,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	
 
 	@RequestMapping(value="/toEdit${entityCamelName}")
-	public ModelAndView toEdit${entityCamelName}(${primaryPropertyType} ${primaryProperty}){
+	public ModelAndView toEdit${entityCamelName}(<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		ModelAndView mv = new ModelAndView("/${moduleName}/edit${entityCamelName}");
-		${entityCamelName} ${entityName}= ${entityName}Service.loadById(${primaryProperty});
+		${entityCamelName} ${entityName}= ${entityName}Service.loadByKey(<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		mv.addObject("${entityName}",${entityName});
 		return mv;
 	}
