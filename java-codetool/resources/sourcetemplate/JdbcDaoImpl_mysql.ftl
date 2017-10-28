@@ -47,9 +47,9 @@ public class ${entityCamelName}DaoImpl extends JdbcDao implements ${entityCamelN
 	}
 
 	@Override
-	public void delete${entityCamelName}(${entityCamelName} ${entityName}) {
-		String sql="delete from ${tableFullName} where ${primaryKey}=?";
-		jdbcTemplate.update(sql, new Object[]{${entityName}.get${primaryCamelProperty}()});
+	public void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType} ${col.propertyName}</#list>,Integer state) {
+		String sql="update ${tableFullName} set state=? where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=?</#list>";
+		jdbcTemplate.update(sql, new Object[]{state,<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}</#list>});
 	}
 
 	@Override

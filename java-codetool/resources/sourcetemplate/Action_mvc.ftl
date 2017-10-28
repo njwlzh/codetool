@@ -61,6 +61,8 @@ public class ${entityCamelName}Action extends BaseAction {
 		Map<String,Object> params = new HashMap<String, Object>();
 		${entityName}Service.load${entityCamelName}List(paging,params);
 		mv.addObject("paging",paging);
+		//参数列表
+		mv.addObject("urlSearch",RequestUtil.getUrlSearch(req));
 		return mv;
 	}
 	
@@ -130,10 +132,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param ${entityCamelName}
 	 * @return
 	 */
-	@RequestMapping(value = "/remove${entityCamelName}",method=RequestMethod.POST)
-	public ModelAndView remove${entityCamelName}(HttpServletRequest req,${entityCamelName} ${entityName}){
+	@RequestMapping(value = "/updateState",method=RequestMethod.POST)
+	public ModelAndView updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
 		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
-		${entityName}Service.remove${entityCamelName}(${entityName});
+		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.${col.propertyName}</#list>,${entityName}.state);
 		return mv;
 	}
 

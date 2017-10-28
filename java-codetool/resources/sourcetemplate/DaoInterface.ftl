@@ -33,7 +33,7 @@ public interface ${entityCamelName}Dao {
 	 * 删除${remark!}
 	 * @param info 要删除的${remark!}对象，只需传入主键ID即可
 	 */
-	void delete${entityCamelName}(${entityCamelName} ${entityName});
+	void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if><#if module.persistance == 'mybatis'>@Param(value="${col.propertyName}") </#if>${col.propertyType} ${col.propertyName}</#list>,@Param(value="state")Integer state);
 	
 	/**
 	 * 根据编号查询${remark!}细信息

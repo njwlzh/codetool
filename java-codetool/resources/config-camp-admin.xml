@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:/camp</basedir>
+	<basePackage>com.lanmeigroup</basePackage>
+	<db>
+		<dbName>camp</dbName>
+		<user>lanmei</user>
+		<pwd>lanmei</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://camphost:3306/camp?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>mybatis</persistance>
+		<name>camp</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="sys_dict_info" />
+		<table name="sys_dict_item"/>
+	</module>
+	<!-- <module>
+		<persistance>jdbc</persistance>
+		<name>sys</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="sys_dict_info" prefix="sys_">
+			<table name="sys_dict_item" prefix="sys_" parentField="dict_key"/>
+		</table>
+	</module> -->
+</configure>

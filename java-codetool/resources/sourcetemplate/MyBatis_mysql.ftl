@@ -51,9 +51,9 @@
   	where <#list primaryKeyList as col><#if col_index gt 0> and </#if>${col.columnName!}=${'#'}{${col.propertyName!},jdbcType=${col.columnType!}}</#list>
   </update>
   
-  <delete id="delete${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
-  	delete from ${tableFullName} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${col.propertyName}}</#list>
-  </delete>
+  <update id="updateState">
+  	update ${tableFullName} set state=${'#'}{${state}} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${propertyName}}</#list>
+  </update>
   
   <select id="findByKey" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/> from ${tableFullName} where 
@@ -67,7 +67,7 @@
   	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
-  	order by ${primaryKey!} desc
+  	order by <#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.columnName!} desc</#list>
   	<if test="page.pageSize>0">
   	limit ${'#'}{page.firstEntityIndex},${'#'}{page.pageSize}
   	</if>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:/git/ymy/ymy-admin\src/main/java</basedir>
+	<basePackage>com.mars</basePackage>
+	<db>
+		<dbName>ymy</dbName>
+		<user>ymy</user>
+		<pwd>ymy123456</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost:3306/ymy?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	
+	<module>
+		<persistance>mybatis</persistance>
+		<name>merchant</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="merchant_info"/>
+		<table name="staff_info"/>
+		<table name="mch_member_role"/>
+		<table name="mch_article_category"/>
+		<table name="mch_member_info"/>
+		<table name="mch_article_info"/>
+		<table name="mch_member_score_record"/>
+		<table name="mch_goods_category"/>
+		<table name="mch_member_order_record"/>
+		<table name="mch_goods_info"/>
+		<table name="mch_member_plugin_record"/>
+		<table name="mch_plugin_prize"/>
+		<table name="mch_order_info"/>
+		<table name="mch_plugin_properties"/>
+		<table name="mch_sys_goods_detail"/>
+	</module>
+	<module>
+		<persistance>mybatis</persistance>
+		<name>sys</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="sys_goods_category"/>
+		<table name="sys_goods_info"/>
+		<table name="sys_plugin_category"/>
+		<table name="sys_plugin_info"/>
+		<table name="sys_goods_plugin_ref"/>
+		<table name="sys_article_category"/>
+		<table name="sys_article_info"/>
+	</module>
+</configure>

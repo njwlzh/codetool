@@ -35,8 +35,8 @@ public class ${entityCamelName}DaoImpl extends HibernateDao implements ${entityC
 	}
 
 	@Override
-	public void delete${entityCamelName}(${entityCamelName} ${entityName}) {
-		delete(${entityName});
+	public void updateState(${entityCamelName} ${entityName}) {
+		update(${entityName});
 	}
 
 	@Override

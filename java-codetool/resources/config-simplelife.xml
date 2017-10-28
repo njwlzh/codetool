@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:\git\simplelife\simplelife-admin\src\main\java</basedir>
+	<basePackage>com.mars</basePackage>
+	<db>
+		<dbName>simplelife</dbName>
+		<user>simplelife</user>
+		<pwd>simplelife</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost:3306/simplelife?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	
+	<module>
+		<persistance>mybatis</persistance>
+		<name>simplelife</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="manager_info"/>
+		<!-- <table name="user_info"/>
+		<table name="company_info"/>
+		<table name="coupon_info"/>
+		<table name="com_user_ref"/>
+		<table name="user_coupon_record"/>
+		<table name="article_category"/>
+		<table name="article_info"/> -->
+		
+	</module>
+</configure>

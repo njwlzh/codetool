@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>D:/youmai/workspace/back/src/main/java</basedir>
+	<basePackage>cn.redair.manager</basePackage>
+	<db>
+		<dbName>htu</dbName>
+		<dbType>oracle</dbType>
+		<user>redairb2c</user>
+		<pwd>ykncTQMl6r</pwd>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<url>jdbc:oracle:thin:@10.1.7.81:1521:htu</url>
+	</db>
+	<packageSetting>
+		<actionPackage>controller</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>biz</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>jdbc</persistance>
+		<name>goods</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="B2C_FLIGHT_SALE_RECORD" prefix="B2C_"/>
+		<table name="B2C_GOODS_STOCK" prefix="B2C_"/>
+		<table name="B2C_GOODS_STOCK_LOG" prefix="B2C_"/>
+	</module>
+</configure>

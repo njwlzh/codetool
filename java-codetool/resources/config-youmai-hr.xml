@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:\git\youmai-hrm\hrm-common\src\main\java</basedir>
+	<basePackage>cn.youmaigroup</basePackage>
+	<db>
+		<dbName>youmaihrm</dbName>
+		<user>youmaihrm</user>
+		<pwd>youmaihrm</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost:3306/youmaihrm?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<!-- 
+	<module>
+		<persistance>mybatis</persistance>
+		<name>sys</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="sys_dict"/>
+		<table name="sys_menu_info"/>
+		<table name="sys_log_info"/>
+	</module>
+	-->
+	<!-- 
+	<module>
+		<persistance>mybatis</persistance>
+		<name>company</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="company_info"/>
+		<table name="company_insurance_config"/> 
+		<table name="role_info"/>
+		<table name="ROLE_MENU_COMPONENT_REF"/>
+		<table name="dept_info"/>
+		<table name="role_menu_ref"/>
+		
+	</module>
+	 -->
+	<module>
+		<persistance>mybatis</persistance>
+		<name>hrm</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		
+		<table name="staff_dept_ref"/>
+		<!-- 
+		<table name="staff_info"/>
+		<table name="staff_post_ref"/>
+		<table name="staff_role_ref"/>
+		<table name="staff_salary_info"/>
+		<table name="staff_contract_info"/>
+		<table name="staff_insurance_info"/>
+		<table name="staff_profile_info"/>
+		<table name="staff_log_info"/> 
+		-->
+		
+	</module>
+	<!-- <module>
+		<persistance>mybatis</persistance>
+		<name>finance</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="salary_pay_apply"/>
+		<table name="staff_salary"/>
+		<table name="salary_insurance_info"/>
+		<table name="salary_insurance_for_accountant"/>
+		
+	</module> -->
+</configure>

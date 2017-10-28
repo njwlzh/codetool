@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>D:/youmai/workspace/common/src/main/java</basedir>
+	<basePackage>cn.redair.B2C</basePackage>
+	<db>
+		<dbName>redairb2c</dbName>
+		<dbType>oracle</dbType>
+		<user>redairb2c</user>
+		<pwd>ykncTQMl6r</pwd>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<url>jdbc:oracle:thin:@10.1.7.81:1521:htu</url>
+	</db>
+	<packageSetting>
+		<actionPackage>controller</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>jdbc</persistance>
+		<name>goods</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<table name="B2C_GOODS_CHANNEL_INFO" prefix="B2C_"/>
+	</module>
+</configure>

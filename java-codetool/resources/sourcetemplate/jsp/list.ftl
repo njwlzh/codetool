@@ -67,8 +67,8 @@
 	                                            	</#list>
 	                                             </#if>
 	                                                <td align="center">
-	                                                	<a href="${"$"}{contextPath}/${moduleName}/remove${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${entityName}.${col.propertyName}}</#list>" target="_self" class="btn btn-danger btn-xs lock"><i class="fa fa-lock"></i> 删除</a>
-	                                                	<a href="${"$"}{contextPath}/${moduleName}/toEdit${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${entityName}.${col.propertyName}}</#list>" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+	                                                	<a href="${"$"}{contextPath}/${moduleName}/updateState?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${entityName}.${col.propertyName}}</#list>&state=2" target="_self" class="btn btn-danger btn-xs lock"><i class="fa fa-lock"></i>禁用</a>
+	                                                	<a href="${"$"}{contextPath}/${moduleName}/toEdit${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${entityName}.${col.propertyName}}</#list>" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i>编辑</a>
 	                                                </td>
 	                                            </tr>
                                             </c:forEach>
@@ -83,7 +83,7 @@
 									             	<c:set var="currentPage" value="${"$"}{paging.pageNo}" />
 													<c:set var="totalPage" value="${"$"}{paging.pageCount}" />
 													<c:set var="actionUrl" value="${"$"}{contextPath }/${moduleName}/list${entityCamelName}?page=" />
-													<c:set var="urlParas" value="" />
+													<c:set var="urlParas" value="${"$"}{urlSearch}" />
 					                				<%@include file="../common/paginate.jsp" %>
 					                			</div>
 					                		</div>

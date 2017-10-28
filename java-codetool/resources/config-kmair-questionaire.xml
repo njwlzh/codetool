@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:/git/kmair-questionaire/src/main/java</basedir>
+	<basePackage>com.kmair</basePackage>
+	<db>
+		<dbName>htu</dbName>
+		<dbType>oracle</dbType>
+		<user>xspj</user>
+		<pwd>test</pwd>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<!-- <url>jdbc:oracle:thin:@localhost:1521:xe</url> -->
+		<url>jdbc:oracle:thin:@10.116.4.34:1521:ORCL</url>
+	</db>
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	<module>
+		<persistance>mybatis</persistance>
+		<name>questionaire</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>mvc</framework>
+		<!-- <table name="LOG_INFO"/>
+		<table name="QUESTIONAIRE_INFO"/>
+		<table name="SMS_LOG_INFO"/>
+		<table name="sms_template"/> -->
+		<table name="IBE_PASSENGER_INFO"/>
+		<table name="PSGER_QUESTIONAIRE_RECORD"/>
+		<table name="FLIGHT_SCHEDULE_INFO"/>
+		<table name="MOBILE_BLACKLIST"/>
+	</module>
+</configure>
