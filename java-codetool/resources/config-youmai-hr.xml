@@ -7,7 +7,7 @@
 		<user>youmaihrm</user>
 		<pwd>youmaihrm</pwd>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://localhost:3306/youmaihrm?useUnicode=true&amp;characterEncoding=utf-8</url>
+		<url>jdbc:mysql://camphost:3306/youmaihrm?useUnicode=true&amp;characterEncoding=utf-8</url>
 	</db>
 	<packageSetting>
 		<actionPackage>action</actionPackage>
@@ -50,12 +50,12 @@
 	 -->
 	<module>
 		<persistance>mybatis</persistance>
-		<name>hrm</name>
+		<name>company</name>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<savePath></savePath>
 		<framework>mvc</framework>
 		
-		<table name="staff_dept_ref"/>
+		<table name="data_right_ref"/>
 		<!-- 
 		<table name="staff_info"/>
 		<table name="staff_post_ref"/>

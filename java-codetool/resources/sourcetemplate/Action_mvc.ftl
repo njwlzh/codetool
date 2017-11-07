@@ -135,7 +135,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	@RequestMapping(value = "/updateState",method=RequestMethod.POST)
 	public ModelAndView updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
 		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
-		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.${col.propertyName}</#list>,${entityName}.state);
+		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.get${col.propertyCamelName}()</#list>,${entityName}.getState());
 		return mv;
 	}
 

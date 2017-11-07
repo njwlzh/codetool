@@ -52,7 +52,7 @@
   </update>
   
   <update id="updateState">
-  	update ${tableFullName} set state=${'#'}{${state}} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${propertyName}}</#list>
+  	update ${tableFullName} set state=${'#'}{state} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${col.propertyName}}</#list>
   </update>
   
   <select id="findByKey" resultMap="BaseResultMap">

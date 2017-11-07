@@ -39,7 +39,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	}
 
 	@Override
-	void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType} ${col.propertyName}</#list>,Integer state); {
+	public void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType} ${col.propertyName}</#list>,Integer state){
 		${entityName}Dao.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}</#list>,state);
 	}
 
