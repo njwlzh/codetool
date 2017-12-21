@@ -295,8 +295,10 @@ public class DataBase2File {
     	setBaseInfo(obj,module);
     	File saveDir=getSaveFilePath(module,module.getViewPackage());
     	for (String action : actions) {
-	    	File saveFile = new File(saveDir,action+table.getEntityCamelName()+".jsp");
-	    	
+	    	File saveFile = new File(saveDir,table.getEntityName());
+	    	saveFile.mkdirs();
+	    	saveFile = new File(saveFile,"/"+action+table.getEntityCamelName()+".jsp");
+	    	//saveFile = new File(saveFile,table.getEntityName());
 	    	String savePath =saveFile.getAbsolutePath();
 	    	System.out.println("生成文件："+savePath);
 	    	FreemarkerUtil.createDoc(obj, "jsp/"+action, savePath);

@@ -34,7 +34,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
  *
  */
 @Controller
-@RequestMapping("/${moduleName}")
+@RequestMapping("/${moduleName}/${entityName}")
 public class ${entityCamelName}Action extends BaseAction {
 	
 	@Resource(name=${entityCamelName}Service.BEAN_ID)
@@ -53,7 +53,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/list${entityCamelName}")
 	public ModelAndView load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
-		ModelAndView mv = new ModelAndView("/${moduleName}/list${entityCamelName}");
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/list${entityCamelName}");
 		if (page<1){
 			page=1;
 		}
@@ -75,7 +75,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/show${entityCamelName}")
 	public ModelAndView load${entityName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
-		ModelAndView mv = new ModelAndView("/${moduleName}/show${entityCamelName}");
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/show${entityCamelName}");
 		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		mv.addObject("${entityName}",${entityName});
 		return mv;
@@ -83,7 +83,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	
 	@RequestMapping(value="/toAdd${entityCamelName}")
 	public ModelAndView toAdd${entityCamelName}(){
-		ModelAndView mv = new ModelAndView("/${moduleName}/add${entityCamelName}");
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/add${entityCamelName}");
 		return mv;
 	}
 	
@@ -98,7 +98,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	</#if>
 	@RequestMapping(value = "/save${entityCamelName}",method=RequestMethod.POST)
 	public ModelAndView save${entityCamelName}(${validate}${entityCamelName} ${entityName}){
-		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
+		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/${entityName}/list${entityCamelName}");
 		${entityName}Service.save${entityCamelName}(${entityName});
 		return mv;
 	}
@@ -106,7 +106,7 @@ public class ${entityCamelName}Action extends BaseAction {
 
 	@RequestMapping(value="/toEdit${entityCamelName}")
 	public ModelAndView toEdit${entityCamelName}(<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
-		ModelAndView mv = new ModelAndView("/${moduleName}/edit${entityCamelName}");
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/edit${entityCamelName}");
 		${entityCamelName} ${entityName}= ${entityName}Service.loadByKey(<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		mv.addObject("${entityName}",${entityName});
 		return mv;
@@ -123,7 +123,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	</#if>
 	@RequestMapping(value = "/update${entityCamelName}",method=RequestMethod.POST)
 	public ModelAndView update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
-		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
+		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/${entityName}/list${entityCamelName}");
 		${entityName}Service.update${entityCamelName}(${entityName});
 		return mv;
 	}
@@ -132,9 +132,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param ${entityCamelName}
 	 * @return
 	 */
-	@RequestMapping(value = "/updateState",method=RequestMethod.POST)
+	@RequestMapping(value = "/updateState")
 	public ModelAndView updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
-		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/list${entityCamelName}");
+		ModelAndView mv = new ModelAndView("redirect:/${moduleName}/${entityName}/list${entityCamelName}");
 		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.get${col.propertyCamelName}()</#list>,${entityName}.getState());
 		return mv;
 	}
