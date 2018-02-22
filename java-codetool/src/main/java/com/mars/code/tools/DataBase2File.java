@@ -89,7 +89,7 @@ public class DataBase2File {
         generateDaoFile(tb, module);//生成dao
         if ("dorado".equals(module.getFramework())) {
         	generateViewFile(tb,module);//生成view
-        } else if ("mvc".equals(module.getFramework())) {
+        } else if ("mvc".equals(module.getFramework()) || "rest".equals(module.getFramework())) {
         	generateJspFile(tb,module);//生成jsp
         }
         StringBuffer sb = new StringBuffer();
@@ -261,7 +261,7 @@ public class DataBase2File {
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Action.java");
     	
     	String templateName="Action";
-    	if (module.getFramework().equals("mvc")) {
+    	if (module.getFramework().equals("mvc") || module.getFramework().equals("rest")) {
     		templateName="Action_"+module.getFramework();
     	}
     	String savePath =saveFile.getAbsolutePath();
@@ -301,7 +301,11 @@ public class DataBase2File {
 	    	//saveFile = new File(saveFile,table.getEntityName());
 	    	String savePath =saveFile.getAbsolutePath();
 	    	System.out.println("生成文件："+savePath);
-	    	FreemarkerUtil.createDoc(obj, "jsp/"+action, savePath);
+	    	if (module.getFramework().equals("rest")) {
+	    		FreemarkerUtil.createDoc(obj, "jsp/rest/"+action, savePath);
+	    	} else {
+	    		FreemarkerUtil.createDoc(obj, "jsp/"+action, savePath);
+	    	}
     	}
     }
     
