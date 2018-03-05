@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ${basePackage}.base.BaseAction;
@@ -152,7 +153,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	</#if>
 	@RequestMapping(value = "/ajax/update${entityCamelName}",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> res update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
+	public Map<String,Object> update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
 		Map<String,Object> res = new HashMap<String,Object>();
 		${entityName}Service.update${entityCamelName}(${entityName});
 		
@@ -166,7 +167,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/ajax/updateState")
 	@ResponseBody
-	public ModelAndView updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
+	public Map<String,Object> updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
 		Map<String,Object> res = new HashMap<String,Object>();
 		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.get${col.propertyCamelName}()</#list>,${entityName}.getState());
 		res.put("state",0);
