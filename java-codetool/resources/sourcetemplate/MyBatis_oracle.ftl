@@ -38,14 +38,18 @@
   	select <include refid="Base_Column_List"/> from ${tableFullName} where ${primaryKey!}=${'#'}{id}
   </select>
   
-  <select id="find${entityCamelName}List" resultMap="BaseResultMap">
-  	select * from(select a.*,ROWNUM rn from(
-  	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
+  <sql id="BaseCondition">
   	<#list columns as col>
   	<if test="map.${col.propertyName}!=null">
   	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
+  </sql>
+  
+  <select id="find${entityCamelName}List" resultMap="BaseResultMap">
+  	select * from(select a.*,ROWNUM rn from(
+  	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
+  	<include refid="BaseCondition"/>
   	order by ${primaryKey!} desc
   	) a 
   	<if test="page.pageSize>0">
@@ -59,10 +63,6 @@
   </select>
   <select id="count${entityCamelName}" resultType="int">
   	select count(*) from ${tableFullName} where 1=1
-  	<#list columns as col>
-  	<if test="map.${col.propertyName}!=null">
-  	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
-  	</if>
-    </#list>
+  	<include refid="BaseCondition"/>
   </select>
 </mapper>

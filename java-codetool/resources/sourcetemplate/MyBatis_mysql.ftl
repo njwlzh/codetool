@@ -60,13 +60,17 @@
   	<#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${col.propertyName}}</#list>
   </select>
   
-  <select id="find${entityCamelName}List" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
+  <sql id="BaseCondition">
   	<#list columns as col>
   	<if test="map.${col.propertyName}!=null">
   	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
+  </sql>
+  
+  <select id="find${entityCamelName}List" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
+  	<include refid="BaseCondition"/>
   	order by <#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.columnName!} desc</#list>
   	<if test="page.pageSize>0">
   	limit ${'#'}{page.firstEntityIndex},${'#'}{page.pageSize}
@@ -74,10 +78,6 @@
   </select>
   <select id="count${entityCamelName}" resultType="int">
   	select count(*) from ${tableFullName} where 1=1
-  	<#list columns as col>
-  	<if test="map.${col.propertyName}!=null">
-  	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
-  	</if>
-    </#list>
+  	<include refid="BaseCondition"/>
   </select>
 </mapper>
