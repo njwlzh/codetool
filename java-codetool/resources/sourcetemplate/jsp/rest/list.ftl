@@ -59,21 +59,6 @@
                                         <tbody>
                                         </tbody>
                                     </table>
-                                    <#--
-                                    <div class="row DTTTFooter">
-					                	<div class="col-sm-6">
-					                		<div aria-live="polite" role="status" id="simpledatatable_info" class="dataTables_info">共${"$"}{paging.pageCount}页-- ${"$"}{paging.entityCount }条数据</div></div>
-					                		<div class="col-sm-6">
-					                			<div id="simpledatatable_paginate" class="dataTables_paginate paging_bootstrap">
-									             	<c:set var="currentPage" value="${"$"}{paging.pageNo}" />
-													<c:set var="totalPage" value="${"$"}{paging.pageCount}" />
-													<c:set var="actionUrl" value="${"$"}{contextPath }/${moduleName}/list${entityCamelName}?page=" />
-													<c:set var="urlParas" value="${"$"}{urlSearch}" />
-					                				<%@include file="../common/paginate.jsp" %>
-					                			</div>
-					                		</div>
-				                	</div>
-				                	--#>
                                 </div>
                             </div>
                         </div>
@@ -89,24 +74,24 @@
 		<tr>
          <#if columns??>
 			<#list columns as col>
-        	<td>${'$'}{${col.propertyName}}</td>
+        	<td>${"$"}{"$"}{${col.propertyName}}</td>
         	</#list>
          </#if>
             <td align="center">
-            	<a <#list primaryKeyList as col> ${col.propertyName}="${'$'}{${col.propertyName}}"</#list> class="btn btn-danger btn-xs lock btnDelete"><i class="fa fa-lock"></i>禁用</a>
-            	<a class="btn btnEdit" href="${"$"}{contextPath}/${moduleName}/${entityName}/toEdit${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${'$'}{${col.propertyName}}</#list>" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i>编辑</a>
+            	<a <#list primaryKeyList as col> {"$"}{col.propertyName}="${"$"}${'$'}{${col.propertyName}}"</#list> class="btn btn-danger btn-xs lock btnDelete"><i class="fa fa-lock"></i>禁用</a>
+            	<a class="btn btnEdit" href="${"$"}{"$"}{"$"}{contextPath}/${moduleName}/${entityName}/toEdit${entityCamelName}?<#list primaryKeyList as col><#if col_index gt 0>&</#if>${col.propertyName}=${"$"}{"$"}{${col.propertyName}}</#list>" target="_self" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i>编辑</a>
             </td>
         </tr>
 	</script>
    	<%@include file="../common/admin_js.jsp" %>
     <script>
-    function loadData(){
+    function reloadData(){
     	var data={page:1};
     	$.ajax({
-    		url:"${"$"}{contextPath}/${moduleName}/${entityName}/ajax/load${entityCamelName}List",
+    		url:"{"$"}{contextPath}/${moduleName}/${entityName}/ajax/load${entityCamelName}List",
     		data:data,
     		success:function(res){
-    			if (res.state=0){
+    			if (res.state==0){
     				var $box=$("#tbList").find("tbody").empty();
     				$("#itemTmpl").tmpl(res.data.entities).appendTo($box);
     			}
@@ -115,9 +100,9 @@
     }
     
     function updateState(<#list primaryKeyList as col><#if col_index gt 0>,</#if>${col.propertyName}</#list>){
-    	var data={<#list primaryKeyList as col><#if col_index gt 0>,</#if>${col.propertyName}</#list>,state:2};
+    	var data={<#list primaryKeyList as col><#if col_index gt 0>,</#if>${col.propertyName}:${col.propertyName}</#list>,state:2};
     	$.ajax({
-    		url:"${"$"}{contextPath}/${moduleName}/${entityName}/ajax/updateState",
+    		url:"{"$"}{contextPath}/${moduleName}/${entityName}/ajax/updateState",
     		data:data,
     		success:function(res){
     			if (res.state==0){
@@ -134,6 +119,8 @@
     		var $btn=$(this);
     		updateState(<#list primaryKeyList as col><#if col_index gt 0>,</#if>$btn.attr("${col.propertyName}")</#list>);
     	});
+    	
+    	reloadData();
     });
     </script>
 </body>
