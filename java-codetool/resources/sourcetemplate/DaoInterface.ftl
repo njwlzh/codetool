@@ -24,6 +24,12 @@ public interface ${entityCamelName}Dao {
 	void save${entityCamelName}(${entityCamelName} ${entityName});
 	
 	/**
+	 * 批量新增的${remark!}
+	 * @param info 要保存的${remark!}列表
+	 */
+	void batchSave${entityCamelName}(@Param(value="list")List<${entityCamelName}> list);
+	
+	/**
 	 * 修改${remark!}
 	 * @param info 要保存的${remark!}对象
 	 */

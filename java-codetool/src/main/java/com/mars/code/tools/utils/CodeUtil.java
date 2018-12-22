@@ -98,8 +98,8 @@ public class CodeUtil {
         	type="INTEGER";
         } else if (type.equals("TEXT")){
     		type="LONGVARCHAR";
-    	} else if (type.equals("DATETIME")) {
-    		type="DATE";
+    	} else if (type.equals("DATETIME") || type.equals("DATE")) {
+    		type="TIMESTAMP";
     	} else if (type.equals("VARCHAR2")) {
     		type="VARCHAR";
     	} else if (type.equals("NUMBER")) {

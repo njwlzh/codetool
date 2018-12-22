@@ -25,7 +25,7 @@
 	  	</#if>
   		<#if !col.identity! && col_index gt 0 && col_index lt columns?size-1>,</#if>
   	</#list>)
-  	<#if primaryKeyList?size==1>
+  	<#if primaryKeyList?size&gt;0>
   		<#list primaryKeyList as col>
   		<#if col.identity>
 	    <selectKey resultType="${col.propertyType}" keyProperty="${col.propertyName}" >
@@ -34,6 +34,20 @@
 	    </#if>
 	    </#list>
     </#if>
+  </insert>
+  
+  <insert id="batchSave${entityCamelName}" parameterType="java.util.List">
+  	insert into ${tableFullName} (<#list columns as col><#if col_index gt 0 && !col.identity>${col.columnName}</#if><#if !col.identity && col_index gt 0 && col_index lt columns?size-1>,</#if></#list>) 
+  	values 
+  	<foreach collection="list" item="item" index="index" separator=",">
+  	(
+  	<#list columns as col>
+	  	<#if col_index gt 0 && !col.identity>
+	  	${'#'}{item.${col.propertyName},jdbcType=${col.columnType}}
+	  	</#if>
+  		<#if !col.identity! && col_index gt 0 && col_index lt columns?size-1>,</#if>
+  	</#list>)
+  	</foreach>
   </insert>
   
   <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">

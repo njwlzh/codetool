@@ -302,7 +302,15 @@ public class DataBase2File {
 	    	String savePath =saveFile.getAbsolutePath();
 	    	System.out.println("生成文件："+savePath);
 	    	if (module.getFramework().equals("rest")) {
-	    		FreemarkerUtil.createDoc(obj, "jsp/rest/"+action, savePath);
+	    		String templateDir = "jsp/rest/";
+	    		if (module.getTheme()==null || module.getTheme().length()==0){
+		    		if (config.getTheme()!=null && config.getTheme().length()>0){
+		    			templateDir = templateDir + config.getTheme()+"/";
+		    		}
+	    		} else {
+	    			templateDir = templateDir+module.getTheme()+"/";
+	    		}
+	    		FreemarkerUtil.createDoc(obj, templateDir+action, savePath);
 	    	} else {
 	    		FreemarkerUtil.createDoc(obj, "jsp/"+action, savePath);
 	    	}

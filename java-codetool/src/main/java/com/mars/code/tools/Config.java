@@ -24,6 +24,7 @@ public class Config {
 	private Db db; //连接数据库的配置信息
 	private List<Module> modules; //要生成的代码模块列表
 	private PackageSetting packageSetting; //全局包名设置
+	private String theme; //全局界面模板风格
 	public String getBaseDir() {
 		return baseDir;
 	}
@@ -55,6 +56,13 @@ public class Config {
 	public void setPackageSetting(PackageSetting packageSetting) {
 		this.packageSetting = packageSetting;
 	}
+	
+	public String getTheme() {
+		return theme;
+	}
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
 	@Override
 	public String toString() {
 		return "Config [baseDir=" + baseDir + ", basePackage=" + basePackage
@@ -77,10 +85,18 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kmair-member.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-hr.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-jinke-ppm.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing-mis.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-system.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
+		Element elemThem = XmlUtil.getChild(root, "theme");
+		if (elemThem==null){
+			cfg.setTheme("");
+		} else {
+			cfg.setTheme(elemThem.getTextTrim());
+		}
 		cfg.setBasePackage(XmlUtil.getChild(root, "basePackage").getTextTrim());
 		//加载数据库配置
 		Element dbNode = XmlUtil.getChild(root, "db");
@@ -145,6 +161,14 @@ public class Config {
 			m.setServicePackage(elePkg==null?pkgSetting.getServicePackage():elePkg.getTextTrim());
 			elePkg = XmlUtil.getChild(e, "viewPackage");
 			m.setViewPackage(elePkg==null?pkgSetting.getViewPackage():elePkg.getTextTrim());
+			//页面模板
+			Element eleTheme = XmlUtil.getChild(e, "theme");
+			if (eleTheme!=null) {
+				String theme = eleTheme.getTextTrim();
+				if (theme!=null && theme.length()>0){
+					m.setTheme(theme);
+				}
+			}
 			//加载table
 			m.setTables(readTableConfList(e));
 			moduleList.add(m);

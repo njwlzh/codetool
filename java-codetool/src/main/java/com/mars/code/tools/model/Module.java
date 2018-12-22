@@ -25,6 +25,9 @@ public class Module {
 	private String mapperPackage;
 	private String myBatisPackage;
 	private List<TableConf> tables; //配置的数据表信息
+	
+	private String theme; //模块使用的页面模板，可独立于全局配置的模板，如果不设置，则默认使用全局配置
+	
 	public String getName() {
 		return name;
 	}
@@ -118,17 +121,20 @@ public class Module {
 	public void setFramework(String framework) {
 		this.framework = framework;
 	}
+	
+	public String getTheme() {
+		return theme;
+	}
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
 	@Override
 	public String toString() {
-		return "Module [name=" + name + ", persistance=" + persistance
-				+ ", isDeleteTablePrefix=" + isDeleteTablePrefix
-				+ ", savePath=" + savePath + ", framework=" + framework
-				+ ", daoPackage=" + daoPackage + ", daoImplPackage="
-				+ daoImplPackage + ", servicePackage=" + servicePackage
-				+ ", serviceImplPackage=" + serviceImplPackage
-				+ ", entityPackage=" + entityPackage + ", actionPackage="
-				+ actionPackage + ", viewPackage=" + viewPackage
-				+ ", mapperPackage=" + mapperPackage + ", myBatisPackage="
-				+ myBatisPackage + ", tables=" + tables + "]";
+		return "Module [name=" + name + ", persistance=" + persistance + ", isDeleteTablePrefix=" + isDeleteTablePrefix
+				+ ", savePath=" + savePath + ", framework=" + framework + ", daoPackage=" + daoPackage
+				+ ", daoImplPackage=" + daoImplPackage + ", servicePackage=" + servicePackage + ", serviceImplPackage="
+				+ serviceImplPackage + ", entityPackage=" + entityPackage + ", actionPackage=" + actionPackage
+				+ ", viewPackage=" + viewPackage + ", mapperPackage=" + mapperPackage + ", myBatisPackage="
+				+ myBatisPackage + ", tables=" + tables + ", theme=" + theme + "]";
 	}
 }
