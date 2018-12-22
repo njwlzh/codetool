@@ -8,13 +8,18 @@ import java.util.List;
  *
  */
 public class TableConf {
-	private String name; //表名
-	private String prefix;//表前缀
-	private String entityName;//配置的实体类名
-	private String parentField;// 如果是主从表，则从表需设置该属性，表示父表的关联属性
-	private String refType; //表关联类型，分为OneToOne,OneToMany等
-	
-	private List<TableConf> subTables = new ArrayList<TableConf>();//子表列表，即一对多的子表
+	//表名
+	private String name;
+	//表前缀
+	private String prefix;
+	//生成的实体类名
+	private String entityName;
+	// 如果是主从表，则从表需设置该属性，表示父表的关联属性
+	private String parentField;
+	//表关联类型，分为OneToOne,OneToMany等，如果与父表的关系是多对一，则会在父表对应的 entity中生成该子表的List集合属性
+	private String refType; 
+	//子表列表，即一对多的子表
+	private List<TableConf> subTables = new ArrayList<TableConf>();
 	
 	public String getName() {
 		return name;
