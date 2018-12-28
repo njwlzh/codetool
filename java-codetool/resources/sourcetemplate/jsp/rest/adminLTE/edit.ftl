@@ -35,8 +35,8 @@
 							<#list columns as col>
 								<#if !col.primaryKey>
                                 <div class="form-group">
-                                    <label class="col-md-2 col-sm-2 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
-                                    <div class="col-md-6 col-sm-6">
+                                    <label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
+                                    <div class="col-lg-9 col-md-9 col-sm-7">
                                     	<#if col.length gt 100>
                                     	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}></textarea>
                                     	<#else>

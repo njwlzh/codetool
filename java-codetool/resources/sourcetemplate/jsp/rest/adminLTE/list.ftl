@@ -47,7 +47,7 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="box">
-                    <table id="tbMain" class="table table-bordered table-hover table-striped">
+                    <table id="tableMain" class="table table-bordered table-hover table-striped">
                         <thead class="bordered-darkorange">
                             <tr role="row">
                             <#if columns??>

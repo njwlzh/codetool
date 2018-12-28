@@ -1,6 +1,4 @@
 package ${basePackage}.${moduleName}.${actionPackage};
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,18 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 <#if module.persistance=="hibernate" || module.persistance=="jpa">
 import javax.validation.Valid;
 </#if>
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ${basePackage}.base.BaseAction;
 import ${basePackage}.common.Pagination;
+import ${basePackage}.common.utils.RequestUtil;
+import ${basePackage}.common.constant.BaseStateConstants;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
@@ -65,18 +61,17 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/ajax/load${entityCamelName}List")
 	@ResponseBody
-	public Map<String,Object> load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
-		Map<String,Object> res = new HashMap<String,Object>();
-		if (page<1){
-			page=1;
-		}
-		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(10, page);
-		Map<String,Object> params = new HashMap<String, Object>();
+	public Map<String,Object> load${entityCamelName}List(HttpServletRequest req){
+		Integer pageNo = getPageNo();
+		Integer pageSize = getPageSize();
+		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(pageSize, pageNo);
+		
+		Map<String,Object> params = RequestUtil.getParameters();
+		params.put("state", BaseStateConstants.NORMAL.getIntCode());
+		
 		${entityName}Service.load${entityCamelName}List(paging,params);
 		
-		res.put("state",0);
-		res.put("data",paging);
-		return res;
+		return getReturnData(paging);
 	}
 	
 	/**
