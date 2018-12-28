@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configure>
-	<basedir>F:/git/babyshop/babyshop/src/main/java</basedir>
+	<basedir>F:/code/babyshop</basedir>
 	<basePackage>com.mars</basePackage>
 	<db>
 		<dbName>babyshop</dbName>
@@ -26,6 +26,6 @@
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<savePath></savePath>
 		<framework>dorado</framework>
-		<table name="shop_user_stock_record"/>
+		<table name="shop_inventory_info"/>
 	</module>
 </configure>

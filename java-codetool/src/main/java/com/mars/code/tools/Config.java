@@ -86,7 +86,8 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-hr.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-jinke-ppm.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing-mis.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing-mis.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kitchen-coat.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-system.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		

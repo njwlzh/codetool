@@ -151,9 +151,9 @@ public class DataBase2File {
     	String moduleName=module.getName().replace(".", "/");
     	File saveDir;
     	if (CodeUtil.isEmpty(module.getSavePath())) {
-    		saveDir = new File(config.getBaseDir()+ File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+packageName);
+    		saveDir = new File(config.getBaseDir()+ File.separator + "java"+File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+packageName);
     	} else {
-    		saveDir = new File(module.getSavePath(),moduleName+File.separator+packageName);
+    		saveDir = new File(module.getSavePath(),"java"+File.separator +moduleName+File.separator+packageName);
     	}
     	if (!saveDir.exists()) {
     		saveDir.mkdirs();
@@ -211,9 +211,9 @@ public class DataBase2File {
     		if (!CodeUtil.isEmpty(module.getSavePath())){ //配置了模块文件保存，则把文件全部生成到此目录下
     			saveDir = new File(module.getSavePath());
     		} else {
-    			saveDir = new File(config.getBaseDir());
-    			saveDir = saveDir.getParentFile();
-    			saveDir = new File(saveDir, "resources/mapper" + File.separator+module.getName());
+    			saveDir = new File(config.getBaseDir(),"resources");
+    			//saveDir = saveDir.getParentFile();
+    			saveDir = new File(saveDir, "mapper" + File.separator+module.getName());
     		}
     		if (!saveDir.exists()) {
         		saveDir.mkdirs();
@@ -293,11 +293,11 @@ public class DataBase2File {
     	String[] actions = {"add","edit","list"};
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,module.getViewPackage());
+    	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());// getSaveFilePath(module,module.getViewPackage());
     	for (String action : actions) {
 	    	File saveFile = new File(saveDir,table.getEntityName());
 	    	saveFile.mkdirs();
-	    	saveFile = new File(saveFile,"/"+action+table.getEntityCamelName()+".jsp");
+	    	saveFile = new File(saveFile,action+table.getEntityCamelName()+".jsp");
 	    	//saveFile = new File(saveFile,table.getEntityName());
 	    	String savePath =saveFile.getAbsolutePath();
 	    	System.out.println("生成文件："+savePath);
