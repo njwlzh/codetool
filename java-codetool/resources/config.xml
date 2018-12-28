@@ -13,6 +13,15 @@
 		<driver>com.mysql.jdbc.Driver</driver>
 		<url>jdbc:mysql://localhost:3306/database_name?useUnicode=true&amp;characterEncoding=utf-8</url>
 	</db>
+	
+	<!-- 需要忽略生成到entity的字段 -->
+	<!-- 对于一般稍大型的系统，有很多数据表有相同的字段，如创建人、创建时间、修改人、修改时间、数据状态等，
+	这些可能使用统一的父类字段属性，那么这些字段可以在生成配置文件的时候进行忽略而不显示
+	 -->
+	<ignoreColumns>
+		create_user,create_time,update_user,update_time,state,note,com_id
+	</ignoreColumns>
+	
 	<!-- 包名配置 -->
 	<packageSetting>
 		<actionPackage>action</actionPackage>

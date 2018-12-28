@@ -14,10 +14,13 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.code.tools.dbservice.ITableService;
+import com.mars.code.tools.model.Column;
 import com.mars.code.tools.model.Module;
 import com.mars.code.tools.model.Table;
 import com.mars.code.tools.model.TableConf;
@@ -128,6 +131,21 @@ public class DataBase2File {
      * @param table 
      */  
     private void generateEntityFile(Table table,Module module) {
+    	//这里应该把过滤的字段取出来，并在table中把相关的column删除后，再生成
+    	List<Column> columns = new ArrayList<Column>();
+    	for (Column col : table.getColumns()){
+    		columns.add(col);
+    	}
+    	
+    	for (String name : config.getIgnoreColumns()){
+    		for (Column col : table.getColumns()){
+    			if (col.getColumnName().toLowerCase().equals(name.toLowerCase())){
+    				table.getColumns().remove(col);
+    				break;
+    			}
+    		}
+    	}
+    	
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
     	File saveDir=getSaveFilePath(module,module.getEntityPackage());
@@ -139,6 +157,8 @@ public class DataBase2File {
     	String savePath =saveFile.getAbsolutePath();
     	FreemarkerUtil.createDoc(obj, "Entity", savePath);
     	System.out.println("生成文件："+savePath);
+    	
+    	table.setColumns(columns);
     }
     
     /**

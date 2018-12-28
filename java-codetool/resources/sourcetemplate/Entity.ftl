@@ -50,6 +50,10 @@ public class ${entityCamelName!} implements Serializable {
 			<#assign defaultValue=defaultValue+"L">
 		<#elseif type=="Double">
 			<#assign defaultValue=defaultValue+"d">
+		<#elseif type=="BigDecimal">
+			<#assign defaultValue="BigDecimal.valueOf("+defaultValue+")">
+		<#elseif type=="String">
+			<#assign defaultValue="\""+defaultValue+"\"">
 		</#if>
 	</#if>
 	<#if col.nullable==false && (module.persistance=="hibernate" || module.persistance=="jpa")>

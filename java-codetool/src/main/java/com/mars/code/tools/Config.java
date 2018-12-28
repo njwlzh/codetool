@@ -1,6 +1,7 @@
 package com.mars.code.tools;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.dom4j.Attribute;
@@ -25,6 +26,7 @@ public class Config {
 	private List<Module> modules; //要生成的代码模块列表
 	private PackageSetting packageSetting; //全局包名设置
 	private String theme; //全局界面模板风格
+	private List<String> ignoreColumns;
 	public String getBaseDir() {
 		return baseDir;
 	}
@@ -62,6 +64,13 @@ public class Config {
 	}
 	public void setTheme(String theme) {
 		this.theme = theme;
+	}
+	
+	public List<String> getIgnoreColumns() {
+		return ignoreColumns;
+	}
+	public void setIgnoreColumns(List<String> ignoreColumns) {
+		this.ignoreColumns = ignoreColumns;
 	}
 	@Override
 	public String toString() {
@@ -116,6 +125,15 @@ public class Config {
 		db.setUser(XmlUtil.getChild(dbNode, "user").getTextTrim());
 		db.setDbName(XmlUtil.getChild(dbNode, "dbName").getTextTrim());
 		cfg.setDb(db);
+		
+		//设置公共忽略字段
+		//加载ignoreColumns
+		List<String> ignoreColumnList = new ArrayList<String>();
+		Element ignoreColumns = XmlUtil.getChild(root, "ignoreColumns");
+		if (ignoreColumns!=null){
+			ignoreColumnList = Arrays.asList(ignoreColumns.getTextTrim().split(","));
+		}
+		cfg.setIgnoreColumns(ignoreColumnList);
 		//加载包名设置
 		Element pkg = XmlUtil.getChild(root, "packageSetting");
 		PackageSetting pkgSetting=new PackageSetting();
