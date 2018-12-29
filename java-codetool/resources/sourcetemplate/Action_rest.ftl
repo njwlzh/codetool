@@ -49,7 +49,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param page
 	 */
 	@RequestMapping(value = "/toList${entityCamelName}")
-	public ModelAndView to${entityCamelName}List(HttpServletRequest req){
+	public ModelAndView toList${entityCamelName}(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/list${entityCamelName}");
 		return mv;
 	}

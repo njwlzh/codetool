@@ -51,8 +51,8 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param params 参数列表
 	 * @param page
 	 */
-	@RequestMapping(value = "/list${entityCamelName}")
-	public ModelAndView load${entityCamelName}List(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
+	@RequestMapping(value = "/toList${entityCamelName}")
+	public ModelAndView toList${entityCamelName}(HttpServletRequest req,@RequestParam(value="page",defaultValue="1",required=false) int page){
 		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/list${entityCamelName}");
 		if (page<1){
 			page=1;
@@ -74,7 +74,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/show${entityCamelName}")
-	public ModelAndView load${entityName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
+	public ModelAndView show${entityName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/show${entityCamelName}");
 		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		mv.addObject("${entityName}",${entityName});

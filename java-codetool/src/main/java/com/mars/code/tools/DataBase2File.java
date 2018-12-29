@@ -325,7 +325,7 @@ public class DataBase2File {
     		}
     	}
     	
-    	String[] actions = {"add","edit","list"};
+    	String[] actions = {"add","edit","list","show"};
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
     	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());// getSaveFilePath(module,module.getViewPackage());
