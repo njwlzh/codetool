@@ -17,7 +17,7 @@ WEB端与服务器端的交互方式支持MVC和restful风格，建议采用rest
 具体配置请参考：resource/config.xml
 
 -------------------------------------------------------------------------------
-[code]
+` ``XML
 	<?xml version="1.0" encoding="UTF-8"?>
 	<!-- 配置示例说明 -->
 	<configure>
@@ -80,4 +80,4 @@ WEB端与服务器端的交互方式支持MVC和restful风格，建议采用rest
 			<table name="cms_comment"/>
 		</module>
 	</configure>
-[/code]
+` ``
