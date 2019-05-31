@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>F:\code\erpcash</basedir>
+	<basePackage>com.kmguozhuan.erp</basePackage>
+	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin，默认为beyondAdmin -->
+	<theme>adminLTE</theme>
+	<!-- 生成的模板文件类型，可选择jsp, html，默认为jsp -->
+	<pageType>html</pageType>
+	<db>
+		<dbName>erps</dbName>
+		<user>erp</user>
+		<pwd>erp</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost:3306/erps?useUnicode=true&amp;characterEncoding=utf-8</url>
+	</db>
+	
+	<ignoreColumns>
+		create_user,create_time,update_user,update_time,state,com_id
+	</ignoreColumns>
+	
+	<packageSetting>
+		<actionPackage>action</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	
+	
+	<module>
+		<persistance>mybatis</persistance>
+		<name>weixin</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>rest</framework>
+		
+		
+		<table name="com_wx_message_tmpl"/>
+	</module>
+	
+	
+</configure>

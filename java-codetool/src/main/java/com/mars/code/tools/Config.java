@@ -26,6 +26,7 @@ public class Config {
 	private List<Module> modules; //要生成的代码模块列表
 	private PackageSetting packageSetting; //全局包名设置
 	private String theme; //全局界面模板风格
+	private String pageType; //页面类型
 	private List<String> ignoreColumns;
 	public String getBaseDir() {
 		return baseDir;
@@ -66,6 +67,12 @@ public class Config {
 		this.theme = theme;
 	}
 	
+	public String getPageType() {
+		return pageType;
+	}
+	public void setPageType(String pageType) {
+		this.pageType = pageType;
+	}
 	public List<String> getIgnoreColumns() {
 		return ignoreColumns;
 	}
@@ -96,8 +103,10 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-jinke-ppm.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-washing-mis.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kitchen-coat.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kitchen-coat.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-system.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-erpcash.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-gzerp.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
@@ -106,6 +115,12 @@ public class Config {
 			cfg.setTheme("");
 		} else {
 			cfg.setTheme(elemThem.getTextTrim());
+		}
+		Element elemThemePage = XmlUtil.getChild(root, "pageType");
+		if (elemThemePage==null){
+			cfg.setPageType("jsp");
+		} else {
+			cfg.setPageType(elemThemePage.getTextTrim());
 		}
 		cfg.setBasePackage(XmlUtil.getChild(root, "basePackage").getTextTrim());
 		//加载数据库配置

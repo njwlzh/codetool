@@ -330,14 +330,16 @@ public class DataBase2File {
     	setBaseInfo(obj,module);
     	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());// getSaveFilePath(module,module.getViewPackage());
     	for (String action : actions) {
+    		//生成文件类型
+    		String pageType=config.getPageType();
 	    	File saveFile = new File(saveDir,table.getEntityName());
 	    	saveFile.mkdirs();
-	    	saveFile = new File(saveFile,action+table.getEntityCamelName()+".jsp");
+	    	saveFile = new File(saveFile,action+table.getEntityCamelName()+"."+pageType);
 	    	//saveFile = new File(saveFile,table.getEntityName());
 	    	String savePath =saveFile.getAbsolutePath();
 	    	System.out.println("生成文件："+savePath);
-	    	if (module.getFramework().equals("rest")) {
-	    		String templateDir = "jsp/rest/";
+	    	//if (module.getFramework().equals("rest")) {
+	    		String templateDir = pageType+"/"+module.getFramework()+"/";
 	    		if (module.getTheme()==null || module.getTheme().length()==0){
 		    		if (config.getTheme()!=null && config.getTheme().length()>0){
 		    			templateDir = templateDir + config.getTheme()+"/";
@@ -346,9 +348,9 @@ public class DataBase2File {
 	    			templateDir = templateDir+module.getTheme()+"/";
 	    		}
 	    		FreemarkerUtil.createDoc(obj, templateDir+action, savePath);
-	    	} else {
-	    		FreemarkerUtil.createDoc(obj, "jsp/"+action, savePath);
-	    	}
+	    	//} else {
+	    	//	FreemarkerUtil.createDoc(obj, pageType+"/"+action, savePath);
+	    	//}
     	}
     	//还原为完整的列
     	table.setColumns(columns);
