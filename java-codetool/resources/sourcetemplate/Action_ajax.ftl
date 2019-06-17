@@ -7,11 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 <#if module.persistance=="hibernate" || module.persistance=="jpa">
 import javax.validation.Valid;
 </#if>
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import ${basePackage}.base.BaseAction;
@@ -31,7 +30,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
  * ${remark!}
  *
  */
-@RestController
+@Controller
 @RequestMapping("/${moduleName}/${entityName}")
 public class ${entityCamelName}Action extends BaseAction {
 	
@@ -44,6 +43,16 @@ public class ${entityCamelName}Action extends BaseAction {
 		</#list>
 	</#if>
 	
+	/**
+	 * 查询${remark!}
+	 * @param params 参数列表
+	 * @param page
+	 */
+	@RequestMapping(value = "/toList${entityCamelName}")
+	public ModelAndView toList${entityCamelName}(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/list${entityCamelName}");
+		return mv;
+	}
 	
 	/**
 	 * 查询${remark!}
@@ -66,6 +75,19 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
+	 * 显示${remark!}详情页面
+	 <#list primaryKeyList as col>
+	 * @param ${col.propertyName}
+	 </#list>
+	 * @return
+	 */
+	@RequestMapping(value = "/show${entityCamelName}")
+	public ModelAndView show${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/show${entityCamelName}");
+		return mv;
+	}
+	
+	/**
 	 * 加载${remark!}详情
 	 <#list primaryKeyList as col>
 	 * @param ${col.propertyName}
@@ -81,6 +103,12 @@ public class ${entityCamelName}Action extends BaseAction {
 		res.put("state",0);
 		res.put("data",${entityName});
 		return res;
+	}
+	
+	@RequestMapping(value="/toAdd${entityCamelName}")
+	public ModelAndView toAdd${entityCamelName}(){
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/add${entityCamelName}");
+		return mv;
 	}
 	
 	/**
@@ -100,6 +128,13 @@ public class ${entityCamelName}Action extends BaseAction {
 		
 		res.put("state",0);
 		return res;
+	}
+	
+
+	@RequestMapping(value="/toEdit${entityCamelName}")
+	public ModelAndView toEdit${entityCamelName}(<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
+		ModelAndView mv = new ModelAndView("/${moduleName}/${entityName}/edit${entityCamelName}");
+		return mv;
 	}
 	
 	/**

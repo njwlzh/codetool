@@ -92,7 +92,7 @@ public class DataBase2File {
         generateDaoFile(tb, module);//生成dao
         if ("dorado".equals(module.getFramework())) {
         	generateViewFile(tb,module);//生成view
-        } else if ("mvc".equals(module.getFramework()) || "rest".equals(module.getFramework())) {
+        } else if ("mvc".equals(module.getFramework()) || "rest".equals(module.getFramework()) || "ajax".equals(module.getFramework())) {
         	generateJspFile(tb,module);//生成jsp
         }
         StringBuffer sb = new StringBuffer();

@@ -116,8 +116,10 @@
 	<!-- 文本编辑框插件 -->
 	<!--日期插件 -->
 	<script src="/static/dateformat.js"></script>
-	<script src="/static/validate.js"></script>
 	<script src="/static/common.js"></script>
+	
+	<script language="javascript" src="/static/tabs.js"></script>
+	<script language="javascript" src="/static/topDialog.js"></script>
 	<script>
 	var URL_SAVE="/${moduleName}/${entityName}/ajax/save${entityCamelName}";
 	$(document).ready(function(){

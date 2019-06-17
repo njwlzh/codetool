@@ -157,8 +157,11 @@
 	<!-- 文本编辑框插件 -->
 	<!--日期插件 -->
 	<script src="/static/dateformat.js"></script>
-	<script src="/static/validate.js"></script>
 	<script src="/static/common.js"></script>
+	
+	<script language="javascript" src="/static/tabs.js"></script>
+	<script language="javascript" src="/static/topDialog.js"></script>
+
 	<script type="text/javascript">
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
 	var URL_ADD="/${moduleName}/${entityName}/toAdd${entityCamelName}";
