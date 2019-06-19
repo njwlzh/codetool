@@ -119,7 +119,7 @@
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
 	
 	$(document).ready(function(){
- 		reloadNodeData();
+ 		loadDicts(null,reloadNodeData);
  	});
 	</script>
 </body>

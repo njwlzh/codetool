@@ -209,8 +209,9 @@
  				reloadTableData("tableMain");
  			}
  		});
-		loadDicts();
-		loadData("tableMain",{columns:columns["tableMain"],columnDefs:columnDefs["tableMain"]});	
+		loadDicts(null,function(){
+			loadData("tableMain",{columns:columns["tableMain"],columnDefs:columnDefs["tableMain"]});	
+		});
 	});
 </script>
 </body>
