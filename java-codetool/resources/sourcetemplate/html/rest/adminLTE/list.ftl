@@ -36,8 +36,7 @@
 	<link rel="stylesheet" href="/static/style/icon/icon.css" />
 	<link rel="stylesheet" href="/static/webuploader/webuploader.css" />
 
-	<link rel="stylesheet" href="/static/mycss/common.css">
-	<link rel="stylesheet" href="/static/toastr/toastr.min.css">
+	<link rel="stylesheet" href="/static/common.css">
 	
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,6 +44,9 @@
 	<script src="/static/adminlte/plugins/ie9/html5shiv.min.js"></script>
 	<script src="/static/adminlte/plugins/ie9/respond.min.js"></script>
 	<![endif]-->
+	<style>
+	section.content{margin-top:40px;}
+	</style>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -74,18 +76,6 @@
 			<section class="content">
 				<div class="box">
 					<table id="tableMain" class="table table-bordered table-hover table-striped">
-						<thead class="bordered-darkorange">
-							<tr role="row">
-							<#if columns??>
-								<#list columns as col>
-								<th>${col.remark!}</th>
-								</#list>
-							</#if>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
 					</table>
 				</div>
 				<!-- /box -->
@@ -164,19 +154,20 @@
 
 	<script type="text/javascript">
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
-	var URL_ADD="/${moduleName}/${entityName}/toAdd${entityCamelName}";
-	var URL_EDIT="/${moduleName}/${entityName}/toEdit${entityCamelName}";
+	var URL_ADD="/html/${moduleName}/${entityName}/add${entityCamelName}.html";
+	var URL_EDIT="/html/${moduleName}/${entityName}/edit${entityCamelName}.html";
 	var URL_DELETE="/${moduleName}/${entityName}/ajax/updateState";
-	var URL_SHOW="/${moduleName}/${entityName}/show${entityCamelName}";
+	var URL_SHOW="/html/${moduleName}/${entityName}/show${entityCamelName}.html";
 	var URL_LIST="/${moduleName}/${entityName}/ajax/load${entityCamelName}List";
 	//表字段结构定义
 	var columns={"tableMain":[
 		<#if columns??>
+		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": '${col.propertyName!}'},
+        {"data": '${col.propertyName!}',title:'${col.remark!}',"sortable":true,"name":"${col.propertyName!}","editable":true},
         </#list>
         </#if>
-        {"data": null}
+        {"data": null,"title":"操作",className:"text-center"}
 	]};
 	var columnDefs={
 		"tableMain":[

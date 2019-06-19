@@ -1,6 +1,5 @@
 package ${basePackage}.${moduleName}.${entityPackage};
 
-import java.io.Serializable;
 <#if subTables?size gt 0>
 import java.util.List;
 </#if>
@@ -23,6 +22,8 @@ import ${imp!};
 </#list>
 </#if>
 
+import ${basePackage}.common.persists.BaseEntity;
+
 /**
 * ${remark!}
 */
@@ -30,9 +31,9 @@ import ${imp!};
 @Entity
 @Table(name="${tableFullName!}")
 </#if>
-public class ${entityCamelName!} implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class ${entityCamelName!} extends BaseEntity {
+	
+	private static final long serialVersionUID = ${serializeValue}L;
 	
 	<#if columns??>
 	<#list columns as col>
@@ -126,8 +127,7 @@ public class ${entityCamelName!} implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		sb.append("${entityCamelName!}[");
 		<#list columns as col>
-		sb.append("${(col_index gt 0)?string(",","")}${col.propertyName}=");
-		sb.append(${col.propertyName});
+		sb.append("${(col_index gt 0)?string(",","")}${col.propertyName}=").append(${col.propertyName});
 		</#list>
 		sb.append("]");
 		return sb.toString();

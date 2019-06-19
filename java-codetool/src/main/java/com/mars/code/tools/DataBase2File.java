@@ -16,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -147,6 +148,7 @@ public class DataBase2File {
     	}
     	
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
+    	obj.put("serializeValue", getIntString(9,18));
     	setBaseInfo(obj,module);
     	File saveDir=getSaveFilePath(module,module.getEntityPackage());
     	if (!saveDir.exists()) {
@@ -428,6 +430,30 @@ public class DataBase2File {
 		}
 		return result.toString();
 	}
+	
+	/**
+	 * 得到0-i之间的随机数的固定长度的字符串
+	 * 
+	 * 例如：随机最大值是9，长度3，那么返回的结果可能是009,010,001
+	 * @param i  随机最大值
+	 * @param len 长度
+	 */
+	public static String getIntString(int i, int len) {
+		if( i<= 0 || len <=0) return "";
+		Random r = new Random();
+		String str = "";
+		for (int j = 0; j < len; j++) {
+			str += String.valueOf(r.nextInt(i));
+		}
+		if (str.length()>len) {
+			str = str.substring(0, len);
+		}
+		if (str.startsWith("0")) {
+			str = "1"+str.substring(1);
+		}
+		return str;
+	}
+
     
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {  
         DataBase2File reverser = new DataBase2File(); 

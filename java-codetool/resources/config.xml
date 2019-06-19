@@ -46,7 +46,13 @@
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<!-- 文件保存路径，默认为全局配置的目录，这里可以单独指定保存目录 -->
 		<savePath></savePath>
-		<!-- 采用的数据交互架构，可选：mvc, rest, dorado -->
+		<!-- 采用的数据交互架构，可选：mvc, rest,ajax, dorado -->
+		<!-- 其中：
+		mvc为jsp文件，采用jstl填充页面数据
+		ajax也为jsp文件，部分数据交互采用ajax
+		rest为html静态文件，纯前后端分离
+		dorado为dorado项目，具体请参考www.bsdn.org官网
+		 -->
 		<framework>mvc</framework>
 		<!-- 以下为要生成代码的数据库表，支持嵌套 -->
 		<!-- table标签属性说明

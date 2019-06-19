@@ -35,9 +35,8 @@
 	<!-- 图标扩充  -->
 	<link rel="stylesheet" href="/static/style/icon/icon.css" />
 	<link rel="stylesheet" href="/static/webuploader/webuploader.css" />
-
-	<link rel="stylesheet" href="/static/mycss/common.css">
-	<link rel="stylesheet" href="/static/toastr/toastr.min.css">
+	
+	<link rel="stylesheet" href="/static/common.css">
 	
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -130,7 +129,7 @@
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
 	
 	$(document).ready(function(){
- 		reloadFormData();
+ 		reloadFormData("formData");
  	});
 	</script>
 </body>

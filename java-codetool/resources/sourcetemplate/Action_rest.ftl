@@ -1,5 +1,4 @@
 package ${basePackage}.${moduleName}.${actionPackage};
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -10,11 +9,10 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import ${basePackage}.base.BaseAction;
+import ${basePackage}.base.ResponseJson;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.common.utils.RequestUtil;
 import ${basePackage}.common.constant.BaseStateConstants;
@@ -31,6 +29,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
  * ${remark!}
  *
  */
+@SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/${moduleName}/${entityName}")
 public class ${entityCamelName}Action extends BaseAction {
@@ -50,9 +49,9 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param params 参数列表
 	 * @param page
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/ajax/load${entityCamelName}List")
-	@ResponseBody
-	public Map<String,Object> load${entityCamelName}List(HttpServletRequest req){
+	public ResponseJson load${entityCamelName}List(HttpServletRequest req){
 		Integer pageNo = getPageNo();
 		Integer pageSize = getPageSize();
 		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(pageSize, pageNo);
@@ -73,14 +72,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/ajax/load${entityCamelName}")
-	@ResponseBody
-	public Map<String,Object> load${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
-		Map<String,Object> res = new HashMap<String,Object>();
+	public ResponseJson load${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		
-		res.put("state",0);
-		res.put("data",${entityName});
-		return res;
+		return new ResponseJson(0,${entityName});
 	}
 	
 	/**
@@ -93,13 +88,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	<#assign validate="@Valid ">
 	</#if>
 	@RequestMapping(value = "/ajax/save${entityCamelName}",method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String,Object> save${entityCamelName}(${validate}${entityCamelName} ${entityName}){
-		Map<String,Object> res = new HashMap<String,Object>();
+	public ResponseJson save${entityCamelName}(${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.save${entityCamelName}(${entityName});
 		
-		res.put("state",0);
-		return res;
+		return new ResponseJson(0,${entityName});
 	}
 	
 	/**
@@ -112,13 +104,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	<#assign validate="@Valid ">
 	</#if>
 	@RequestMapping(value = "/ajax/update${entityCamelName}",method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String,Object> update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
-		Map<String,Object> res = new HashMap<String,Object>();
+	public ResponseJson update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.update${entityCamelName}(${entityName});
 		
-		res.put("state",0);
-		return res;
+		return new ResponseJson(0,null);
 	}
 	/**
 	 * 修改${remark!}状态
@@ -126,12 +115,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/ajax/updateState")
-	@ResponseBody
-	public Map<String,Object> updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
-		Map<String,Object> res = new HashMap<String,Object>();
+	public ResponseJson updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
 		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.get${col.propertyCamelName}()</#list>,${entityName}.getState());
-		res.put("state",0);
-		return res;
+		
+		return new ResponseJson(0,null);
 	}
 
 
