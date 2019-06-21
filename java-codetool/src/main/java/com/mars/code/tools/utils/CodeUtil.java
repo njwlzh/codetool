@@ -96,7 +96,7 @@ public class CodeUtil {
     	type=type.replace(" UNSIGNED","");
     	if (type.equals("INT")) {
         	type="INTEGER";
-        } else if (type.equals("TEXT")){
+        } else if (type.equals("TEXT") || type.equals("LONGTEXT")){
     		type="LONGVARCHAR";
     	} else if (type.equals("DATETIME") || type.equals("DATE")) {
     		type="TIMESTAMP";
