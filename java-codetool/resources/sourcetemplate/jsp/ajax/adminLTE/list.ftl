@@ -5,7 +5,7 @@
 <!-- Head -->
 <head>
 	<meta charset="utf-8" />
-	<title>管理系统</title>
+	<title>${caption!}管理</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -52,7 +52,7 @@
                             <tr role="row">
                             <#if columns??>
 								<#list columns as col>
-								<th>${col.remark!}</th>
+								<th>${col.caption!}</th>
                                 </#list>
                             </#if>
                                 <th>操作</th>
@@ -69,7 +69,7 @@
 	<#if columns??>
 		<#list columns as col>
 		<div class="form-group">
-			<label class="col-md-4 col-sm-4">${col.remark!}</label>
+			<label class="col-md-4 col-sm-4">${col.caption!}</label>
 			<div class="col-md-8 col-sm-8">
 				<input type="text" class="form-control" name="${col.propertyName!}">
 			</div>

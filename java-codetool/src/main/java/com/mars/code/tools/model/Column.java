@@ -4,11 +4,12 @@ public class Column {
     
     private String columnName;
     private String columnType; //数据表的类型
-    private String remark;
+    private String remark; //字段注释
+    private String caption; //字段名，用于显示表单提示、表格头
     private String propertyName; //属性名，首字小写
     private String propertyType; //属性的java type
     private String propertyCamelName; //首字大写的属性名
-    private boolean isPrimaryKey;
+    private boolean isPrimaryKey; //就否是主键
     private boolean isNullable;//是否允许为空
     private Long length; //字段长度
     private Object defaultValue; //字段默认值
@@ -84,6 +85,12 @@ public class Column {
 		this.identity = identity;
 	}
 	
+	public String getCaption() {
+		return caption;
+	}
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
 	@Override
 	public String toString() {
 		return "Column [columnName=" + columnName + ", columnType=" + columnType + ", remark=" + remark

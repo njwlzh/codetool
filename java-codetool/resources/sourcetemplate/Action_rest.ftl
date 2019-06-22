@@ -1,5 +1,8 @@
 package ${basePackage}.${moduleName}.${actionPackage};
 import java.util.Map;
+import java.io.File;
+import java.net.URLEncoder;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -7,13 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 </#if>
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import ${basePackage}.base.BaseAction;
 import ${basePackage}.base.ResponseJson;
 import ${basePackage}.common.Pagination;
+import ${basePackage}.common.utils.ExcelUtil;
+import ${basePackage}.common.utils.FileUtil;
+import ${basePackage}.common.utils.StringUtil;
 import ${basePackage}.common.utils.RequestUtil;
 import ${basePackage}.common.constant.BaseStateConstants;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
@@ -122,4 +137,70 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 
 
+	/**
+	 * 导出表格数据，前台需传入页面URI和要导出的表格名称，其它为查询的参数
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/export", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<byte[]> export(HttpServletRequest req) throws Exception{
+		byte[] fileArray = new byte[0];
+		//导出所有数据
+		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(-1, 1);
+		
+		Map<String,Object> params = RequestUtil.getParameters();
+		params.put("state", BaseStateConstants.NORMAL.getIntCode());
+		
+		String tableConfig = getTableConfig();
+		//如果没有查询到表格的配置，则不进行下载
+		if (StringUtil.isEmpty(tableConfig)) {
+			return null;
+		}
+		
+		${entityName}Service.load${entityCamelName}List(paging,params);
+		//转换数据列表为jsonArray，方便导出Excel对应的键值
+		JSONArray datas = (JSONArray)JSON.toJSON(paging.getEntities());
+		//列头
+		List<Map> excelHeaders = JSON.parseArray(tableConfig, Map.class);
+		
+		File f = new File(FileUtil.getTempRandomFilePath("xls"));
+		ExcelUtil.writeExcel(f, excelHeaders, datas);
+		fileArray = FileUtil.file2Byte(f);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentDispositionFormData("attachment", URLEncoder.encode("数据列表","UTF-8")+".xls");
+		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		
+		return new ResponseEntity<byte[]>(fileArray, httpHeaders, HttpStatus.OK);
+	}
+
+
+	/**
+	 * 上传Excel，并解析后返回到列表页
+	 * @param req
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/ajax/importExcel")
+	public ResponseJson importExcel(HttpServletRequest req, MultipartFile file) throws Exception{
+		//Map<String,Object> params = RequestUtil.getParameters();
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+	    MultipartHttpServletRequest multiReq = multipartResolver.resolveMultipart(req);
+	    
+	    String pageUri = multiReq.getParameter("pageUri");
+	    String tableId = multiReq.getParameter("tableId");
+	    
+		String tableConfig = getTableConfig(pageUri, tableId);
+		//如果没有查询到表格的配置，则不进行下载
+		if (StringUtil.isEmpty(tableConfig)) {
+			return null;
+		}
+		
+		//列头
+		List<Map> excelHeaders = JSON.parseArray(tableConfig, Map.class);
+		//解析Excel文件
+		List<Map> datas = ExcelUtil.readExcel(file.getInputStream(), excelHeaders);
+		
+		return new ResponseJson(0,datas);
+	}
 }

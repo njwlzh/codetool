@@ -81,8 +81,21 @@ public class SqlServerTableService implements ITableService {
         getTableColumns(table,con);
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
         table.setPrimaryKeys(getTablePrimaryKeys(tableName, con));
-        table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
-        table.setRemark(getTableRemark(tableName, con));
+        table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey()));
+        
+        String remark = getTableRemark(tableName, con);
+        String caption = remark;
+        int dotIdx = remark.indexOf(":");
+        if (dotIdx == -1) {
+        	dotIdx = remark.indexOf("：");
+        }
+        if (dotIdx != -1) {
+        	caption = remark.substring(0, dotIdx);
+        	remark = remark.substring(dotIdx+1);
+        }
+        table.setCaption(caption);
+        table.setRemark(remark);
+        
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
         table.setPrimaryPropertyType(CodeUtil.convertType(table.getPrimaryKeyType()));
         table.setPrimaryCamelProperty(CodeUtil.convertToCamelCase(table.getPrimaryKey()));
@@ -157,7 +170,21 @@ public class SqlServerTableService implements ITableService {
 	        		type="VARCHAR";
 	        	}
 	        	col.setColumnType(type);
-	        	col.setRemark(rs.getString("comments"));
+	        	
+	        	String remark = rs.getString("comments");
+	        	String caption = remark;
+	            int dotIdx = remark.indexOf(":");
+	            if (dotIdx == -1) {
+	            	dotIdx = remark.indexOf("：");
+	            }
+	            if (dotIdx != -1) {
+	            	caption = remark.substring(0, dotIdx);
+	            	remark = remark.substring(dotIdx+1);
+	            }
+	            col.setCaption(caption);
+	        	
+	        	col.setRemark(remark);
+	        	
 	        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(colName));
 	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));

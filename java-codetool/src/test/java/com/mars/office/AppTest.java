@@ -35,4 +35,9 @@ public class AppTest
     {
         assertTrue( true );
     }
+    
+    public static void main(String[] args) {
+		String s="测试：后续注释";
+		System.out.println(s.indexOf("[：|:]"));
+	}
 }

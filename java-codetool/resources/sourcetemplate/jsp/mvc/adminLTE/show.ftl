@@ -27,7 +27,7 @@
                             <i class="fa fa-home"></i>
                             <a href="${"$"}{contextPath}/index">主页</a>
                         </li>
-                        <li class="active">修改${remark!}</li>
+                        <li class="active">${caption!}详情</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -50,12 +50,12 @@
 										<#list columns as col>
 											<#if !col.primaryKey>
 	                                        <div class="form-group">
-	                                            <label class="col-md-2 col-sm-2 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
+	                                            <label class="col-md-2 col-sm-2 control-label">${col.caption!}${(col.nullable)?string('','(*)')}</label>
 	                                            <div class="col-md-6 col-sm-6">
 	                                            	<#if col.length gt 100>
 	                                            	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')} disalbed>${'$'}{${entityName}.${col.propertyName}}</textarea>
 	                                            	<#else>
-	                                                <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} disabled/>
+	                                                <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${'$'}{${entityName}.${col.propertyName}}" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} disabled/>
 	                                            	</#if>
 	                                            </div>
 	                                        </div>

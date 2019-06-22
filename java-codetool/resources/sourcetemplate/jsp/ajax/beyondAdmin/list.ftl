@@ -5,7 +5,7 @@
 <!-- Head -->
 <head>
     <meta charset="utf-8" />
-	<title>后台管理系统</title>
+	<title>管理${caption!}</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,7 +27,7 @@
                             <i class="fa fa-home"></i>
                             <a href="${"$"}{contextPath}/index">主页</a>
                         </li>
-                        <li class="active">${remark!}管理</li>
+                        <li class="active">${caption!}管理</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -50,7 +50,7 @@
                                             <tr role="row">
 	                                        <#if columns??>
 												<#list columns as col>
-                                                <th>${col.remark!}</th>
+                                                <th>${col.caption!}</th>
 	                                            </#list>
 	                                        </#if>
                                                 <th>操作</th>

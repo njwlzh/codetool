@@ -5,7 +5,7 @@
 <!-- Head -->
 <head>
 	<meta charset="utf-8" />
-	<title>管理系统</title>
+	<title>添加${caption!}</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,12 +31,12 @@
                             <#if columns??>
 							<#list columns as col>
                             <div class="form-group">
-                                <label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
+                                <label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.caption!}${(col.nullable)?string('','(*)')}</label>
                                 <div class="col-lg-9 col-md-9 col-sm-7">
                                     <#if col.length gt 100>
                                 	<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}></textarea>
                                 	<#else>
-                                    <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${col.defaultValue!}" placeholder="请输入${col.remark!}" ${(col.nullable)?string('','require')} />
+                                    <input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${col.defaultValue!}" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} />
                                 	</#if>
                                 </div>
                             </div>

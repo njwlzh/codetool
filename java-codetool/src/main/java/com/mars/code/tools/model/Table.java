@@ -11,6 +11,7 @@ public class Table {
     private String entityName; //实体名
     private String entityCamelName; //完整实体类名
     private String remark; //表注释
+    private String caption; //表的标题，用于显示页面的标题、表格标题等
     private String primaryKey;//主键
     private List<String> primaryKeys; //联合主键
     private String primaryProperty;//主键属性名
@@ -179,6 +180,14 @@ public class Table {
 
 	public void setPrimaryKeyList(List<Column> primaryKeyList) {
 		this.primaryKeyList = primaryKeyList;
+	}
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
 
 	@Override

@@ -3,7 +3,7 @@
 <!-- Head -->
 <head>
 	<meta charset="utf-8" />
-	<title>管理系统</title>
+	<title>${caption!} 详情</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -61,7 +61,7 @@
 						<#list columns as col>
 							<#if !col.primaryKey>
 							<div class="form-group">
-								<label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.remark!}${(col.nullable)?string('','(*)')}</label>
+								<label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.caption!}${(col.nullable)?string('','(*)')}</label>
 								<div class="col-lg-9 col-md-9 col-sm-7 prop-value" property="${col.propertyName}">
 								</div>
 							</div>

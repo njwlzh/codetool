@@ -84,7 +84,20 @@ public class OracleTableService implements ITableService {
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
         table.setPrimaryKeys(getTablePrimaryKeys(tableName, con));
         table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
-        table.setRemark(getTableRemark(tableName, con));
+       
+        String remark = getTableRemark(tableName, con);
+        String caption = remark;
+        int dotIdx = remark.indexOf(":");
+        if (dotIdx == -1) {
+        	dotIdx = remark.indexOf("：");
+        }
+        if (dotIdx != -1) {
+        	caption = remark.substring(0, dotIdx);
+        	remark = remark.substring(dotIdx+1);
+        }
+        table.setCaption(caption);
+        table.setRemark(remark);
+        
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
         table.setPrimaryPropertyType(CodeUtil.convertType(table.getPrimaryKeyType()));
         table.setPrimaryCamelProperty(CodeUtil.convertToCamelCase(table.getPrimaryKey()));
@@ -156,7 +169,20 @@ public class OracleTableService implements ITableService {
 	        	col.setLength(rs.getLong("data_length"));
 	        	col.setNullable(rs.getString("nullable").equals("YES") || rs.getString("nullable").equals("Y"));
 	        	col.setDefaultValue(rs.getString("data_default"));
-	        	col.setRemark(rs.getString("comments"));
+
+	        	String remark = rs.getString("comments");
+	        	String caption = remark;
+	            int dotIdx = remark.indexOf(":");
+	            if (dotIdx == -1) {
+	            	dotIdx = remark.indexOf("：");
+	            }
+	            if (dotIdx != -1) {
+	            	caption = remark.substring(0, dotIdx);
+	            	remark = remark.substring(dotIdx+1);
+	            }
+	            col.setCaption(caption);
+	        	
+	        	col.setRemark(remark);
 	        	
 	        	for (String primaryKey : primaryKeys){
 		        	if (colName.equalsIgnoreCase(primaryKey)) {

@@ -17,6 +17,8 @@ import com.mars.code.tools.model.Table;
 import com.mars.code.tools.model.TableConf;
 import com.mars.code.tools.utils.CodeUtil;
 
+import freemarker.template.utility.StringUtil;
+
 public class MysqlTableService implements ITableService {
 	
 	private Config config;
@@ -82,21 +84,20 @@ public class MysqlTableService implements ITableService {
         
         //取主键列表
         List<String> keys = getTablePrimaryKeys(tableName, con);
-        /*List<Column> primaryKeyList = new ArrayList<Column>();
-        for (String key : keys){
-        	Column col = new Column();
-        	col.setColumnName(key);
-        	col.setColumnType(getColumnType(table, key));
-        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(key));
-        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(key));
-        	col.setPropertyType(CodeUtil.convertType(key));
-        	
-        	primaryKeyList.add(col);
-        }
-        table.setPrimaryKeyList(primaryKeyList);*/
         table.setPrimaryKeyList(getPrimaryColumns(table, keys));
         
-        table.setRemark(getTableRemark(tableName, con));
+        String remark = getTableRemark(tableName, con);
+        String caption = remark;
+        int dotIdx = remark.indexOf(":");
+        if (dotIdx == -1) {
+        	dotIdx = remark.indexOf("：");
+        }
+        if (dotIdx != -1) {
+        	caption = remark.substring(0, dotIdx);
+        	remark = remark.substring(dotIdx+1);
+        }
+        table.setCaption(caption);
+        table.setRemark(remark);
         table.setEntityCamelName(CodeUtil.isEmpty(tbConf.getEntityName())?CodeUtil.convertToCamelCase(table.getTableName()):tbConf.getEntityName());
         table.setEntityName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getTableName()));
         table.setModule(module);
@@ -123,15 +124,6 @@ public class MysqlTableService implements ITableService {
     				break;
     			}
     		}
-    		/*
-        	Column col = new Column();
-        	col.setColumnName(key);
-        	col.setColumnType(getColumnType(table, key));
-        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(key));
-        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(key));
-        	col.setPropertyType(CodeUtil.convertType(key));
-        	primaryKeyList.add(col);
-    		 */
         }
     	return primaryKeyList;
     }
@@ -156,7 +148,20 @@ public class MysqlTableService implements ITableService {
 	        	String type = rs.getString("data_type").toUpperCase();
 	        	type=CodeUtil.convertJdbcType(type);
 	        	col.setColumnType(type);
-	        	col.setRemark(rs.getString("column_comment"));
+	        	
+	        	String remark = rs.getString("column_comment");
+	        	String caption = remark;
+	            int dotIdx = remark.indexOf(":");
+	            if (dotIdx == -1) {
+	            	dotIdx = remark.indexOf("：");
+	            }
+	            if (dotIdx != -1) {
+	            	caption = remark.substring(0, dotIdx);
+	            	remark = remark.substring(dotIdx+1);
+	            }
+	            col.setCaption(caption);
+	        	
+	        	col.setRemark(remark);
 	        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(colName));
 	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));
@@ -215,7 +220,7 @@ public class MysqlTableService implements ITableService {
 		return colType;
 	}
 	/**
-	 * 表注释
+	 * 表注释，若为null，则返回空字段串
 	 * @param tableName
 	 * @return
 	 * @throws SQLException
@@ -231,7 +236,7 @@ public class MysqlTableService implements ITableService {
 		}
 		rs.close();
 		ps.close();
-		return remark;
+		return remark == null ?"":remark;
 	}
 
 }

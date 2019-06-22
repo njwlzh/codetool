@@ -3,7 +3,7 @@
 <!-- Head -->
 <head>
 	<meta charset="utf-8" />
-	<title>查询${remark}</title>
+	<title>查询${caption!}</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -67,6 +67,7 @@
 						</div>
 						<!--右侧按钮组 -->
 						<div class="pull-right" style="padding-right: 15px;">
+							<span class="hidden" id="pickerImport-tableMain"></span>
 							<a href="javascript:showAddMainInfo();" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</a>
 						</div>
 					</div>
@@ -85,7 +86,7 @@
 	<#if columns??>
 		<#list columns as col>
 		<div class="form-group">
-			<label class="col-md-4 col-sm-4">${col.remark!}</label>
+			<label class="col-md-4 col-sm-4">${col.caption!}</label>
 			<div class="col-md-8 col-sm-8">
 				<input type="text" class="form-control" name="${col.propertyName!}">
 			</div>
@@ -164,7 +165,7 @@
 		<#if columns??>
 		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": '${col.propertyName!}',title:'${col.remark!}',"sortable":true,"name":"${col.propertyName!}","editable":true},
+        {"data": '${col.propertyName!}',title:'${col.caption!}',"sortable":true,"name":"${col.propertyName!}","editable":true},
         </#list>
         </#if>
         {"data": null,"title":"操作",className:"text-center"}
@@ -180,37 +181,8 @@
 
 	
 	$(document).ready(function () {
-		
-	 	// 筛选弹出框
-		$('#btn_filter').click(function() {
-		 	var isVisible=$("#formQuery").is(":visible");
-		 	 if (!isVisible){ 
-		 		$(this).find(".fa").removeClass("fa-caret-right").addClass("fa-caret-down");
-		 		showTip(this,null,function(){
-					$('#'+this.dlg.attr("id")).css('overflow-y','hidden');
-				},{height:'auto',tagId:"formQuery"});
-		 	}else {
-		 		$(".ym-filter-box").hide();
-		 		$(this).find(".fa").removeClass("fa-caret-down").addClass("fa-caret-right");
-		 	}
-		});
-		
-		$("#btnSearch,#btnFormQuery").click(function(){
-			reloadTableData("tableMain");
-		});
-		
-		$("#btnFormReset").click(function(){
-			resetFormQuery()
-		});
-		
-		$("#keyword").on("keyup",function(e){
- 			e=e || event;
- 			if (e.keyCode==13){
- 				reloadTableData("tableMain");
- 			}
- 		});
 		loadDicts(null,function(){
-			loadData("tableMain",{columns:columns["tableMain"],columnDefs:columnDefs["tableMain"]});	
+			loadData("tableMain",{serverSide:true, columns:columns["tableMain"],columnDefs:columnDefs["tableMain"]});	
 		});
 	});
 </script>
