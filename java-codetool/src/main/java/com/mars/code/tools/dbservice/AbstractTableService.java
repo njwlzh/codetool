@@ -90,6 +90,13 @@ public abstract class AbstractTableService {
 	 * @return 返回标题和注释
 	 */
 	protected String[] seperatRemark(String remark) {
+		
+		//先判断是否定义了数据字典信息，若有，则截取前段内容为注释信息
+		int idx = remark.lastIndexOf("||");
+		if (idx != -1) {
+			remark = remark.substring(0,idx);
+		}
+		
 		String caption = remark;
 		int dotIdx = remark.indexOf(REMARK_SEPERATOR);
         if (dotIdx == -1) {
@@ -143,7 +150,7 @@ public abstract class AbstractTableService {
 			}
 			return new String[] {dictKey, json.getString("editorType")};
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			String[] arr = new String[2];
 			if (dictJson.indexOf("dictKey")==-1) {
 				return null;
