@@ -1,7 +1,6 @@
 package com.mars.code.tools.dbservice.impl;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mars.code.tools.Config;
-import com.mars.code.tools.dbservice.ITableService;
+import com.mars.code.tools.dbservice.AbstractTableService;
 import com.mars.code.tools.model.Column;
 import com.mars.code.tools.model.Module;
 import com.mars.code.tools.model.Table;
 import com.mars.code.tools.model.TableConf;
 import com.mars.code.tools.utils.CodeUtil;
 
-public class OracleTableService implements ITableService {
+public class OracleTableService extends AbstractTableService {
 	
 	private Config config;
 	public void setConfig(Config config) {
@@ -78,7 +77,7 @@ public class OracleTableService implements ITableService {
         if (module.isDeleteTablePrefix() && !CodeUtil.isEmpty(tbConf.getPrefix())){
         	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix().toLowerCase(), ""));  
         }
-        System.out.println(tbConf);
+        //System.out.println(tbConf);
         //获取表各字段的信息
         getTableColumns(table,con);
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
@@ -86,17 +85,9 @@ public class OracleTableService implements ITableService {
         table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey())); 
        
         String remark = getTableRemark(tableName, con);
-        String caption = remark;
-        int dotIdx = remark.indexOf(":");
-        if (dotIdx == -1) {
-        	dotIdx = remark.indexOf("：");
-        }
-        if (dotIdx != -1) {
-        	caption = remark.substring(0, dotIdx);
-        	remark = remark.substring(dotIdx+1);
-        }
-        table.setCaption(caption);
-        table.setRemark(remark);
+        String[] remarkArr = seperatRemark(remark);
+        table.setCaption(remarkArr[0]);
+        table.setRemark(remarkArr[1]);
         
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
         table.setPrimaryPropertyType(CodeUtil.convertType(table.getPrimaryKeyType()));
@@ -141,17 +132,17 @@ public class OracleTableService implements ITableService {
 		
 		//查询所有字段
 		sql="SELECT USER_TAB_COLS.TABLE_NAME, USER_TAB_COLS.COLUMN_NAME , "
-+"USER_TAB_COLS.DATA_TYPE, "
-+"USER_TAB_COLS.DATA_LENGTH , "
-+" USER_TAB_COLS.NULLABLE, "
-+" USER_TAB_COLS.COLUMN_ID, "
-+" user_tab_cols.data_default,"
-+"    user_col_comments.comments " 
-+"FROM USER_TAB_COLS  "
-+"inner join user_col_comments on "
-+" user_col_comments.TABLE_NAME=USER_TAB_COLS.TABLE_NAME " 
-+"and user_col_comments.COLUMN_NAME=USER_TAB_COLS.COLUMN_NAME " 
-+"where  USER_TAB_COLS.Table_Name=upper(?)";
+			+"USER_TAB_COLS.DATA_TYPE, "
+			+"USER_TAB_COLS.DATA_LENGTH , "
+			+" USER_TAB_COLS.NULLABLE, "
+			+" USER_TAB_COLS.COLUMN_ID, "
+			+" user_tab_cols.data_default,"
+			+"    user_col_comments.comments " 
+			+"FROM USER_TAB_COLS  "
+			+"inner join user_col_comments on "
+			+" user_col_comments.TABLE_NAME=USER_TAB_COLS.TABLE_NAME " 
+			+"and user_col_comments.COLUMN_NAME=USER_TAB_COLS.COLUMN_NAME " 
+			+"where  USER_TAB_COLS.Table_Name=upper(?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,table.getTableFullName());
 			rs = ps.executeQuery();
@@ -171,18 +162,16 @@ public class OracleTableService implements ITableService {
 	        	col.setDefaultValue(rs.getString("data_default"));
 
 	        	String remark = rs.getString("comments");
-	        	String caption = remark;
-	            int dotIdx = remark.indexOf(":");
-	            if (dotIdx == -1) {
-	            	dotIdx = remark.indexOf("：");
+	        	String[] remarkArr = seperatRemark(remark);
+	        	col.setCaption(remarkArr[0]);
+	        	col.setRemark(remarkArr[1]);
+
+	            //获取定义的数据字典项
+	            String[] dictDef = getColumnDict(col.getRemark());
+	            if (dictDef != null && dictDef[0].length()>0) {
+	            	col.setDictKey(dictDef[0]);
+	            	col.setEditorType(dictDef[1]);
 	            }
-	            if (dotIdx != -1) {
-	            	caption = remark.substring(0, dotIdx);
-	            	remark = remark.substring(dotIdx+1);
-	            }
-	            col.setCaption(caption);
-	        	
-	        	col.setRemark(remark);
 	        	
 	        	for (String primaryKey : primaryKeys){
 		        	if (colName.equalsIgnoreCase(primaryKey)) {
@@ -191,10 +180,6 @@ public class OracleTableService implements ITableService {
 		        	}
 	        	}
 	        	
-	        	//String colKey = rs.getString("column_key");
-	        	//if (!isPrimaryKey(priCols,colKey)) {
-	        	//	col.setPrimaryKey(true);
-	        	//}
 	        	if (col.getPropertyType().indexOf(".")!=-1 && !CodeUtil.existsType(table.getImportClassList(),col.getPropertyType())) {
 	        		table.getImportClassList().add(col.getPropertyType());
 	        	}
@@ -205,21 +190,7 @@ public class OracleTableService implements ITableService {
 			
 			
     }
-    /**
-     * 判断是否是主键
-     * @param priCols 主键列表
-     * @param columnName 要判断的列名
-     * @return
-     */
-    private boolean isPrimaryKey(List<String> priCols,String columnName){
-    	for (String pri : priCols) {
-    		if (pri.equalsIgnoreCase(columnName)) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-    
+        
 
     public String getTablePrimaryKey(String tableName, Connection con) throws SQLException{
     	List<String> keys = getTablePrimaryKeys(tableName, con);
@@ -230,8 +201,6 @@ public class OracleTableService implements ITableService {
     }
     
     public List<String> getTablePrimaryKeys(String tableName, Connection con) throws SQLException{
-    	//DatabaseMetaData dbMeta = con.getMetaData(); 
-    	//ResultSet rs = dbMeta.getPrimaryKeys(null,null,tableName);
     	List<String> keys = new ArrayList<String>();
     	String sql="select a.constraint_name,a.column_name from user_cons_columns a, user_constraints b  where a.constraint_name = b.constraint_name  and b.constraint_type = 'P' and a.table_name = ?";
     	PreparedStatement stmt = con.prepareStatement(sql);

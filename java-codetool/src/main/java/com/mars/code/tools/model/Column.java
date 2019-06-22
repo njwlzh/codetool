@@ -15,6 +15,15 @@ public class Column {
     private Object defaultValue; //字段默认值
     private boolean identity=false;//是否自增长字段
     
+    /**
+     * 如果字段为数据字典项，则此处设置为字典项的parentKey
+     */
+    private String dictKey;
+    /**
+     * 如果为字典项，此属性保存编辑框的类型：select, radio, checkbox
+     */
+    private String editorType;
+    
 	public String getColumnName() {
 		return columnName;
 	}
@@ -91,12 +100,27 @@ public class Column {
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
+	
+	
+	public String getDictKey() {
+		return dictKey;
+	}
+	public void setDictKey(String dictKey) {
+		this.dictKey = dictKey;
+	}
+	public String getEditorType() {
+		return editorType;
+	}
+	public void setEditorType(String editorType) {
+		this.editorType = editorType;
+	}
 	@Override
 	public String toString() {
-		return "Column [columnName=" + columnName + ", columnType=" + columnType + ", remark=" + remark
-				+ ", propertyName=" + propertyName + ", propertyType=" + propertyType + ", propertyCamelName="
+		return "Column [columnName=" + columnName + ", columnType=" + columnType + ", remark=" + remark + ", caption="
+				+ caption + ", propertyName=" + propertyName + ", propertyType=" + propertyType + ", propertyCamelName="
 				+ propertyCamelName + ", isPrimaryKey=" + isPrimaryKey + ", isNullable=" + isNullable + ", length="
-				+ length + ", defaultValue=" + defaultValue + ", identity=" + identity + "]";
+				+ length + ", defaultValue=" + defaultValue + ", identity=" + identity + ", dictKey=" + dictKey
+				+ ", editorType=" + editorType + "]";
 	}
     
 }

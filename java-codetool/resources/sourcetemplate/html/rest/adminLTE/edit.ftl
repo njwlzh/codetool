@@ -65,13 +65,17 @@
 								<#if !col.primaryKey>
 								<div class="form-group">
 									<label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.caption!}${(col.nullable)?string('','(*)')}</label>
+									<#if col.dictKey??>
+									<div class="col-lg-9 col-md-9 col-sm-7" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" property="${col.propertyName}" defaultValue="${col.defaultValue!}"></div>
+									<#else>
 									<div class="col-lg-9 col-md-9 col-sm-7">
 										<#if col.length gt 100>
 										<textarea class="form-control" name="${col.propertyName}" ${(col.nullable)?string('','require')}></textarea>
 										<#else>
-										<input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} />
+										<input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${col.defaultValue!}" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} />
 										</#if>
 									</div>
+									</#if>
 								</div>
 								</#if>
 							</#list>

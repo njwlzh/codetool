@@ -10,16 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mars.code.tools.Config;
-import com.mars.code.tools.dbservice.ITableService;
+import com.mars.code.tools.dbservice.AbstractTableService;
 import com.mars.code.tools.model.Column;
 import com.mars.code.tools.model.Module;
 import com.mars.code.tools.model.Table;
 import com.mars.code.tools.model.TableConf;
 import com.mars.code.tools.utils.CodeUtil;
 
-import freemarker.template.utility.StringUtil;
-
-public class MysqlTableService implements ITableService {
+public class MysqlTableService extends AbstractTableService {
 	
 	private Config config;
 	public void setConfig(Config config) {
@@ -87,17 +85,10 @@ public class MysqlTableService implements ITableService {
         table.setPrimaryKeyList(getPrimaryColumns(table, keys));
         
         String remark = getTableRemark(tableName, con);
-        String caption = remark;
-        int dotIdx = remark.indexOf(":");
-        if (dotIdx == -1) {
-        	dotIdx = remark.indexOf("：");
-        }
-        if (dotIdx != -1) {
-        	caption = remark.substring(0, dotIdx);
-        	remark = remark.substring(dotIdx+1);
-        }
-        table.setCaption(caption);
-        table.setRemark(remark);
+        String[] remarkArr = seperatRemark(remark);
+        table.setCaption(remarkArr[0]);
+        table.setRemark(remarkArr[1]);
+        
         table.setEntityCamelName(CodeUtil.isEmpty(tbConf.getEntityName())?CodeUtil.convertToCamelCase(table.getTableName()):tbConf.getEntityName());
         table.setEntityName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getTableName()));
         table.setModule(module);
@@ -150,18 +141,17 @@ public class MysqlTableService implements ITableService {
 	        	col.setColumnType(type);
 	        	
 	        	String remark = rs.getString("column_comment");
-	        	String caption = remark;
-	            int dotIdx = remark.indexOf(":");
-	            if (dotIdx == -1) {
-	            	dotIdx = remark.indexOf("：");
+	        	String[] remarkArr = seperatRemark(remark);
+	            col.setCaption(remarkArr[0]);
+	            col.setRemark(remarkArr[1]);
+	            
+	            //获取定义的数据字典项
+	            String[] dictDef = getColumnDict(col.getRemark());
+	            if (dictDef != null && dictDef[0].length()>0) {
+	            	col.setDictKey(dictDef[0]);
+	            	col.setEditorType(dictDef[1]);
 	            }
-	            if (dotIdx != -1) {
-	            	caption = remark.substring(0, dotIdx);
-	            	remark = remark.substring(dotIdx+1);
-	            }
-	            col.setCaption(caption);
-	        	
-	        	col.setRemark(remark);
+	             
 	        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(colName));
 	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));

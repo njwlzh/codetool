@@ -1,6 +1,6 @@
 package com.mars.code.tools;
 
-import com.mars.code.tools.dbservice.ITableService;
+import com.mars.code.tools.dbservice.AbstractTableService;
 import com.mars.code.tools.dbservice.impl.MysqlTableService;
 import com.mars.code.tools.dbservice.impl.OracleTableService;
 import com.mars.code.tools.dbservice.impl.SqlServerTableService;
@@ -12,7 +12,7 @@ import com.mars.code.tools.dbservice.impl.SqlServerTableService;
  */
 public class TableServiceFactory {
 	
-	public static ITableService getInstance(String dbType) {
+	public static AbstractTableService getInstance(String dbType) {
 		dbType = dbType.toLowerCase();
 		if (dbType.equals("mysql")) {
 			return getMysqlService();
@@ -24,15 +24,15 @@ public class TableServiceFactory {
 		throw new RuntimeException("不支持的数据库类型");
 	}
 	
-	private static ITableService getMysqlService(){
+	private static AbstractTableService getMysqlService(){
 		return new MysqlTableService();
 	}
 	
-	private static ITableService getOracleService(){
+	private static AbstractTableService getOracleService(){
 		return new OracleTableService();
 	}
 	
-	private static ITableService getSqlServerService(){
+	private static AbstractTableService getSqlServerService(){
 		return new SqlServerTableService();
 	}
 

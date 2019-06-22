@@ -85,12 +85,18 @@
 	<form id="formQuery" class="form-horizontal" onsubmit="return false" style=" padding:20px 30px 0 30px;display:none;">
 	<#if columns??>
 		<#list columns as col>
+		<#if col.length lte 100>
 		<div class="form-group">
-			<label class="col-md-4 col-sm-4">${col.caption!}</label>
-			<div class="col-md-8 col-sm-8">
-				<input type="text" class="form-control" name="${col.propertyName!}">
+			<label class="col-lg-4 col-md-4 col-sm-4">${col.caption!}</label>
+			<#if col.dictKey??>
+			<div class="col-lg-9 col-md-9 col-sm-7" property="${col.propertyName}" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" defaultValue="${col.defaultValue!}"></div>
+			<#else>
+			<div class="col-lg-8 col-md-8 col-sm-7">
+				<input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${col.defaultValue!}" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} />
 			</div>
+			</#if>
 		</div>
+		</#if>
 		</#list>
 	</#if>
 		<div class="form-group">
@@ -161,11 +167,12 @@
 	var URL_SHOW="/html/${moduleName}/${entityName}/show${entityCamelName}.html";
 	var URL_LIST="/${moduleName}/${entityName}/ajax/load${entityCamelName}List";
 	//表字段结构定义
+	//,"dictKey":"IS_HOME_DELIVERY","editorType":"Select"
 	var columns={"tableMain":[
 		<#if columns??>
 		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": '${col.propertyName!}',title:'${col.caption!}',"sortable":true,"name":"${col.propertyName!}","editable":true},
+        {"data": '${col.propertyName!}',title:'${col.caption!}',"sortable":true,"name":"${col.propertyName!}","editable":true <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
         {"data": null,"title":"操作",className:"text-center"}
