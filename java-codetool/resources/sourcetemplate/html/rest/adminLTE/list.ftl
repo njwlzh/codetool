@@ -89,7 +89,7 @@
 		<div class="form-group">
 			<label class="col-lg-4 col-md-4 col-sm-4">${col.caption!}</label>
 			<#if col.dictKey??>
-			<div class="col-lg-9 col-md-9 col-sm-7" property="${col.propertyName}" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" defaultValue="${col.defaultValue!}"></div>
+			<div class="col-lg-8 col-md-8 col-sm-7" property="${col.propertyName}" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" defaultValue="${col.defaultValue!}"></div>
 			<#else>
 			<div class="col-lg-8 col-md-8 col-sm-7">
 				<input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${col.defaultValue!}" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} />
