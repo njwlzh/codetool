@@ -283,7 +283,7 @@ public class DataBase2File {
     	File saveFile = new File(saveDir,table.getEntityCamelName()+"Action.java");
     	
     	String templateName="Action";
-    	if (module.getFramework().equals("mvc") || module.getFramework().equals("rest")) {
+    	if (module.getFramework().equals("mvc") || module.getFramework().equals("rest") || module.getFramework().equals("ajax")) {
     		templateName="Action_"+module.getFramework();
     	}
     	String savePath =saveFile.getAbsolutePath();
