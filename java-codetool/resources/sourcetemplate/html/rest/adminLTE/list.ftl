@@ -76,7 +76,7 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="box">
-					<table id="tableMain" class="table table-bordered table-hover table-striped">
+					<table id="tableMain" class="table table-bordered table-hover">
 					</table>
 				</div>
 				<!-- /box -->
@@ -166,13 +166,11 @@
 	var URL_DELETE="/${moduleName}/${entityName}/ajax/updateState";
 	var URL_SHOW="/html/${moduleName}/${entityName}/show${entityCamelName}.html";
 	var URL_LIST="/${moduleName}/${entityName}/ajax/load${entityCamelName}List";
-	//表字段结构定义
-	//,"dictKey":"IS_HOME_DELIVERY","editorType":"Select"
 	var columns={"tableMain":[
 		<#if columns??>
 		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": '${col.propertyName!}',title:'${col.caption!}',"sortable":true,"name":"${col.propertyName!}","editable":true <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+        {"data": "${col.propertyName!}",title:"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
         {"data": null,"title":"操作",className:"text-center"}
