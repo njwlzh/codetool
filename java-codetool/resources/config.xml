@@ -7,6 +7,8 @@
 	<theme>adminLTE</theme>
 	<!-- 生成的模板文件类型，可选择jsp, html，默认为jsp -->
 	<pageType>html</pageType>
+	<!-- 是否生成移动端H5页面，true=生成，默认为false，设置为true，必须要有对应的wap模板文件 -->
+	<supportWap>false</supportWap>
 	<!-- 数据库连接配置 -->
 	<db>
 		<dbName>database name</dbName>
@@ -41,10 +43,10 @@
 		<!-- 数据持久层框架，可选：mybatis,hibernate,jdbc,jpa -->
 		<persistance>mybatis</persistance>
 		<!-- 模块名称，该模块会根据自动生成一个包，相关的dao, service,entity,action等都会生成在该包里面 -->
-		<name>wap</name>
+		<name>user</name>
 		<!-- 是否删除表前缀，如果为true，则在table里面设置的表前缀名称就会被自动删除 -->
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
-		<!-- 文件保存路径，默认为全局配置的目录，这里可以单独指定保存目录 -->
+		<!-- 文件保存路径，这里可以单独指定保存目录，默认为全局配置的目录 -->
 		<savePath></savePath>
 		<!-- 采用的数据交互架构，可选：mvc, rest,ajax, dorado -->
 		<!-- 其中：
@@ -54,6 +56,8 @@
 		dorado为dorado项目，具体请参考www.bsdn.org官网
 		 -->
 		<framework>mvc</framework>
+		<!-- 是否生成移动端H5页面，true=生成，默认为false，若不添加此标签，则继承全局配置 -->
+		<supportWap>false</supportWap>
 		<!-- 以下为要生成代码的数据库表，支持嵌套 -->
 		<!-- table标签属性说明
 		name: 			表名

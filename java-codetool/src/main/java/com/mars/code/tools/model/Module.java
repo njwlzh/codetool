@@ -25,6 +25,8 @@ public class Module {
 	private String mapperPackage;
 	private String myBatisPackage;
 	private List<TableConf> tables; //配置的数据表信息
+	//是否生成wap文件
+	private boolean supportWap = false;
 	
 	private String theme; //模块使用的页面模板，可独立于全局配置的模板，如果不设置，则默认使用全局配置
 	
@@ -128,6 +130,12 @@ public class Module {
 	public void setTheme(String theme) {
 		this.theme = theme;
 	}
+	public boolean isSupportWap() {
+		return supportWap;
+	}
+	public void setSupportWap(boolean supportWap) {
+		this.supportWap = supportWap;
+	}
 	@Override
 	public String toString() {
 		return "Module [name=" + name + ", persistance=" + persistance + ", isDeleteTablePrefix=" + isDeleteTablePrefix
@@ -135,6 +143,6 @@ public class Module {
 				+ ", daoImplPackage=" + daoImplPackage + ", servicePackage=" + servicePackage + ", serviceImplPackage="
 				+ serviceImplPackage + ", entityPackage=" + entityPackage + ", actionPackage=" + actionPackage
 				+ ", viewPackage=" + viewPackage + ", mapperPackage=" + mapperPackage + ", myBatisPackage="
-				+ myBatisPackage + ", tables=" + tables + ", theme=" + theme + "]";
+				+ myBatisPackage + ", tables=" + tables + ", supportWap=" + supportWap + ", theme=" + theme + "]";
 	}
 }

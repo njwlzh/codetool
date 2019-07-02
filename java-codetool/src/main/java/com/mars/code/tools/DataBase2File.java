@@ -330,7 +330,8 @@ public class DataBase2File {
     	String[] actions = {"add","edit","list","show"};
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());// getSaveFilePath(module,module.getViewPackage());
+    	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());
+    	File wapSaveDir = new File(config.getBaseDir(),"webapp/wap/"+module.getName());
     	for (String action : actions) {
     		//生成文件类型
     		String pageType=config.getPageType();
@@ -341,18 +342,29 @@ public class DataBase2File {
 	    	String savePath =saveFile.getAbsolutePath();
 	    	System.out.println("生成文件："+savePath);
 	    	//if (module.getFramework().equals("rest")) {
-	    		String templateDir = pageType+"/"+module.getFramework()+"/";
-	    		if (module.getTheme()==null || module.getTheme().length()==0){
-		    		if (config.getTheme()!=null && config.getTheme().length()>0){
-		    			templateDir = templateDir + config.getTheme()+"/";
-		    		}
-	    		} else {
-	    			templateDir = templateDir+module.getTheme()+"/";
+    		String templateDir = pageType+"/"+module.getFramework()+"/";
+    		if (module.getTheme()==null || module.getTheme().length()==0){
+	    		if (config.getTheme()!=null && config.getTheme().length()>0){
+	    			templateDir = templateDir + config.getTheme()+"/";
 	    		}
-	    		FreemarkerUtil.createDoc(obj, templateDir+action, savePath);
+    		} else {
+    			templateDir = templateDir+module.getTheme()+"/";
+    		}
+    		FreemarkerUtil.createDoc(obj, templateDir+action, savePath);
 	    	//} else {
 	    	//	FreemarkerUtil.createDoc(obj, pageType+"/"+action, savePath);
 	    	//}
+	    	//如果需要生成wap文件，则此处生成wap文件
+	    	if (module.isSupportWap()) {
+	    		saveFile = new File(wapSaveDir,table.getEntityName());
+	    		saveFile.mkdirs();
+	    		saveFile = new File(saveFile,action+table.getEntityCamelName()+"."+pageType);
+	    		savePath =saveFile.getAbsolutePath();
+		    	System.out.println("生成文件："+savePath);
+		    	//if (module.getFramework().equals("rest")) {
+	    		templateDir = pageType+"/"+module.getFramework()+"/wap/";
+	    		FreemarkerUtil.createDoc(obj, templateDir+action, savePath);
+	    	}
     	}
     	//还原为完整的列
     	table.setColumns(columns);

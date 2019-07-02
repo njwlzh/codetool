@@ -28,6 +28,9 @@ public class Config {
 	private String theme; //全局界面模板风格
 	private String pageType; //页面类型
 	private List<String> ignoreColumns;
+	
+	private boolean supportWap = false;
+	
 	public String getBaseDir() {
 		return baseDir;
 	}
@@ -79,10 +82,18 @@ public class Config {
 	public void setIgnoreColumns(List<String> ignoreColumns) {
 		this.ignoreColumns = ignoreColumns;
 	}
+	
+	public boolean isSupportWap() {
+		return supportWap;
+	}
+	public void setSupportWap(boolean supportWap) {
+		this.supportWap = supportWap;
+	}
 	@Override
 	public String toString() {
-		return "Config [baseDir=" + baseDir + ", basePackage=" + basePackage
-				+ ", db=" + db + ", modules=" + modules + "]";
+		return "Config [baseDir=" + baseDir + ", basePackage=" + basePackage + ", db=" + db + ", modules=" + modules
+				+ ", packageSetting=" + packageSetting + ", theme=" + theme + ", pageType=" + pageType
+				+ ", ignoreColumns=" + ignoreColumns + ", supportWap=" + supportWap + "]";
 	}
 	public static Config loadConfig(){
 		Config cfg = new Config();
@@ -106,7 +117,7 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kitchen-coat.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-youmai-system.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-erpcash.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-gzerp.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-erp2.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
@@ -121,6 +132,12 @@ public class Config {
 			cfg.setPageType("jsp");
 		} else {
 			cfg.setPageType(elemThemePage.getTextTrim());
+		}
+		Element elemSupportWap = XmlUtil.getChild(root, "supportWap");
+		if (elemSupportWap==null){
+			cfg.setSupportWap(false);
+		} else {
+			cfg.setSupportWap(Boolean.valueOf(elemSupportWap.getTextTrim()));
 		}
 		cfg.setBasePackage(XmlUtil.getChild(root, "basePackage").getTextTrim());
 		//加载数据库配置
@@ -195,6 +212,8 @@ public class Config {
 			m.setServicePackage(elePkg==null?pkgSetting.getServicePackage():elePkg.getTextTrim());
 			elePkg = XmlUtil.getChild(e, "viewPackage");
 			m.setViewPackage(elePkg==null?pkgSetting.getViewPackage():elePkg.getTextTrim());
+			elePkg = XmlUtil.getChild(e, "supportWap");
+			m.setSupportWap(elePkg==null?cfg.isSupportWap():Boolean.valueOf(elePkg.getTextTrim()));
 			//页面模板
 			Element eleTheme = XmlUtil.getChild(e, "theme");
 			if (eleTheme!=null) {
