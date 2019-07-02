@@ -45,7 +45,7 @@
 		var URL_ENTITY="/${moduleName}/${entityName}/ajax/load${entityCamelName}";
 		var URL_LIST="/html/${moduleName}/${entityName}/list${entityCamelName}";
 		$(document).ready(function(){
-			loadDicts(null,function(){
+			loadDictsForShow(null,function(){
 				reloadNodeData(UrlParm.params());
 	    	});
 		});
