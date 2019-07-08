@@ -134,7 +134,7 @@
 	
 	$(document).ready(function(){
 		loadDicts(null,function(){
-			reloadFormData("formData");
+			reloadFormData({params:UrlParm.params(),"formId":"formData"});
 			hideLoading();
 		});
  	});

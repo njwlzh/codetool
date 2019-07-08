@@ -46,7 +46,7 @@
 		var URL_LIST="/html/${moduleName}/${entityName}/list${entityCamelName}";
 		$(document).ready(function(){
 			loadDictsForShow(null,function(){
-				reloadNodeData(UrlParm.params());
+				reloadNodeData({params:UrlParm.params()});
 	    	});
 		});
 		

@@ -89,7 +89,7 @@
 				});
 			});
 			loadDicts(null,function(){
-				reloadFormData(UrlParm.params());
+				reloadFormData({params:UrlParm.params()});
 			});
 		});
 		
