@@ -67,7 +67,7 @@
 						</div>
 						<!--右侧按钮组 -->
 						<div class="pull-right" style="padding-right: 15px;">
-							<span class="hidden" id="pickerImport-tableMain"></span>
+							<span class="hidden" id="pickerImport-table_Main"></span>
 							<a href="javascript:showAddMainInfo();" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</a>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 			<!-- Main content -->
 			<section class="content">
 				<div class="box">
-					<table id="tableMain" class="table table-bordered table-hover">
+					<table id="table_Main" class="table table-bordered table-hover">
 					</table>
 				</div>
 				<!-- /box -->
@@ -163,20 +163,20 @@
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
 	var URL_ADD="/html/${moduleName}/${entityName}/add${entityCamelName}.html";
 	var URL_EDIT="/html/${moduleName}/${entityName}/edit${entityCamelName}.html";
-	var URL_DELETE="/${moduleName}/${entityName}/ajax/updateState";
 	var URL_SHOW="/html/${moduleName}/${entityName}/show${entityCamelName}.html";
-	var URL_LIST="/${moduleName}/${entityName}/ajax/load${entityCamelName}List";
-	var columns={"tableMain":[
+	URL_DELETE["Main"]="/${moduleName}/${entityName}/ajax/updateState";
+	URL_LIST["Main"]="/${moduleName}/${entityName}/ajax/load${entityCamelName}List";
+	var columns={"table_Main":[
 		<#if columns??>
 		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": "${col.propertyName!}",title:"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
         {"data": null,"title":"操作",className:"text-center"}
 	]};
 	var columnDefs={
-		"tableMain":[
+		"table_Main":[
 				{
 					targets: -1,
 					defaultContent: DEFAULT_TABLE_OPERATION
@@ -184,10 +184,9 @@
 		]
 	}
 
-	
 	$(document).ready(function () {
 		loadDicts(null,function(){
-			loadData("tableMain",{serverSide:true, columns:columns["tableMain"],columnDefs:columnDefs["tableMain"]});	
+			loadData("table_Main",{serverSide:true, columns:columns["table_Main"],columnDefs:columnDefs["table_Main"]});	
 		});
 	});
 </script>

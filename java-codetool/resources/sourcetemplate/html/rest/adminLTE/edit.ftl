@@ -81,9 +81,35 @@
 							</#list>
 							</#if>
 						 </form>
+						 
 					 </div>
 				<!-- /box -->
 				</div>
+				
+				<!-- 以下是明细 -->
+				<#if subTables??>
+				<#list subTables as subTable>
+				<div class="box">
+		            <div class="box-header">
+		              <h3 class="box-title">${subTable.caption} 列表</h3>
+		
+		              <div class="box-tools pull-right">
+		                <div class="btn-group">
+	                      <button type="button" class="btn btn-default btnAddDetail" id="btnAdd_${subTable.entityCamelName}">添加</button>
+	                    </div>
+		              </div>
+		            </div>
+		            <!-- /.box-header -->
+		            <div class="box-body no-padding">
+		              <table class="table" id="table_${subTable.entityCamelName}">
+		                
+		              </table>
+		            </div>
+		            <!-- /.box-body -->
+		          </div>
+		          <!-- /.box -->
+		        </#list>
+		        </#if>
 			</section>
 		</div>
 	</div>
@@ -131,11 +157,50 @@
 	var URL_DATA="/${moduleName}/${entityName}/ajax/load${entityCamelName}";
 	var URL_SAVE="/${moduleName}/${entityName}/ajax/update${entityCamelName}";
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
+	<#if subTables??>
+		<#list subTables as subTable>
+	URL_LIST["${subTable.entityCamelName}"]="/${moduleName}/${subTable.entityName}/ajax/load${subTable.entityCamelName}List";
+	URL_DELETE["${subTable.entityCamelName}"]="/${moduleName}/${subTable.entityName}/ajax/updateState";
+		</#list>
+	</#if>
+	
+	var columns={
+	<#if subTables??>
+		<#list subTables as subTable>
+		"table_${subTable.entityCamelName}":[
+			<#if subTable.columns??>
+			{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
+			<#list subTable.columns as col>
+	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":true <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+	        </#list>
+	        </#if>
+	        {"data": null,"title":"操作",className:"text-center"}
+		],
+		</#list>
+	</#if>
+	};
+	var columnDefs={
+	<#if subTables??>
+		<#list subTables as subTable>
+		"table_${subTable.entityCamelName}":[
+				{
+					targets: -1,
+					defaultContent: TABLE_OPERATION_DELETE
+				}
+		],
+		</#list>
+	</#if>
+	}
 	
 	$(document).ready(function(){
 		loadDicts(null,function(){
 			reloadFormData({params:UrlParm.params(),"formId":"formData"});
 			hideLoading();
+			<#if subTables??>
+			<#list subTables as subTable>
+			window["tables_${subTable.entityCamelName}"] = loadData("table_${subTable.entityCamelName}",{serverSide:false, paging:false, showFooter: false, columns:columns["table_${subTable.entityCamelName}"],columnDefs:columnDefs["table_${subTable.entityCamelName}"]});
+			</#list>
+			</#if>
 		});
  	});
 	</script>
