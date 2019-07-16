@@ -198,7 +198,7 @@
 			hideLoading();
 			<#if subTables??>
 			<#list subTables as subTable>
-			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"]});
+			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:UrlParm.params().id});
 			</#list>
 			</#if>
 		});
