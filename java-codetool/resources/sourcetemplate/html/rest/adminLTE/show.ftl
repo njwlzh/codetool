@@ -77,12 +77,6 @@
 				<div class="box">
 		            <div class="box-header">
 		              <h3 class="box-title">${subTable.caption} 列表</h3>
-		
-		              <div class="box-tools pull-right">
-		                <div class="btn-group">
-	                      <button type="button" class="btn btn-default btnAddDetail" id="btnAdd_${subTable.entityName}">添加</button>
-	                    </div>
-		              </div>
 		            </div>
 		            <!-- /.box-header -->
 		            <div class="box-body no-padding">
@@ -158,7 +152,6 @@
 	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
 	        </#list>
 	        </#if>
-	        {"data": null,"title":"操作",className:"text-center"}
 		],
 		</#list>
 	</#if>
@@ -166,12 +159,7 @@
 	var columnDefs={
 	<#if subTables??>
 		<#list subTables as subTable>
-		"table_${subTable.entityName}":[
-				{
-					targets: -1,
-					defaultContent: TABLE_OPERATION_DELETE
-				}
-		],
+		"table_${subTable.entityName}":[],
 		</#list>
 	</#if>
 	}
