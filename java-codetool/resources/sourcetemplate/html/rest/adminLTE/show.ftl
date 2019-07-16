@@ -80,13 +80,13 @@
 		
 		              <div class="box-tools pull-right">
 		                <div class="btn-group">
-	                      <button type="button" class="btn btn-default btnAddDetail" id="btnAdd_${subTable.entityCamelName}">添加</button>
+	                      <button type="button" class="btn btn-default btnAddDetail" id="btnAdd_${subTable.entityName}">添加</button>
 	                    </div>
 		              </div>
 		            </div>
 		            <!-- /.box-header -->
 		            <div class="box-body no-padding">
-		              <table class="table" id="table_${subTable.entityCamelName}">
+		              <table class="table" id="table_${subTable.entityName}">
 		                
 		              </table>
 		            </div>
@@ -143,15 +143,15 @@
 	var keyProperties=[<#list primaryKeyList as col><#if col_index!=0>,</#if>"${col.propertyName}"</#list>];
 	<#if subTables??>
 		<#list subTables as subTable>
-	URL_LIST["${subTable.entityCamelName}"]="/${moduleName}/${subTable.entityName}/ajax/load${subTable.entityCamelName}List";
-	URL_DELETE["${subTable.entityCamelName}"]="/${moduleName}/${subTable.entityName}/ajax/updateState";
+	URL_LIST["${subTable.entityName}"]="/${moduleName}/${subTable.entityName}/ajax/load${subTable.entityCamelName}List";
+	URL_DELETE["${subTable.entityName}"]="/${moduleName}/${subTable.entityName}/ajax/updateState";
 		</#list>
 	</#if>
 	
 	var columns={
 	<#if subTables??>
 		<#list subTables as subTable>
-		"table_${subTable.entityCamelName}":[
+		"table_${subTable.entityName}":[
 			<#if subTable.columns??>
 			{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 			<#list subTable.columns as col>
@@ -166,7 +166,7 @@
 	var columnDefs={
 	<#if subTables??>
 		<#list subTables as subTable>
-		"table_${subTable.entityCamelName}":[
+		"table_${subTable.entityName}":[
 				{
 					targets: -1,
 					defaultContent: TABLE_OPERATION_DELETE
@@ -182,7 +182,7 @@
  			
  			<#if subTables??>
 			<#list subTables as subTable>
-			window["tables_${subTable.entityCamelName}"] = loadData("table_${subTable.entityCamelName}",{serverSide:false, paging:false, showFooter: false, columns:columns["table_${subTable.entityCamelName}"],columnDefs:columnDefs["table_${subTable.entityCamelName}"]});
+			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"]});
 			</#list>
 			</#if>
  		});

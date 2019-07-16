@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -103,7 +104,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	<#assign validate="@Valid ">
 	</#if>
 	@RequestMapping(value = "/ajax/save${entityCamelName}",method=RequestMethod.POST)
-	public ResponseJson save${entityCamelName}(${validate}${entityCamelName} ${entityName}){
+	public ResponseJson save${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.save${entityCamelName}(${entityName});
 		
 		return new ResponseJson(0,${entityName});
@@ -119,7 +120,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	<#assign validate="@Valid ">
 	</#if>
 	@RequestMapping(value = "/ajax/update${entityCamelName}",method=RequestMethod.POST)
-	public ResponseJson update${entityCamelName}(${validate}${entityCamelName} ${entityName}){
+	public ResponseJson update${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.update${entityCamelName}(${entityName});
 		
 		return new ResponseJson(0,null);
