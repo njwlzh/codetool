@@ -95,13 +95,13 @@
 		
 		              <div class="box-tools pull-right">
 		                <div class="btn-group">
-	                      <button type="button" class="btn btn-default btnAddDetail" id="btnAdd_${subTable.entityName}">添加</button>
+	                      <button type="button" class="btn btn-default btnAddDetail" id="btnAdd_${subTable.entityName}"><i class="fa fa-plus-square" aria-hidden="true"></i> 添加</button>
 	                    </div>
 		              </div>
 		            </div>
 		            <!-- /.box-header -->
 		            <div class="box-body no-padding">
-		              <table class="table" id="table_${subTable.entityName}">
+		              <table class="table table-bordered table-hover" id="table_${subTable.entityName}">
 		                
 		              </table>
 		            </div>
@@ -169,7 +169,6 @@
 		<#list subTables as subTable>
 		"table_${subTable.entityName}":[
 			<#if subTable.columns??>
-			{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 			<#list subTable.columns as col>
 	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":true <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
 	        </#list>
@@ -198,7 +197,7 @@
 			hideLoading();
 			<#if subTables??>
 			<#list subTables as subTable>
-			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:UrlParm.params().id});
+			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:UrlParm.params().id});
 			</#list>
 			</#if>
 		});
