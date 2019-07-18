@@ -65,8 +65,9 @@
 		entityName 		生成的实体类名 
 		parentField: 	如果是主从表，则从表需设置该属性，表示父表的关联属性
 		refType: 		表关联类型，在子表中配置，分为OneToOne,OneToMany等，用于持久层为hibernate或jpa的entity，如果与父表的关系是多对一，则会在父表对应的 entity中生成该子表的List集合属性
+		showPrint: 		是否生成打印页面，对于一些单据类型的数据，可能需要进行特定的打印，默认为false不打印，设置为true表示需要生成打印文件
 		 -->
-		<table name="cms_category" entityName="Category" prefix="cms_">
+		<table name="cms_category" entityName="Category" prefix="cms_" showPrint="false">
 			<table name="cms_article" entityName="Article" prefix="cms_" parentField="cat_id" refType="OneToMany"/>
 		</table>
 		<table name="cms_comment"/>

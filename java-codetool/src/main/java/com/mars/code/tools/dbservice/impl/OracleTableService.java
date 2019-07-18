@@ -77,6 +77,7 @@ public class OracleTableService extends AbstractTableService {
         if (module.isDeleteTablePrefix() && !CodeUtil.isEmpty(tbConf.getPrefix())){
         	table.setTableName(tableName.toLowerCase().replaceFirst(tbConf.getPrefix().toLowerCase(), ""));  
         }
+        table.setShowPrint(tbConf.getShowPrint());
         //System.out.println(tbConf);
         //获取表各字段的信息
         getTableColumns(table,con);

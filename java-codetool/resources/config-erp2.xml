@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configure>
-	<basedir>F:\code\erpcash</basedir>
+	<basedir>F:\code\erp2</basedir>
 	<basePackage>com.kmguozhuan.erp</basePackage>
 	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin，默认为beyondAdmin -->
 	<theme>adminLTE</theme>
 	<!-- 生成的模板文件类型，可选择jsp, html，默认为jsp -->
 	<pageType>html</pageType>
+	<!-- 是否生成移动端H5页面，true=生成，默认为false -->
+	<supportWap>true</supportWap>
 	<db>
-		<dbName>erps</dbName>
-		<user>erp</user>
-		<pwd>erp</pwd>
+		<dbName>erp2</dbName>
+		<user>root</user>
+		<pwd>123456</pwd>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://localhost:3306/erps?useUnicode=true&amp;characterEncoding=utf-8</url>
+		<url>jdbc:mysql://localhost:3306/erp2?useUnicode=true&amp;characterEncoding=utf-8</url>
 	</db>
 	
 	<ignoreColumns>
-		create_user,create_time,update_user,update_time,state,com_id
+		id,create_user,create_time,update_user,update_time,state,com_id,inst_id,note
 	</ignoreColumns>
 	
 	<packageSetting>
@@ -33,14 +35,39 @@
 	
 	<module>
 		<persistance>mybatis</persistance>
-		<name>weixin</name>
+		<name>pd</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>rest</framework>
+		
+		<table name="pd_category_info"/>
+		<table name="pd_product_info"/>
+	</module>
+	
+	 
+	<module>
+		<persistance>mybatis</persistance>
+		<name>sale</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>rest</framework>
+		
+		<table name="sale_order_info" showPrint="true">
+			<table name="sale_order_detail" parentField="sale_order_id" refType="OneToMany"></table>
+		</table>
+	</module>
+	
+	 <!-- 
+	<module>
+		<persistance>mybatis</persistance>
+		<name>sys</name>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<savePath></savePath>
 		<framework>rest</framework>
 		
 		
-		<table name="com_wx_message_tmpl"/>
+		<table name="sys_page_table_def"/>
 	</module>
-	
+	 -->
 	
 </configure>

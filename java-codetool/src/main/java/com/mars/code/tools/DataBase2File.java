@@ -327,12 +327,16 @@ public class DataBase2File {
     		}
     	}
     	
-    	String[] actions = {"add","edit","list","show"};
+    	String[] actions = {"add","edit","list","show","print"};
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
     	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());
     	File wapSaveDir = new File(config.getBaseDir(),"webapp/wap/"+module.getName());
     	for (String action : actions) {
+    		//如果表需要生成打印文件，则根据action决定是否继续执行
+    		if (action.equals("print") && !table.isShowPrint()) {
+    			continue;
+    		}
     		//生成文件类型
     		String pageType=config.getPageType();
 	    	File saveFile = new File(saveDir,table.getEntityName());
@@ -354,8 +358,8 @@ public class DataBase2File {
 	    	//} else {
 	    	//	FreemarkerUtil.createDoc(obj, pageType+"/"+action, savePath);
 	    	//}
-	    	//如果需要生成wap文件，则此处生成wap文件
-	    	if (module.isSupportWap()) {
+	    	//如果需要生成wap文件，则此处生成wap文件，wap不生成打印页
+	    	if (module.isSupportWap() && !action.equals("print")) {
 	    		saveFile = new File(wapSaveDir,table.getEntityName());
 	    		saveFile.mkdirs();
 	    		saveFile = new File(saveFile,action+table.getEntityCamelName()+"."+pageType);

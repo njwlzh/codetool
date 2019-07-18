@@ -170,10 +170,10 @@
 		<#if columns??>
 		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
-        {"data": null,"title":"操作",className:"text-center"}
+        {"sortable":false,"data": null,"title":"操作",className:"text-center"}
 	]};
 	var columnDefs={
 		"table_Main":[
@@ -186,7 +186,10 @@
 
 	$(document).ready(function () {
 		loadDicts(null,function(){
-			loadData("table_Main",{serverSide:true, columns:columns["table_Main"],columnDefs:columnDefs["table_Main"]});	
+			loadData("table_Main",{serverSide:true, autoWidth:true, deleteServer:true, columns:columns["table_Main"],columnDefs:columnDefs["table_Main"],fixedColumns:{
+                leftColumns: 1,
+                rightColumns: 1
+            }});	
 		});
 	});
 </script>

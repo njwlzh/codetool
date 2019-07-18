@@ -1,5 +1,6 @@
 package ${basePackage}.${moduleName}.${actionPackage};
 import java.util.Map;
+import java.util.HashMap;
 import java.io.File;
 import java.net.URLEncoder;
 import java.util.List;
@@ -31,6 +32,7 @@ import ${basePackage}.common.utils.ExcelUtil;
 import ${basePackage}.common.utils.FileUtil;
 import ${basePackage}.common.utils.StringUtil;
 import ${basePackage}.common.utils.RequestUtil;
+import ${basePackage}.common.utils.ListUtil;
 import ${basePackage}.common.constant.BaseStateConstants;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
@@ -38,6 +40,7 @@ import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 <#if subTables??>
 	<#list subTables as sub>
 import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Service;
 	</#list>
 </#if>
 
@@ -54,8 +57,8 @@ public class ${entityCamelName}Action extends BaseAction {
 	private ${entityCamelName}Service ${entityName}Service;
 	<#if subTables??>
 		<#list subTables as sub>
-	@Resource(name="${sub.entityName}Action")
-	private ${sub.entityCamelName}Action ${sub.entityName}Action;
+	@Resource(name=${sub.entityCamelName}Service.BEAN_ID)
+	private ${sub.entityCamelName}Service ${sub.entityName}Service;
 		</#list>
 	</#if>
 	
@@ -90,6 +93,15 @@ public class ${entityCamelName}Action extends BaseAction {
 	@RequestMapping(value = "/ajax/load${entityCamelName}")
 	public ResponseJson load${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
+		
+	<#if subTables??>
+		<#list subTables as sub>
+		Pagination<${sub.entityCamelName}> paging${sub.entityCamelName} = new Pagination<${sub.entityCamelName}>(-1, 1);
+		Map<String,Object> params${sub.entityCamelName} = new HashMap<String,Object>();
+		${sub.entityName}Service.load${sub.entityCamelName}List(paging${sub.entityCamelName},params${sub.entityCamelName});
+		${entityName}.set${sub.entityCamelName}List(ListUtil.collection2List(paging${sub.entityCamelName}.getEntities()));
+		</#list>
+	</#if>
 		
 		return new ResponseJson(0,${entityName});
 	}

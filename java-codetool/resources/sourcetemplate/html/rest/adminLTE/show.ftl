@@ -89,6 +89,14 @@
 		          <!-- /.box -->
 		        </#list>
 		        </#if>
+		        
+		        <#if showPrint>
+		        <div class="box">
+		        	<div class="box-body text-center">
+		        		<button class="btn" id="btnPrint"><i class="fa fa-print"></i> 打印</button>
+		        	</div>
+		        </div>
+		        </#if>
 			</section>
 		</div>
 	</div>
@@ -148,7 +156,7 @@
 		"table_${subTable.entityName}":[
 			<#if subTable.columns??>
 			<#list subTable.columns as col>
-	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
 	        </#list>
 	        </#if>
 		],
@@ -164,6 +172,18 @@
 	}
 	
 	$(document).ready(function(){
+		$("#btnPrint").click(function(){
+			var urlParams = UrlParm.params();
+			var url="/html/${moduleName}/${entityName}/print${entityCamelName}.html?";
+			for (var i=0;i<keyProperties.length;i++){
+				if (i>0){
+					url += "&";
+				}
+				url += keyProperties[i]+"="+urlParams[keyProperties[i]];
+			}
+			window.open(url);
+		});
+		
  		loadDicts(null,function(){
  			reloadNodeData({params:UrlParm.params()});
  			

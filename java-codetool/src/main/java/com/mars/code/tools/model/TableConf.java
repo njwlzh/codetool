@@ -20,6 +20,7 @@ public class TableConf {
 	private String refType; 
 	//子表列表，即一对多的子表
 	private List<TableConf> subTables = new ArrayList<TableConf>();
+	private boolean showPrint; //是否生成打印页面
 	
 	public String getName() {
 		return name;
@@ -60,10 +61,16 @@ public class TableConf {
 	public void setRefType(String refType) {
 		this.refType = refType;
 	}
+	
+	public boolean getShowPrint() {
+		return showPrint;
+	}
+	public void setShowPrint(boolean showPrint) {
+		this.showPrint = showPrint;
+	}
 	@Override
 	public String toString() {
-		return "TableConf [name=" + name + ", prefix=" + prefix
-				+ ", entityName=" + entityName + ", parentField=" + parentField
-				+ ", refType=" + refType + ", subTables=" + subTables + "]";
+		return "TableConf [name=" + name + ", prefix=" + prefix + ", entityName=" + entityName + ", parentField="
+				+ parentField + ", refType=" + refType + ", subTables=" + subTables + ", showPrint=" + showPrint + "]";
 	}
 }

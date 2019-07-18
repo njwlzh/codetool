@@ -13,6 +13,7 @@ import com.mars.code.tools.model.Module;
 import com.mars.code.tools.model.PackageSetting;
 import com.mars.code.tools.model.TableConf;
 import com.mars.code.tools.utils.XmlUtil;
+import com.mysql.jdbc.StringUtils;
 
 /**
  * 读取配置文件
@@ -276,6 +277,10 @@ public class Config {
 			m.setRefType(refType.getValue());
 		} else {
 			m.setRefType("OneToMany"); //默认OneToMany
+		}
+		Attribute showPrint =XmlUtil.getAttribute(e, "showPrint");
+		if (showPrint!=null && !StringUtils.isEmptyOrWhitespaceOnly(showPrint.getValue())) {
+			m.setShowPrint(Boolean.valueOf(showPrint.getValue()));
 		}
 		return m;
 	}

@@ -163,7 +163,7 @@
 		"table_${subTable.entityName}":[
 			<#if subTable.columns??>
 			<#list subTable.columns as col>
-	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":true <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":true,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
 	        </#list>
 	        </#if>
 	        {"data": null,"title":"操作",className:"text-center"}

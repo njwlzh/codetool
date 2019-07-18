@@ -27,6 +27,7 @@ public class Table {
     private List<Column> columns=new ArrayList<Column>();
     private List<Table> subTables = new ArrayList<Table>();
     private String refType; //表间关联类型
+    private boolean showPrint; //是否生成打印页面
       
     public String getPackageName() {
 		return packageName;
@@ -188,6 +189,14 @@ public class Table {
 
 	public void setCaption(String caption) {
 		this.caption = caption;
+	}
+
+	public boolean isShowPrint() {
+		return showPrint;
+	}
+
+	public void setShowPrint(boolean showPrint) {
+		this.showPrint = showPrint;
 	}
 
 	@Override
