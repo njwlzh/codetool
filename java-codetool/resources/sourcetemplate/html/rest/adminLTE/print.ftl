@@ -126,7 +126,9 @@
 				var tds = ["<tr>"];
 				for (var cx=0; cx<columns[table].length; cx++) {
 					var col = columns[table][cx];
-					tds.push("<td>"+(datas[i][col.data]||"")+"</td>");
+					var val = datas[i][col.data]||"";
+					val = transaction(col, val);
+					tds.push("<td>"+(val)+"</td>");
 				}
 				tds.push("</tr>");
 				tdatas.push(tds.join(""));

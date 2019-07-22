@@ -61,7 +61,11 @@
 							<#if !col.primaryKey>
 							<div class="form-group">
 								<label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.caption!}${(col.nullable)?string('','(*)')}</label>
+								<#if col.dictKey??>
+								<div class="col-lg-9 col-md-9 col-sm-7 prop-value" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" property="${col.propertyName}">
+								<#else>
 								<div class="col-lg-9 col-md-9 col-sm-7 prop-value" property="${col.propertyName}">
+								</#if>
 								</div>
 							</div>
 							</#if>
