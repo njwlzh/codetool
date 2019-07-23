@@ -85,7 +85,11 @@
   <select id="find${entityCamelName}List" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
   	<include refid="BaseCondition"/>
-  	order by <#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.columnName!} desc</#list>
+  	order by 
+  	<if test="map.orderString!=null">
+  		${'$'}{map.orderString},
+  	</if>
+  	<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.columnName!} desc</#list>
   	<if test="page.pageSize>0">
   	limit ${'#'}{page.firstEntityIndex},${'#'}{page.pageSize}
   	</if>

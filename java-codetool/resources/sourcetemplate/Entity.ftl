@@ -23,6 +23,8 @@ import ${imp!};
 </#if>
 
 import ${basePackage}.common.persists.BaseEntity;
+import ${basePackage}.common.persists.ColumnInfo;
+import ${basePackage}.common.persists.TableInfo;
 
 /**
 * ${remark!}
@@ -31,6 +33,7 @@ import ${basePackage}.common.persists.BaseEntity;
 @Entity
 @Table(name="${tableFullName!}")
 </#if>
+@TableInfo(name="${tableFullName!}")
 public class ${entityCamelName!} extends BaseEntity {
 	
 	private static final long serialVersionUID = ${serializeValue}L;
@@ -64,6 +67,7 @@ public class ${entityCamelName!} extends BaseEntity {
 	@NotNull(message="${col.remark!}不能为空")	
 		</#if>
 	</#if>
+	@ColumnInfo(name="${col.columnName}",nullable=${col.nullable?string("true","false")})
 	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};
 	</#list>
 	<#-- 生成子表属性 -->

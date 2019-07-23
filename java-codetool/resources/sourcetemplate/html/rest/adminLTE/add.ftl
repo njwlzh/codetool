@@ -63,7 +63,7 @@
 							<div class="form-group">
 								<label class="col-lg-2 col-md-2 col-sm-4 control-label">${col.caption!}${(col.nullable)?string('','(*)')}</label>
 								<#if col.dictKey??>
-								<div class="col-lg-9 col-md-9 col-sm-7" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" property="${col.propertyName}" defaultValue="${col.defaultValue!}"></div>
+								<div class="col-lg-9 col-md-9 col-sm-7" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" property="${col.propertyName}" defaultValue="${col.defaultValue!}" defaultName="请选择"></div>
 								<#else>
 								<div class="col-lg-9 col-md-9 col-sm-7">
 									<#if col.length gt 100>

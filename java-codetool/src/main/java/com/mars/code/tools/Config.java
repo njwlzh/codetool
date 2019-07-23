@@ -164,7 +164,13 @@ public class Config {
 		List<String> ignoreColumnList = new ArrayList<String>();
 		Element ignoreColumns = XmlUtil.getChild(root, "ignoreColumns");
 		if (ignoreColumns!=null){
-			ignoreColumnList = Arrays.asList(ignoreColumns.getTextTrim().split(","));
+			String[] ignoreCols = ignoreColumns.getTextTrim().split(",");
+			for (String col : ignoreCols) {
+				String colName = col.trim();
+				if (colName.length()>0) {
+					ignoreColumnList.add(colName);
+				}
+			}
 		}
 		cfg.setIgnoreColumns(ignoreColumnList);
 		//加载包名设置

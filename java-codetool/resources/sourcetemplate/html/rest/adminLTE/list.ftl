@@ -89,7 +89,7 @@
 		<div class="form-group">
 			<label class="col-lg-4 col-md-4 col-sm-4">${col.caption!}</label>
 			<#if col.dictKey??>
-			<div class="col-lg-8 col-md-8 col-sm-7" property="${col.propertyName}" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" defaultValue="${col.defaultValue!}"></div>
+			<div class="col-lg-8 col-md-8 col-sm-7" property="${col.propertyName}" type="${col.editorType?default('select')}" role="dict" dictKey="${col.dictKey!}" defaultValue="" defaultName="请选择"></div>
 			<#else>
 			<div class="col-lg-8 col-md-8 col-sm-7">
 				<input type="text" class="form-control ${(col.propertyType?index_of('Date')!=-1)?string('datepicker','')}" name="${col.propertyName}" value="${col.defaultValue!}" placeholder="请输入${col.caption!}" ${(col.nullable)?string('','require')} />
@@ -170,7 +170,7 @@
 		<#if columns??>
 		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
 		<#list columns as col>
-        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":false,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
         {"sortable":false,"data": null,"title":"操作",className:"text-center"}
@@ -186,10 +186,7 @@
 
 	$(document).ready(function () {
 		loadDicts(null,function(){
-			loadData("table_Main",{serverSide:true, autoWidth:true, deleteServer:true, columns:columns["table_Main"],columnDefs:columnDefs["table_Main"],fixedColumns:{
-                leftColumns: 1,
-                rightColumns: 1
-            }});	
+			loadData("table_Main",{serverSide:true, autoWidth:true, deleteServer:true, columns:columns["table_Main"],columnDefs:columnDefs["table_Main"]});	
 		});
 	});
 </script>

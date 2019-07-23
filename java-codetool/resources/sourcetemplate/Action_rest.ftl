@@ -77,7 +77,7 @@ public class ${entityCamelName}Action extends BaseAction {
 		
 		Map<String,Object> params = RequestUtil.getParameters();
 		params.put("state", BaseStateConstants.NORMAL.getIntCode());
-		
+		resetOrderString(${entityCamelName}.class, params);
 		${entityName}Service.load${entityCamelName}List(paging,params);
 		
 		return getReturnData(paging);
