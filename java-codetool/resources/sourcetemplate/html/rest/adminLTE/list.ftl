@@ -168,12 +168,12 @@
 	URL_LIST["Main"]="/${moduleName}/${entityName}/ajax/load${entityCamelName}List";
 	var columns={"table_Main":[
 		<#if columns??>
-		{"sortable":false,"data":null,"width":30,"editable":false,"className":"select-checkbox","defaultContent":""},
+		{"data":null,"orderable":false,"editable":false,"className":"select-checkbox","defaultContent":"","width":30},
 		<#list columns as col>
         {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":false,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
-        {"sortable":false,"data": null,"title":"操作",className:"text-center"}
+        {"data": null,"title":"操作", "orderable":false,className:"text-center", width:80}
 	]};
 	var columnDefs={
 		"table_Main":[
