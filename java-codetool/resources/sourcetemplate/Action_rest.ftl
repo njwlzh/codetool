@@ -155,7 +155,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 * @throws Exception 
 	 */
-	@RequestMapping(value = "/export", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value = "/file/export", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<byte[]> export(HttpServletRequest req) throws Exception{
 		byte[] fileArray = new byte[0];
 		//导出所有数据
