@@ -188,7 +188,7 @@
 			window.open(url);
 		});
 		
- 		loadDicts(null,function(){
+		initPageDefine(function(){
  			reloadNodeData({params:UrlParm.params()});
  			
  			<#if subTables??>
@@ -196,7 +196,8 @@
 			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:UrlParm.params().id});
 			</#list>
 			</#if>
- 		});
+		});
+		
  	});
 	</script>
 </body>

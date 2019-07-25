@@ -3,7 +3,7 @@
 <!-- Head -->
 <head>
 	<meta charset="utf-8" />
-	<title>查询${caption!}</title>
+	<title>${caption!}列表</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -185,7 +185,7 @@
 	}
 
 	$(document).ready(function () {
-		loadDicts(null,function(){
+		initPageDefine(function(){
 			loadData("table_Main",{serverSide:true, autoWidth:true, deleteServer:true, columns:columns["table_Main"],columnDefs:columnDefs["table_Main"]});	
 		});
 	});

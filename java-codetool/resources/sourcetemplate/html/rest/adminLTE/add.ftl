@@ -185,14 +185,15 @@
 	}
 	
 	$(document).ready(function(){
-		loadDicts(null,function(){
-			hideLoading();
+		initPageDefine(function(){
 			<#if subTables??>
 			<#list subTables as subTable>
 			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"]});
 			</#list>
 			</#if>
+			hideLoading();
 		});
+	
 	});
 	</script>
 </body>
