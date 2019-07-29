@@ -65,7 +65,7 @@ public interface ${entityCamelName}Dao {
 	</#if>
 
 	<#if module.persistance=="mybatis">
-	Integer count${entityCamelName}(@Param(value="map") Map<String,Object> params);
+	Map<String,Object> count${entityCamelName}(@Param(value="map") Map<String,Object> params);
 	</#if>
 
 }

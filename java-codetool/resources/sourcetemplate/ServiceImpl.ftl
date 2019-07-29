@@ -116,11 +116,11 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			Map<String, Object> params) {
 		<#if module.persistance=="mybatis">
 		if (page.getPageSize()>0){
-			Integer total = ${entityName}Dao.count${entityCamelName}(params);
-			if (total==0){
+			Map<String,Object>  countData = ${entityName}Dao.count${entityCamelName}(params);
+			page.setCountData(countData);
+			if (!countData.containsKey("total")){
 				return;
 			}
-			page.setEntityCount(total);
 		}
 		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);
 		page.setEntities(list);

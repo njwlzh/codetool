@@ -94,8 +94,8 @@
   	limit ${'#'}{page.firstEntityIndex},${'#'}{page.pageSize}
   	</if>
   </select>
-  <select id="count${entityCamelName}" resultType="int">
-  	select count(*) from ${tableFullName} where 1=1
+  <select id="count${entityCamelName}" resultType="map">
+  	select count(*) total from ${tableFullName} where 1=1
   	<include refid="BaseCondition"/>
   </select>
 </mapper>
