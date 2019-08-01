@@ -34,12 +34,12 @@ import ${basePackage}.common.utils.StringUtil;
 import ${basePackage}.common.utils.RequestUtil;
 import ${basePackage}.common.utils.ListUtil;
 import ${basePackage}.common.constant.BaseStateConstants;
-import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
 <#if subTables??>
 	<#list subTables as sub>
-import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${sub.entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Service;
 	</#list>
 </#if>

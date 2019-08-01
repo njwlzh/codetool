@@ -150,7 +150,7 @@ public class DataBase2File {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	obj.put("serializeValue", getIntString(9,18));
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,module.getEntityPackage());
+    	File saveDir=getSaveFilePath(module,"common/dataobj/"+module.getEntityPackage());
     	if (!saveDir.exists()) {
     		saveDir.mkdirs();
     	}
@@ -174,6 +174,7 @@ public class DataBase2File {
     	File saveDir;
     	if (CodeUtil.isEmpty(module.getSavePath())) {
     		saveDir = new File(config.getBaseDir()+ File.separator + "java"+File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+packageName);
+    		//saveDir = new File(config.getBaseDir()+ File.separator + "java"+File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+"common/dataobj"+File.separator+packageName);
     	} else {
     		saveDir = new File(module.getSavePath(),"java"+File.separator +moduleName+File.separator+packageName);
     	}

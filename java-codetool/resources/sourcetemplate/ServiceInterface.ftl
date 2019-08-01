@@ -3,7 +3,7 @@ package ${basePackage}.${moduleName}.${servicePackage};
 import java.util.Map;
 
 import ${basePackage}.common.Pagination;
-import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
 
 /**
  * ${caption!}操作相关

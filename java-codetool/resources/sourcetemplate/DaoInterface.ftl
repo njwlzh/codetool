@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 </#if>
 
-import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
 
 /**
  * ${caption!}操作相关

@@ -1,4 +1,4 @@
-package ${basePackage}.${moduleName}.${entityPackage};
+package ${basePackage}.${moduleName}.common.dataobj.${entityPackage};
 
 <#if subTables?size gt 0>
 import java.util.List;

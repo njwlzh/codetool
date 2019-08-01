@@ -18,13 +18,13 @@ import ${basePackage}.common.utils.EntityUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
-import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 <#if subTables??>
 <#list subTables as sub>
 import ${basePackage}.${moduleName}.${daoPackage}.${sub.entityCamelName}Dao;
-import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${sub.entityCamelName};
 </#list>
 </#if>
 

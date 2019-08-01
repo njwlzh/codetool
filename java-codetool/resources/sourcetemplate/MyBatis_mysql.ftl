@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao" >
-  <resultMap id="BaseResultMap" type="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}" >
+  <resultMap id="BaseResultMap" type="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}" >
     <#list primaryKeyList as col>
     <id column="${col.columnName}" property="${col.propertyName}" jdbcType="${col.columnType}" />
     </#list>
@@ -16,7 +16,7 @@
     <#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>
   </sql>
   
-  <insert id="save${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
+  <insert id="save${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
   	insert into ${tableFullName} (<#list columns as col><#if !col.identity>${col.columnName}</#if><#if !col.identity && col_index lt columns?size-1>,</#if></#list>) 
   	values (
   	<#list columns as col>
@@ -50,7 +50,7 @@
   	</foreach>
   </insert>
   
-  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
+  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
   	update ${tableFullName} set 
   	<#list columns as col>
 	  	<#if col_index gt 0>,</#if>
