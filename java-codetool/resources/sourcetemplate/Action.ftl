@@ -25,6 +25,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
 </#if>
 
 /**
+ * ${caption!}相关接口操作
  * ${remark!}
  *
  */
@@ -41,7 +42,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	</#if>
 	
 	/**
-	 * 查询${remark!}
+	 * 查询${caption!}
 	 * @param params 参数列表
 	 * @param page
 	 */
@@ -65,7 +66,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 保存${remark!}
+	 * 保存${caption!}
 	 * @param params 
 	 */
 	@DataResolver

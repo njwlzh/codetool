@@ -29,7 +29,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
 </#if>
 
 /**
- * ${remark!}操作相关
+ * ${caption!}操作相关
  */
 @Service(${entityCamelName}Service.BEAN_ID)
 public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service {

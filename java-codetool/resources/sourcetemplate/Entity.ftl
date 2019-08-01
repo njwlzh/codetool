@@ -27,6 +27,7 @@ import ${basePackage}.common.persists.ColumnInfo;
 import ${basePackage}.common.persists.TableInfo;
 
 /**
+* ${caption!}
 * ${remark!}
 */
 <#if module.persistance=="hibernate" || module.persistance=="jpa">

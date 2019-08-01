@@ -27,8 +27,8 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
 </#if>
 
 /**
+ * ${caption!}
  * ${remark!}
- *
  */
 @Controller
 @RequestMapping("/${moduleName}/${entityName}")
@@ -44,7 +44,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	</#if>
 	
 	/**
-	 * 查询${remark!}
+	 * 查询${caption!}
 	 * @param params 参数列表
 	 * @param page
 	 */
@@ -55,7 +55,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 查询${remark!}
+	 * 查询${caption!}
 	 * @param params 参数列表
 	 * @param page
 	 */
@@ -75,7 +75,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 显示${remark!}详情页面
+	 * 显示${caption!}详情页面
 	 <#list primaryKeyList as col>
 	 * @param ${col.propertyName}
 	 </#list>
@@ -88,7 +88,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 加载${remark!}详情
+	 * 加载${caption!}详情
 	 <#list primaryKeyList as col>
 	 * @param ${col.propertyName}
 	 </#list>
@@ -112,7 +112,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 保存${remark!}详情
+	 * 保存${caption!}详情
 	 * @param ${entityName}
 	 * @return
 	 */
@@ -138,7 +138,7 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 保存修改的${remark!}
+	 * 保存修改的${caption!}
 	 * @param ${entityCamelName}
 	 * @return
 	 */
@@ -156,7 +156,7 @@ public class ${entityCamelName}Action extends BaseAction {
 		return res;
 	}
 	/**
-	 * 修改${remark!}状态
+	 * 修改${caption!}状态
 	 * @param ${entityCamelName}
 	 * @return
 	 */
