@@ -92,7 +92,7 @@
 		"table_${subTable.entityName}":[
 			<#if subTable.columns??>
 			<#list subTable.columns as col>
-	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,(col.length)?c)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
 	        </#list>
 	        </#if>
 		],
@@ -116,7 +116,7 @@
 			var ths = ["<tr>"];
 			for (var i=0; i<columns[table].length; i++) {
 				var col = columns[table][i];
-				ths.push("<th width='"+col.length+"'>"+col.title+"</th>");
+				ths.push("<th width='"+((col.length)?c)+"'>"+col.title+"</th>");
 			}
 			ths.push("</tr>");
 			$("#thead_"+tableName).append(ths.join(""));

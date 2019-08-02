@@ -170,7 +170,7 @@
 		<#if columns??>
 		{"data":null,"orderable":false,"editable":false,"className":"select-checkbox","defaultContent":"","width":30},
 		<#list columns as col>
-        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":false,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,col.length)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":false,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,(col.length)?c)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
         </#list>
         </#if>
         {"data": null,"title":"操作", "orderable":false,className:"text-center", width:80}
