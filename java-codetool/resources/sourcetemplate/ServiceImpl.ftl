@@ -75,9 +75,10 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			List<${sub.entityCamelName}> deletedList = EntityUtil.getDataList(${entityName}.get${sub.entityCamelName}List(), BaseEntity.TMP_DELETED);
 			//新增列表
 			if (newList.size()>0) {
-				for (SaleOrderDetail dt : newList) {
+				for (${sub.entityCamelName} dt : newList) {
 					dt.setId(new IdWorker(1l).nextId());
-					dt.setOrderId(${entityName}.getId());
+					//dt.setOrderId(${entityName}.getId());
+					dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 					dt.setComId(${entityName}.getComId());
 					dt.setCreateUser(${entityName}.getCreateUser());
 					dt.setCreateTime(DateUtil.getDate().getTime());
