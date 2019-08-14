@@ -52,7 +52,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		<#list subTables as sub>
 		if (${entityName}.get${sub.entityCamelName}List() != null && ${entityName}.get${sub.entityCamelName}List().size()>0) {
 			for (${sub.entityCamelName} dt : ${entityName}.get${sub.entityCamelName}List()) {
-				dt.setOrderId(${entityName}.getId());
+				dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 				dt.setComId(${entityName}.getComId());
 				dt.setCreateUser(${entityName}.getCreateUser());
 				dt.setCreateTime(DateUtil.getDate().getTime());
@@ -77,7 +77,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			if (newList.size()>0) {
 				for (${sub.entityCamelName} dt : newList) {
 					dt.setId(new IdWorker(1l).nextId());
-					//dt.setOrderId(${entityName}.getId());
+					//dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 					dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 					dt.setComId(${entityName}.getComId());
 					dt.setCreateUser(${entityName}.getCreateUser());
