@@ -14,7 +14,9 @@ import ${basePackage}.common.persists.BaseEntity;
 import ${basePackage}.common.persists.IdWorker;
 import ${basePackage}.common.utils.DateUtil;
 import ${basePackage}.common.utils.EntityUtil;
+import ${basePackage}.common.utils.StringUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -44,6 +46,8 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	private ${sub.entityCamelName}Dao ${sub.entityName}Dao;
 	</#list>
 	</#if>
+	@Autowired
+	private IdWorker idWorker;
 
 	@Override
 	public void save${entityCamelName}(${entityCamelName} ${entityName}) {
@@ -52,6 +56,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		<#list subTables as sub>
 		if (${entityName}.get${sub.entityCamelName}List() != null && ${entityName}.get${sub.entityCamelName}List().size()>0) {
 			for (${sub.entityCamelName} dt : ${entityName}.get${sub.entityCamelName}List()) {
+				dt.setId(idWorker.nextId());
 				dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 				dt.setComId(${entityName}.getComId());
 				dt.setCreateUser(${entityName}.getCreateUser());
@@ -76,14 +81,13 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			//新增列表
 			if (newList.size()>0) {
 				for (${sub.entityCamelName} dt : newList) {
-					dt.setId(new IdWorker(1l).nextId());
-					//dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
+					dt.setId(idWorker.nextId());
 					dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 					dt.setComId(${entityName}.getComId());
 					dt.setCreateUser(${entityName}.getCreateUser());
 					dt.setCreateTime(DateUtil.getDate().getTime());
 				}
-				${sub.entityName}Dao.batchSave${sub.entityCamelName}(${entityName}.get${sub.entityCamelName}List());
+				${sub.entityName}Dao.batchSave${sub.entityCamelName}(newList);
 			}
 			//修改列表
 			if (modifyList.size()>0) {
@@ -103,8 +107,14 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	}
 
 	@Override
-	public void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType} ${col.propertyName}</#list>,Integer state){
-		${entityName}Dao.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}</#list>,state);
+	public void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType}[] ${col.propertyName}s</#list>,Integer state){
+		<#list primaryKeyList as col> 
+			<#if col_index lt 1>
+		for (int i=0; i<${col.propertyName}s.length; i++){
+			${entityName}Dao.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}s[i]</#list>,state);
+		}
+			</#if>
+		</#list>
 	}
 
 	@Override
@@ -120,7 +130,10 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			Map<String,Object>  countData = ${entityName}Dao.count${entityCamelName}(params);
 			page.setCountData(countData);
 			if (!countData.containsKey("total")){
-				return;
+				Long total = StringUtil.getLong(countData.get("total"));
+				if (total==null || total<1l) {
+					return;
+				}
 			}
 		}
 		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);

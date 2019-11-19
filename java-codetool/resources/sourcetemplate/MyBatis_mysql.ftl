@@ -51,8 +51,15 @@
   </insert>
   
   <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
-  	update ${tableFullName} set 
+  	update ${tableFullName} set id = ${"#"}{${"id"},${"jdbcType=BIGINT"}}
   	<#list columns as col>
+  	<#if col.propertyName != 'id'>
+  	<if test="${col.propertyName}!=null">
+  	,${col.columnName}=${'#'}{${col.propertyName},jdbcType=${col.columnType}}
+  	</if>
+  	</#if>
+    </#list>
+  	<#--<#list columns as col>
 	  	<#if col_index gt 0>,</#if>
 	  	<#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
 	    <#if jdbcType=="INT">
@@ -61,7 +68,7 @@
 	    <#assign jdbcType="DATE">
 	    </#if>
 	  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${jdbcType}}
-  	</#list>
+  	</#list>-->
   	where <#list primaryKeyList as col><#if col_index gt 0> and </#if>${col.columnName!}=${'#'}{${col.propertyName!},jdbcType=${col.columnType!}}</#list>
   </update>
   
@@ -75,15 +82,17 @@
   </select>
   
   <sql id="BaseCondition">
+    <where>
   	<#list columns as col>
   	<if test="map.${col.propertyName}!=null">
   	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
+    </where>
   </sql>
   
   <select id="find${entityCamelName}List" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
+  	select <include refid="Base_Column_List"/> from ${tableFullName}
   	<include refid="BaseCondition"/>
   	order by 
   	<if test="map.orderString!=null">
@@ -95,7 +104,7 @@
   	</if>
   </select>
   <select id="count${entityCamelName}" resultType="map">
-  	select count(*) total from ${tableFullName} where 1=1
+  	select count(*) total from ${tableFullName}
   	<include refid="BaseCondition"/>
   </select>
 </mapper>

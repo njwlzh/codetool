@@ -28,7 +28,7 @@ public interface ${entityCamelName}Service {
 	 * 删除${caption!}，一般情况下是设置记录的状态为删除
 	 * @param ${entityName}
 	 */
-	void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType} ${col.propertyName}</#list>,Integer state);
+	void updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyType}[] ${col.propertyName}s</#list>,Integer state);
 	
 	/**
 	 * 根据编号查询${caption!}细信息

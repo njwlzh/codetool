@@ -17,7 +17,7 @@
 	</db>
 	
 	<ignoreColumns>
-		id,create_user,create_time,update_user,update_time,state,com_id,inst_id,note
+		id,create_user,create_time,update_user,update_time,state,com_id,inst_id,note,extra_data
 	</ignoreColumns>
 	
 	<packageSetting>
@@ -32,7 +32,7 @@
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
 	
-	
+	<!-- 
 	<module>
 		<persistance>mybatis</persistance>
 		<name>pd</name>
@@ -56,7 +56,7 @@
 			<table name="sale_order_detail" parentField="sale_order_id" refType="OneToMany"></table>
 		</table>
 	</module>
-	
+	 -->
 	 <!-- 
 	<module>
 		<persistance>mybatis</persistance>
@@ -69,5 +69,32 @@
 		<table name="sys_page_table_def"/>
 	</module>
 	 -->
-	
+	 <!-- 
+	 <module>
+		<persistance>mybatis</persistance>
+		<name>cms</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>rest</framework>
+		
+		<table name="cms_article_category" ></table>
+		<table name="cms_article_info"></table>
+	</module>
+	 -->
+	 
+	 <module>
+		<persistance>mybatis</persistance>
+		<name>wx</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>rest</framework>
+		
+		<table name="WX_MENU_INFO" ></table>
+		<table name="WX_MERCHANT_APPLY_INFO"></table>
+		<table name="WX_MSG_ARTICLE_INFO"/>
+		<table name="WX_MSG_ARTICLE_ITEM"/>
+		<table name="WX_OPEN_INFO"/>
+		<table name="WX_SHOP_DECORATION" />
+	</module>
+	 
 </configure>

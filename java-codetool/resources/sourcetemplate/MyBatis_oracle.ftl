@@ -39,16 +39,18 @@
   </select>
   
   <sql id="BaseCondition">
+  	<where>
   	<#list columns as col>
   	<if test="map.${col.propertyName}!=null">
   	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
+    </where>
   </sql>
   
   <select id="find${entityCamelName}List" resultMap="BaseResultMap">
   	select * from(select a.*,ROWNUM rn from(
-  	select <include refid="Base_Column_List"/> from ${tableFullName} where 1=1
+  	select <include refid="Base_Column_List"/> from ${tableFullName}
   	<include refid="BaseCondition"/>
   	order by ${primaryKey!} desc
   	) a 
@@ -62,7 +64,7 @@
   	]]>
   </select>
   <select id="count${entityCamelName}" resultType="int">
-  	select count(*) from ${tableFullName} where 1=1
+  	select count(*) from ${tableFullName}
   	<include refid="BaseCondition"/>
   </select>
 </mapper>

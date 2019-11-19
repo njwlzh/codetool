@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -45,8 +46,8 @@ import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Serv
 </#if>
 
 /**
- * ${caption!}
- *
+ * ${caption!}相关操作
+ * ${remark!}
  */
 @SuppressWarnings("rawtypes")
 @RestController
@@ -96,13 +97,16 @@ public class ${entityCamelName}Action extends BaseAction {
 		
 	<#if subTables??>
 		<#list subTables as sub>
+		//${sub.caption}
 		Pagination<${sub.entityCamelName}> paging${sub.entityCamelName} = new Pagination<${sub.entityCamelName}>(-1, 1);
 		Map<String,Object> params${sub.entityCamelName} = new HashMap<String,Object>();
+		params${sub.entityCamelName}.put("${sub.parentProperty}", id);
+		params${sub.entityCamelName}.put("state", BaseStateConstants.NORMAL.getIntCode());
 		${sub.entityName}Service.load${sub.entityCamelName}List(paging${sub.entityCamelName},params${sub.entityCamelName});
 		${entityName}.set${sub.entityCamelName}List(ListUtil.collection2List(paging${sub.entityCamelName}.getEntities()));
+		
 		</#list>
 	</#if>
-		
 		return new ResponseJson(0,${entityName});
 	}
 	
@@ -143,8 +147,8 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/ajax/updateState")
-	public ResponseJson updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
-		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.get${col.propertyCamelName}()</#list>,${entityName}.getState());
+	public ResponseJson updateState(HttpServletRequest req,@RequestParam(value="state") Integer state,@RequestParam(value="id[]") Long[] ids){
+		${entityName}Service.updateState(ids,state);
 		
 		return new ResponseJson(0,null);
 	}
