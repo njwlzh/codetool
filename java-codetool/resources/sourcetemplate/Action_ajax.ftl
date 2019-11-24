@@ -9,6 +9,7 @@ import javax.validation.Valid;
 </#if>
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,12 +18,13 @@ import ${basePackage}.base.BaseAction;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.common.utils.RequestUtil;
 import ${basePackage}.common.constant.BaseStateConstants;
-import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
 <#if subTables??>
 	<#list subTables as sub>
-import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Service;
 	</#list>
 </#if>
 
@@ -161,12 +163,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/ajax/updateState")
-	@ResponseBody
-	public Map<String,Object> updateState(HttpServletRequest req,${entityCamelName} ${entityName}){
-		Map<String,Object> res = new HashMap<String,Object>();
-		${entityName}Service.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${entityName}.get${col.propertyCamelName}()</#list>,${entityName}.getState());
-		res.put("state",0);
-		return res;
+	public ResponseJson updateState(HttpServletRequest req,@RequestParam(value="state") Integer state,@RequestParam(value="id[]") Long[] ids){
+		${entityName}Service.updateState(ids,state);
+		
+		return new ResponseJson(0,null);
 	}
 
 

@@ -216,7 +216,7 @@
 		       	        callback: function(result) {
 		       	            if(result) {  
 		       	            	$.ajax({
-		       	                    url:"${"$"}{contextPath}/${moduleName}/${entityName}/ajax/updateState?state=3&<#list primaryKeyList as col><#if col_index!=0>+"&</#if>${col.propertyName}="+data.${col.propertyName}</#list>,
+		       	                    url:"${"$"}{contextPath}/${moduleName}/${entityName}/ajax/updateState?state=3&<#list primaryKeyList as col><#if col_index!=0>+"&</#if>${col.propertyName}[]="+data.${col.propertyName}</#list>,
 		       	                    dataType: "json",
 		       	                    cache: "false",
 		       	                    success:function(data){
