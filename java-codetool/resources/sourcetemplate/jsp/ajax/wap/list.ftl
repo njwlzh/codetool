@@ -79,13 +79,13 @@
 	<script type="text/html" id="itemTmpl_Main">
 	<li class="mui-table-view-cell mui-media">
 		<div class="mui-slider-right">
-			<a class="mui-btn mui-btn-danger btn-edit" <#list primaryKeyList as col>${col.propertyName}="${"$"}{${col.propertyName!}}"</#list>>修改</a>
-			<a class="mui-btn mui-btn-danger btn-delete" <#list primaryKeyList as col>${col.propertyName}="${"$"}{${col.propertyName!}}"</#list>>删除</a>
+			<a class="mui-btn mui-btn-danger btn-edit" <#list primaryKeyList as col>${col.propertyName}="${"$"}{"$"}{${col.propertyName!}}"</#list>>修改</a>
+			<a class="mui-btn mui-btn-danger btn-delete" <#list primaryKeyList as col>${col.propertyName}="${"$"}{"$"}{${col.propertyName!}}"</#list>>删除</a>
 		</div>
-		<div class="mui-slider-handle data-item" <#list primaryKeyList as col>${col.propertyName}="${"$"}{${col.propertyName!}}"</#list>>
+		<div class="mui-slider-handle data-item" <#list primaryKeyList as col>${col.propertyName}="${"$"}{"$"}{${col.propertyName!}}"</#list>>
 			<span class="mui-pull-left">
 				<#list columns as col>
-				<span class="mui-ellipsis mui-block">${col.caption!}：<span property="${col.propertyName}" <#if col.dictKey?default("")?trim?length gt 0>dictKey="${col.dictKey!}"</#if> >${"$"}{${col.propertyName!}}</span></span>
+				<span class="mui-ellipsis mui-block">${col.caption!}：<span property="${col.propertyName}" <#if col.dictKey?default("")?trim?length gt 0>dictKey="${col.dictKey!}"</#if> >${"$"}{"$"}{${col.propertyName!}}</span></span>
 				</#list>
 			</span>
 		</div>
