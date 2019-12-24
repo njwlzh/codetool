@@ -50,25 +50,17 @@
   	</foreach>
   </insert>
   
-  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
-  	update ${tableFullName} set id = ${"#"}{${"id"},${"jdbcType=BIGINT"}}
+  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
+  	update ${tableFullName} 
+  	<set>
   	<#list columns as col>
   	<#if col.propertyName != 'id'>
   	<if test="${col.propertyName}!=null">
-  	,${col.columnName}=${'#'}{${col.propertyName},jdbcType=${col.columnType}}
+  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${col.columnType}},
   	</if>
   	</#if>
     </#list>
-  	<#--<#list columns as col>
-	  	<#if col_index gt 0>,</#if>
-	  	<#assign jdbcType=col.columnType?replace(" UNSIGNED","")>
-	    <#if jdbcType=="INT">
-	    <#assign jdbcType="INTEGER">
-	    <#elseif jdbcType=="DATETIME">
-	    <#assign jdbcType="DATE">
-	    </#if>
-	  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${jdbcType}}
-  	</#list>-->
+    </set>
   	where <#list primaryKeyList as col><#if col_index gt 0> and </#if>${col.columnName!}=${'#'}{${col.propertyName!},jdbcType=${col.columnType!}}</#list>
   </update>
   
@@ -99,7 +91,7 @@
   		${'$'}{map.orderString},
   	</if>
   	<#list primaryKeyList as col><#if col_index gt 0> , </#if>${col.columnName!} desc</#list>
-  	<if test="page.pageSize>0">
+  	<if test="page!=null and page.pageSize>0">
   	limit ${'#'}{page.firstEntityIndex},${'#'}{page.pageSize}
   	</if>
   </select>

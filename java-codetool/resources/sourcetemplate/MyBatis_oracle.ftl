@@ -23,11 +23,17 @@
   </insert>
   
   <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
-  	update ${tableFullName} set <#list columns as col>
-  	<#if col_index gt 0>,</#if>
-  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${col.columnType}}
-  	</#list> 
-  	where ${primaryKey!}=${'#'}{${primaryProperty!},jdbcType=${primaryKeyType!}}
+  	update ${tableFullName} 
+  	<set>
+  	<#list columns as col>
+  	<#if col.propertyName != 'id'>
+  	<if test="${col.propertyName}!=null">
+  	${col.columnName}=${'#'}{${col.propertyName},jdbcType=${col.columnType}},
+  	</if>
+  	</#if>
+    </#list>
+    </set>
+  	where <#list primaryKeyList as col><#if col_index gt 0> and </#if>${col.columnName!}=${'#'}{${col.propertyName!},jdbcType=${col.columnType!}}</#list>
   </update>
   
   <update id="updateState">
@@ -54,13 +60,16 @@
   	<include refid="BaseCondition"/>
   	order by ${primaryKey!} desc
   	) a 
-  	<if test="page.pageSize>0">
+  	<if test="page!=null and page.pageSize>0">
   	<![CDATA[
   	 where ROWNUM<=(${'#'}{page.firstEntityIndex}+${'#'}{page.pageSize})
   	]]>
   	</if>
   	<![CDATA[
-  	) where rn > ${'#'}{page.firstEntityIndex}
+  	)
+	<if test="page!=null and page.pageSize>0">
+	where rn > ${'#'}{page.firstEntityIndex}
+	</if>
   	]]>
   </select>
   <select id="count${entityCamelName}" resultType="int">
