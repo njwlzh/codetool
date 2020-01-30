@@ -50,7 +50,7 @@
   	</foreach>
   </insert>
   
-  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
+  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
   	update ${tableFullName} 
   	<set>
   	<#list columns as col>

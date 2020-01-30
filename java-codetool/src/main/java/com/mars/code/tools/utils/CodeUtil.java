@@ -100,7 +100,7 @@ public class CodeUtil {
     		type="LONGVARCHAR";
     	} else if (type.equals("DATETIME") || type.equals("DATE")) {
     		type="TIMESTAMP";
-    	} else if (type.equals("VARCHAR2")) {
+    	} else if (type.equals("VARCHAR2") || type.equals("JSON")) {
     		type="VARCHAR";
     	} else if (type.equals("NUMBER")) {
     		type="NUMERIC";
