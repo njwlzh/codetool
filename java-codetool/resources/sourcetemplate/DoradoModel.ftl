@@ -1,6 +1,6 @@
 
   <DataType name="dt${entityCamelName}">
-    <Property name="creationType">${basePackage}.${moduleName}.${entityPackage}.${entityCamelName!}</Property>
+    <Property name="creationType">${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName!}</Property>
     <#list columns as col>
     <#assign type=col.propertyType>
 	<#assign type=type?replace("java.util.Date","DateTime")>

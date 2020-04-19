@@ -15,7 +15,9 @@
         </#if>
         <Property name="parameter">
           <Entity>
-            <Property name="${primaryProperty}">${'$'}${'$'}{this.${sub.parentProperty!}}</Property>
+          	<#list primaryKeyList as col>
+            <Property name="${col.propertyName}">${'$'}${'$'}{this.${sub.parentProperty!}}</Property>
+            </#list>
           </Entity>
         </Property>
         <#if sub.refType=="OneToOne">
@@ -159,7 +161,7 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
         <ToolBarButton>
           <ClientEvent name="onClick">var entity=view.get(&quot;#ds${entityCamelName}&quot;).getData(&quot;#&quot;);&#xD;
 var list=entity.get(&quot;${sub.entityName}List&quot;);&#xD;
-list.insert({&quot;${primaryProperty}&quot;:entity.get(&quot;${primaryProperty}&quot;)});&#xD;
+list.insert({&quot;${primaryKeyList[0].propertyName}&quot;:entity.get(&quot;${primaryKeyList[0].propertyName}&quot;)});&#xD;
 view.get(&quot;#dlg${sub.entityCamelName}&quot;).show();&#xD;
 </ClientEvent>
           <Property name="caption">新增</Property>

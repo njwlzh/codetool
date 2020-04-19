@@ -24,11 +24,6 @@
 	folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="/static/adminlte/dist/css/skins/all-skins.min.css">
 
-	<!-- 树形结构 -->
-	<link href="/static/jquery-treegrid-master/css/jquery.treegrid.css" rel="stylesheet" /> 
-	<link href="/static/jquery-treegrid-master/css/treeclick.css" rel="stylesheet" />
-	<!---->
-	<link rel="stylesheet" href="/static/webContextMenu/css/web.contextmenu.css" />
 	<!--bootstrap datepicker插件-->
 	<link rel="stylesheet" href="/static/adminlte/plugins/datepicker/datepicker3.css">
 	<link rel="stylesheet" href="/static/adminlte/plugins/datetimepicker/datetimepicker.css">
@@ -146,7 +141,6 @@
 	
 	<script src="/static/adminlte/plugins/datatables/extensions/colresizable/js/dataTables.colResize.js"></script>
 	
-	<script src="/static/bootstrap-treeview.js"></script>
 	<script src="/static/toastr/toastr.min.js"></script>
 	
 	<!-- 文件上传 -->
