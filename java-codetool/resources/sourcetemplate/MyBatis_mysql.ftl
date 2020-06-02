@@ -80,6 +80,9 @@
   	and ${col.columnName}=${'#'}{map.${col.propertyName},jdbcType=${col.columnType}}
   	</if>
     </#list>
+    <if test="map.keyword!=null">
+  	
+  	</if>
     </where>
   </sql>
   

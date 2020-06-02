@@ -170,10 +170,10 @@
 		"table_${subTable.entityName}":[
 			<#if subTable.columns??>
 			<#list subTable.columns as col>
-	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":true,"width":${(col.length<60)?string(60,(col.length)?c)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
+	        {"data": "${col.propertyName!}","title":"${col.caption!}","orderable":true,"name":"${col.propertyName!}","editable":false,"width":${(col.length<60)?string(60,(col.length)?c)} <#if col.dictKey??>,"dictKey":"${col.dictKey!}","editorType":"${col.editorType!}"</#if>},
 	        </#list>
 	        </#if>
-	        {"data": null,"title":"操作",className:"text-center"}
+	        {"data": null,"title":"操作",className:"text-center","width":80}
 		],
 		</#list>
 	</#if>
@@ -193,7 +193,7 @@
 	
 	$(document).ready(function(){
 		$("#btnPrint").click(function(){
-			var urlParams = UrlParm.params();
+			var urlParams = UrlParam.params();
 			var url="/html/${moduleName}/${entityName}/print${entityCamelName}.html?";
 			for (var i=0;i<keyProperties.length;i++){
 				if (i>0){
@@ -207,10 +207,10 @@
 		initPageDefine(function(){
 			<#if subTables??>
 			<#list subTables as subTable>
-			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:UrlParm.params().id});
+			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:{"${subTable.parentProperty}":UrlParam.params().id}});
 			</#list>
 			</#if>
-			reloadFormData({params:UrlParm.params(),"formId":"formData"});
+			reloadFormData({params:UrlParam.params(),"formId":"formData"});
 			hideLoading();
 		});
  	});

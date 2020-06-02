@@ -121,6 +121,7 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-erp2.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-epochpet.xml"));
 		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-health.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());

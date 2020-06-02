@@ -97,7 +97,9 @@ public class ${entityCamelName}Action extends BaseAction {
 		
 	<#if subTables??>
 		<#list subTables as sub>
-		//${sub.caption}
+		/*
+		${sub.caption}
+		*/
 		Pagination<${sub.entityCamelName}> paging${sub.entityCamelName} = new Pagination<${sub.entityCamelName}>(-1, 1);
 		Map<String,Object> params${sub.entityCamelName} = new HashMap<String,Object>();
 		params${sub.entityCamelName}.put("${sub.parentProperty}", id);
@@ -200,7 +202,6 @@ public class ${entityCamelName}Action extends BaseAction {
 	 */
 	@RequestMapping(value = "/ajax/importExcel")
 	public ResponseJson importExcel(HttpServletRequest req, MultipartFile file) throws Exception{
-		//Map<String,Object> params = RequestUtil.getParameters();
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 	    MultipartHttpServletRequest multiReq = multipartResolver.resolveMultipart(req);
 	    

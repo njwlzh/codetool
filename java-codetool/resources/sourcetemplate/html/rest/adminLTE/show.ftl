@@ -171,7 +171,7 @@
 	
 	$(document).ready(function(){
 		$("#btnPrint").click(function(){
-			var urlParams = UrlParm.params();
+			var urlParams = UrlParam.params();
 			var url="/html/${moduleName}/${entityName}/print${entityCamelName}.html?";
 			for (var i=0;i<keyProperties.length;i++){
 				if (i>0){
@@ -183,11 +183,11 @@
 		});
 		
 		initPageDefine(function(){
- 			reloadNodeData({params:UrlParm.params()});
+ 			reloadNodeData({params:UrlParam.params()});
  			
  			<#if subTables??>
 			<#list subTables as subTable>
-			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:UrlParm.params().id});
+			window["tables_${subTable.entityName}"] = loadData("table_${subTable.entityName}",{serverSide:false, paging:false, showFooter: false,autoWidth: false, ordering:false, columns:columns["table_${subTable.entityName}"],columnDefs:columnDefs["table_${subTable.entityName}"],params:{"${subTable.parentProperty}":UrlParam.params().id}});
 			</#list>
 			</#if>
 		});

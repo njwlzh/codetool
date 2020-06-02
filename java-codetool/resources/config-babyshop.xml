@@ -20,12 +20,33 @@
 		<viewPackage>view</viewPackage>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
+	<!-- 
 	<module>
 		<persistance>mybatis</persistance>
 		<name>shop</name>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<savePath></savePath>
 		<framework>dorado</framework>
-		<table name="shop_inventory_info"/>
+		<table name="shop_sale_back_order">
+			<table name="shop_sale_back_detail" parentField="order_id" refType="OneToMany"/>
+		</table>
+		<table name="shop_in_back_order">
+			<table name="shop_in_back_detail" parentField="order_id" refType="OneToMany"/>
+		</table>
+		<table name="shop_in_order_info">
+			<table name="shop_in_order_detail" parentField="order_id" refType="OneToMany"/>
+		</table>
+		<table name="shop_stock_inventory"/>
+		
+	</module>
+	 -->
+	<module>
+		<persistance>mybatis</persistance>
+		<name>manage</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>dorado</framework>
+		<table name="com_staff_ref"/>
+		
 	</module>
 </configure>
