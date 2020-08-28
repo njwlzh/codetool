@@ -83,6 +83,8 @@ public class SqlServerTableService extends AbstractTableService {
         table.setPrimaryKey(getTablePrimaryKey(tableName, con));
         table.setPrimaryKeys(getTablePrimaryKeys(tableName, con));
         table.setPrimaryProperty(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getPrimaryKey()));
+
+        table.setPrimaryKeyList(getPrimaryColumns(table, table.getPrimaryKeys()));
         
         String remark = getTableRemark(tableName, con);
         String[] remarkArr = seperatRemark(remark);
@@ -90,7 +92,7 @@ public class SqlServerTableService extends AbstractTableService {
         table.setRemark(remarkArr[1]);
         
         table.setPrimaryKeyType(getColumnType(table, table.getPrimaryKey()));
-        table.setPrimaryPropertyType(CodeUtil.convertType(table.getPrimaryKeyType()));
+        table.setPrimaryPropertyType(CodeUtil.convertType(table.getPrimaryKeyType(), 20));
         table.setPrimaryCamelProperty(CodeUtil.convertToCamelCase(table.getPrimaryKey()));
         table.setEntityCamelName(CodeUtil.isEmpty(tbConf.getEntityName())?CodeUtil.convertToCamelCase(table.getTableName()):tbConf.getEntityName());
         table.setEntityName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(table.getTableName()));
@@ -107,7 +109,20 @@ public class SqlServerTableService extends AbstractTableService {
         	table.setSubTables(subTables);
         }
         return table;  
-    } 
+    }
+
+    private List<Column> getPrimaryColumns(Table table,List<String> keys){
+    	List<Column> primaryKeyList = new ArrayList<Column>();
+    	for (String key : keys){
+    		for (Column col : table.getColumns()){
+    			if (key.equalsIgnoreCase(col.getColumnName())){
+    				primaryKeyList.add(col);
+    				break;
+    			}
+    		}
+        }
+    	return primaryKeyList;
+    }
     
     /**
      * 获取数据表的所有字段
@@ -150,6 +165,7 @@ public class SqlServerTableService extends AbstractTableService {
 			while (rs.next()) {
 				Column col = new Column();
 	        	String colName = rs.getString("column_name");
+	        	Long dataLength=rs.getLong("data_length");
 	        	col.setColumnName(colName);
 	        	String type = rs.getString("data_type").toUpperCase();
 	        	type=CodeUtil.convertJdbcType(type);
@@ -177,10 +193,10 @@ public class SqlServerTableService extends AbstractTableService {
 	            }
 	        	
 	        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(colName));
-	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
+	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType(), dataLength));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));
 	        	col.setNullable(rs.getString("nullable").equals("Y"));
-	        	col.setLength(rs.getLong("data_length"));
+	        	col.setLength(dataLength);
 	        	col.setDefaultValue(rs.getString("data_default"));
 	        	
 	        	String colKey = rs.getString("prim");

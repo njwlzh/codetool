@@ -46,7 +46,7 @@
   </update>
   
   <update id="updateState">
-  	update ${tableFullName} set state=${'#'}{${state}} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${propertyName}}</#list>
+  	update ${tableFullName} set state=${'#'}{state} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${col.propertyName}}</#list>
   </update>
   
   <select id="findById" resultMap="BaseResultMap" parameterType="${primaryPropertyType}">
@@ -73,8 +73,8 @@
   	rownumber>${'#'}{page.firstEntityIndex}
   	]]>
   </select>
-  <select id="count${entityCamelName}" resultType="int">
-  	select count(*) from ${tableFullName}
+  <select id="count${entityCamelName}" resultType="map">
+  	select count(*) total from ${tableFullName}
   	<include refid="BaseCondition"/>
   </select>
 </mapper>

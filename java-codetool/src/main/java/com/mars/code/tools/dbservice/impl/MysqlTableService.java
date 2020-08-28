@@ -136,6 +136,7 @@ public class MysqlTableService extends AbstractTableService {
 			while (rs.next()) {
 				Column col = new Column();
 	        	String colName = rs.getString("column_name");
+	        	long dataLength = rs.getLong("numeric_precision");
 	        	col.setColumnName(colName);
 	        	String type = rs.getString("data_type").toUpperCase();
 	        	type=CodeUtil.convertJdbcType(type);
@@ -154,7 +155,7 @@ public class MysqlTableService extends AbstractTableService {
 	            }
 	             
 	        	col.setPropertyName(CodeUtil.convertToFirstLetterLowerCaseCamelCase(colName));
-	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType()));
+	        	col.setPropertyType(CodeUtil.convertType(col.getColumnType(), dataLength));
 	        	col.setPropertyCamelName(CodeUtil.convertToCamelCase(colName));
 	        	col.setNullable(rs.getString("is_nullable").equals("YES"));
 	        	col.setLength(rs.getLong("character_maximum_length"));
@@ -184,6 +185,7 @@ public class MysqlTableService extends AbstractTableService {
 		while (rs.next()){
 			keys.add(rs.getString("COLUMN_NAME"));
 		}
+		rs.close();
 		return keys;
 	}
     

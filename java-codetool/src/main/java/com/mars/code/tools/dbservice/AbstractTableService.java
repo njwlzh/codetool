@@ -91,6 +91,9 @@ public abstract class AbstractTableService {
 	 */
 	protected String[] seperatRemark(String remark) {
 		
+		if (remark == null || remark.trim().length()==0) {
+			return new String[] {"",""};
+		}
 		//先判断是否定义了数据字典信息，若有，则截取前段内容为注释信息
 		int idx = remark.lastIndexOf("||");
 		if (idx != -1) {
@@ -133,6 +136,9 @@ public abstract class AbstractTableService {
 	 * @return 返回数组["字典关键字","编辑框类型"]，编辑框类型默认为下拉框select
 	 */
 	protected static String[] getColumnDict(String remark) {
+		if (remark == null || remark.trim().length()==0) {
+			return new String[] {"",""};
+		}
 		int idx = remark.lastIndexOf("||");
 		if (idx == -1) {
 			return null;

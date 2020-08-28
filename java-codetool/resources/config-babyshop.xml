@@ -20,26 +20,19 @@
 		<viewPackage>view</viewPackage>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
-	<!-- 
+	
 	<module>
 		<persistance>mybatis</persistance>
 		<name>shop</name>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<savePath></savePath>
 		<framework>dorado</framework>
-		<table name="shop_sale_back_order">
-			<table name="shop_sale_back_detail" parentField="order_id" refType="OneToMany"/>
-		</table>
-		<table name="shop_in_back_order">
-			<table name="shop_in_back_detail" parentField="order_id" refType="OneToMany"/>
-		</table>
-		<table name="shop_in_order_info">
-			<table name="shop_in_order_detail" parentField="order_id" refType="OneToMany"/>
-		</table>
-		<table name="shop_stock_inventory"/>
+		
+		<table name="order_hungup"/>
 		
 	</module>
-	 -->
+	
+	 <!-- 
 	<module>
 		<persistance>mybatis</persistance>
 		<name>manage</name>
@@ -49,4 +42,27 @@
 		<table name="com_staff_ref"/>
 		
 	</module>
+	 -->
+	<!--  
+	<module>
+		<persistance>mybatis</persistance>
+		<name>fin</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>dorado</framework>
+		<table name="fin_fee_order_info"/>
+		
+	</module>
+	 -->
+	 <!-- 
+	 <module>
+		<persistance>mybatis</persistance>
+		<name>sys</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>dorado</framework>
+		<table name="sys_app_version"/>
+		
+	</module>
+	 -->
 </configure>

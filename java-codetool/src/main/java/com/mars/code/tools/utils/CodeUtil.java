@@ -43,7 +43,7 @@ public class CodeUtil {
     /* 
      * 将数据库的数据类型转换为java的数据类型 
      */  
-    public static String convertType(String databaseType) {  
+    public static String convertType(String databaseType, long length) {  
         String javaType = "";  
           
         String databaseTypeStr = databaseType.trim().toLowerCase();
@@ -56,8 +56,12 @@ public class CodeUtil {
             javaType = "String";  
         } else if(databaseTypeStr.equals("number") 
         		|| databaseTypeStr.equals("numeric")
-        		) {  
-            javaType = "Integer";  
+        		) {
+        	if (length>10) {
+        		javaType="Long";
+        	} else {
+        		javaType = "Integer";
+        	}
         } else if(databaseTypeStr.indexOf("varchar")!=-1) {  
             javaType = "String";  
         } else if(databaseTypeStr.equals("blob")) {  
@@ -96,7 +100,7 @@ public class CodeUtil {
     	type=type.replace(" UNSIGNED","");
     	if (type.equals("INT")) {
         	type="INTEGER";
-        } else if (type.equals("TEXT") || type.equals("LONGTEXT")){
+        } else if (type.equals("TEXT") || type.equals("LONGTEXT") || type.equals("LONG VARCHAR")){
     		type="LONGVARCHAR";
     	} else if (type.equals("DATETIME") || type.equals("DATE")) {
     		type="TIMESTAMP";

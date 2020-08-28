@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao" >
-  <resultMap id="BaseResultMap" type="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}" >
+  <resultMap id="BaseResultMap" type="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}" >
     <id column="${primaryKey!}" property="${primaryProperty}" jdbcType="${primaryKeyType}" />
     <#list columns as col>
     <#if !col.primaryKey>
@@ -14,7 +14,7 @@
     <#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>
   </sql>
   
-  <insert id="save${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
+  <insert id="save${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
   	insert into ${tableFullName} (<#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>) 
   	values (<#list columns as col>
   	${'#'}{${col.propertyName},jdbcType=${col.columnType}}
@@ -22,7 +22,24 @@
   	</#list>)
   </insert>
   
-  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.${entityPackage}.${entityCamelName}">
+  
+  <insert id="batchSave${entityCamelName}" parameterType="java.util.List">
+  	insert all
+  	<foreach collection="list" item="item" index="index" separator=" ">
+  	 into ${tableFullName} (<#list columns as col><#if !col.identity>${col.columnName}</#if><#if !col.identity && col_index lt columns?size-1>,</#if></#list>) 
+  	values 
+  	(
+  	<#list columns as col>
+	  	<#if !col.identity>
+	  	${'#'}{item.${col.propertyName},jdbcType=${col.columnType}}
+	  	</#if>
+  		<#if !col.identity! && col_index lt columns?size-1>,</#if>
+  	</#list>)
+  	</foreach>
+  	select 1 from dual
+  </insert>
+  
+  <update id="update${entityCamelName}" parameterType="${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName}">
   	update ${tableFullName} 
   	<set>
   	<#list columns as col>
@@ -37,11 +54,12 @@
   </update>
   
   <update id="updateState">
-  	update ${tableFullName} set state=${'#'}{${state}} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${propertyName}}</#list>
+  	update ${tableFullName} set state=${'#'}{state} where <#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${col.propertyName}}</#list>
   </update>
   
-  <select id="findById" resultMap="BaseResultMap" parameterType="${primaryPropertyType}">
-  	select <include refid="Base_Column_List"/> from ${tableFullName} where ${primaryKey!}=${'#'}{id}
+  <select id="findByKey" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from ${tableFullName} where 
+  	<#list primaryKeyList as col> <#if col_index gt 0> and </#if>${col.columnName}=${'#'}{${col.propertyName}}</#list>
   </select>
   
   <sql id="BaseCondition">
@@ -65,15 +83,15 @@
   	 where ROWNUM<=(${'#'}{page.firstEntityIndex}+${'#'}{page.pageSize})
   	]]>
   	</if>
-  	<![CDATA[
   	)
 	<if test="page!=null and page.pageSize>0">
+  	<![CDATA[
 	where rn > ${'#'}{page.firstEntityIndex}
-	</if>
   	]]>
+	</if>
   </select>
-  <select id="count${entityCamelName}" resultType="int">
-  	select count(*) from ${tableFullName}
+  <select id="count${entityCamelName}" resultType="map">
+  	select count(*) total from ${tableFullName}
   	<include refid="BaseCondition"/>
   </select>
 </mapper>

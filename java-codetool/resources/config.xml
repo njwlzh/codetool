@@ -11,6 +11,8 @@
 	<supportWap>false</supportWap>
 	<!-- 数据库连接配置 -->
 	<db>
+		<!-- 数据库类型：mysql(默认), oracle, sqlserver -->
+		<dbType>mysql</dbType>
 		<dbName>database name</dbName>
 		<user>user</user>
 		<pwd>password</pwd>
