@@ -30,7 +30,14 @@ public class Config {
 	private String pageType; //页面类型
 	private List<String> ignoreColumns;
 	
+	//是否生成wap页面
 	private boolean supportWap = false;
+	//是否生成swagger注解（controller, entity）
+	private boolean supportSwagger = false;
+	/**
+	 * 表主键值生成方式：idWork=雪花算法生成, auto=自增长, uuid=uuid字符串
+	 */
+	private String idGenerateType;
 	
 	public String getBaseDir() {
 		return baseDir;
@@ -90,11 +97,24 @@ public class Config {
 	public void setSupportWap(boolean supportWap) {
 		this.supportWap = supportWap;
 	}
+	public boolean isSupportSwagger() {
+		return supportSwagger;
+	}
+	public void setSupportSwagger(boolean supportSwagger) {
+		this.supportSwagger = supportSwagger;
+	}
+	public String getIdGenerateType() {
+		return idGenerateType;
+	}
+	public void setIdGenerateType(String idGenerateType) {
+		this.idGenerateType = idGenerateType;
+	}
 	@Override
 	public String toString() {
 		return "Config [baseDir=" + baseDir + ", basePackage=" + basePackage + ", db=" + db + ", modules=" + modules
 				+ ", packageSetting=" + packageSetting + ", theme=" + theme + ", pageType=" + pageType
-				+ ", ignoreColumns=" + ignoreColumns + ", supportWap=" + supportWap + "]";
+				+ ", ignoreColumns=" + ignoreColumns + ", supportWap=" + supportWap + ", supportSwagger="
+				+ supportSwagger + "]";
 	}
 	public static Config loadConfig(){
 		Config cfg = new Config();
@@ -122,7 +142,9 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-epochpet.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-health.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-collectflowdata.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-collectflowdata.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-activity.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-activity-new.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());
@@ -143,6 +165,18 @@ public class Config {
 			cfg.setSupportWap(false);
 		} else {
 			cfg.setSupportWap(Boolean.valueOf(elemSupportWap.getTextTrim()));
+		}
+		Element elemSupportSwagger = XmlUtil.getChild(root, "supportSwagger");
+		if (elemSupportSwagger==null){
+			cfg.setSupportSwagger(false);
+		} else {
+			cfg.setSupportSwagger(Boolean.valueOf(elemSupportSwagger.getTextTrim()));
+		}
+		Element elemIdGenerateType = XmlUtil.getChild(root, "idGenerateType");
+		if (elemIdGenerateType==null){
+			cfg.setIdGenerateType("auto");
+		} else {
+			cfg.setIdGenerateType(elemIdGenerateType.getTextTrim());
 		}
 		cfg.setBasePackage(XmlUtil.getChild(root, "basePackage").getTextTrim());
 		//加载数据库配置
@@ -272,7 +306,8 @@ public class Config {
 		}
 		Attribute name = XmlUtil.getAttribute(e, "name");
 		if (name!=null) {
-			m.setName(name.getValue().toUpperCase());
+			//m.setName(name.getValue().toUpperCase());
+			m.setName(name.getValue().toLowerCase()); //TODO 临时改为小写
 		}
 		Attribute prefix = XmlUtil.getAttribute(e, "prefix");
 		if (prefix!=null) {

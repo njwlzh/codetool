@@ -24,6 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import ${basePackage}.base.BaseAction;
@@ -49,7 +52,9 @@ import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Serv
  * ${caption!}相关操作
  * ${remark!}
  */
-@SuppressWarnings("rawtypes")
+<#if supportSwagger!false>
+@Api(tags = {"${caption!}相关操作"})
+</#if>
 @RestController
 @RequestMapping("/${moduleName}/${entityName}")
 public class ${entityCamelName}Action extends BaseAction {
@@ -69,8 +74,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param params 参数列表
 	 * @param page
 	 */
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/ajax/load${entityCamelName}List")
+	<#if supportSwagger!false>
+	@ApiOperation(value = "查询${caption!}列表", notes = "查询${caption!}列表，根据 entity属性作为键值传入查询参数，以条件组合方式查询", response = ResponseJson.class)
+	</#if>
+	@RequestMapping(value = "/load${entityCamelName}List")
 	public ResponseJson load${entityCamelName}List(HttpServletRequest req){
 		Integer pageNo = getPageNo();
 		Integer pageSize = getPageSize();
@@ -91,7 +98,10 @@ public class ${entityCamelName}Action extends BaseAction {
 	 </#list>
 	 * @return
 	 */
-	@RequestMapping(value = "/ajax/load${entityCamelName}")
+	<#if supportSwagger!false>
+	@ApiOperation(value = "根据主键ID查询${caption!}", notes = "根据主键ID查询单个${caption!}", response = ResponseJson.class)
+	</#if>
+	@RequestMapping(value = "/load${entityCamelName}")
 	public ResponseJson load${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		
@@ -117,11 +127,14 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param ${entityName}
 	 * @return
 	 */
+	<#if supportSwagger!false>
+	@ApiOperation(value = "保存${caption!}", notes = "保存${caption!}", response = ResponseJson.class)
+	</#if>
 	<#assign validate="">
 	<#if module.persistance=="hibernate" || module.persistance=="jpa">
 	<#assign validate="@Valid ">
 	</#if>
-	@RequestMapping(value = "/ajax/save${entityCamelName}",method=RequestMethod.POST)
+	@PostMapping(value = "/save${entityCamelName}",method=RequestMethod.POST)
 	public ResponseJson save${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.save${entityCamelName}(${entityName});
 		
@@ -129,15 +142,18 @@ public class ${entityCamelName}Action extends BaseAction {
 	}
 	
 	/**
-	 * 保存修改的${caption!}
+	 * 更新${caption!}
 	 * @param ${entityCamelName}
 	 * @return
 	 */
-	 <#assign validate="">
+	<#if supportSwagger!false>
+	@ApiOperation(value = "更新${caption!}", notes = "更新${caption!}", response = ResponseJson.class)
+	</#if>
+	<#assign validate="">
 	<#if module.persistance=="hibernate" || module.persistance=="jpa">
 	<#assign validate="@Valid ">
 	</#if>
-	@RequestMapping(value = "/ajax/update${entityCamelName}",method=RequestMethod.POST)
+	@RequestMapping(value = "/update${entityCamelName}",method=RequestMethod.POST)
 	public ResponseJson update${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.update${entityCamelName}(${entityName});
 		
@@ -148,77 +164,14 @@ public class ${entityCamelName}Action extends BaseAction {
 	 * @param ${entityCamelName}
 	 * @return
 	 */
-	@RequestMapping(value = "/ajax/updateState")
+	<#if supportSwagger!false>
+	@ApiOperation(value = "更新${caption!}数据状态", notes = "更新${caption!}数据状态，一般用于逻辑删除数据，支持传入ID列表进行更新", response = ResponseJson.class)
+	</#if>
+	@RequestMapping(value = "/updateState")
 	public ResponseJson updateState(HttpServletRequest req,@RequestParam(value="state") Integer state,@RequestParam(value="id[]") Long[] ids){
 		${entityName}Service.updateState(ids,state);
 		
 		return new ResponseJson(0,null);
 	}
 
-
-	/**
-	 * 导出表格数据，前台需传入页面URI和要导出的表格名称，其它为查询的参数
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping(value = "/file/export", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<byte[]> export(HttpServletRequest req) throws Exception{
-		byte[] fileArray = new byte[0];
-		//导出所有数据
-		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(-1, 1);
-		
-		Map<String,Object> params = RequestUtil.getParameters();
-		params.put("state", BaseStateConstants.NORMAL.getIntCode());
-		
-		String tableConfig = getTableConfig();
-		//如果没有查询到表格的配置，则不进行下载
-		if (StringUtil.isEmpty(tableConfig)) {
-			return null;
-		}
-		
-		${entityName}Service.load${entityCamelName}List(paging,params);
-		//转换数据列表为jsonArray，方便导出Excel对应的键值
-		JSONArray datas = (JSONArray)JSON.toJSON(paging.getEntities());
-		//列头
-		List<Map> excelHeaders = JSON.parseArray(tableConfig, Map.class);
-		
-		File f = new File(FileUtil.getTempRandomFilePath("xls"));
-		ExcelUtil.writeExcel(f, excelHeaders, datas);
-		fileArray = FileUtil.file2Byte(f);
-		
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentDispositionFormData("attachment", URLEncoder.encode("数据列表","UTF-8")+".xls");
-		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		
-		return new ResponseEntity<byte[]>(fileArray, httpHeaders, HttpStatus.OK);
-	}
-
-
-	/**
-	 * 上传Excel，并解析后返回到列表页
-	 * @param req
-	 * @return
-	 * @throws Exception 
-	 */
-	@RequestMapping(value = "/ajax/importExcel")
-	public ResponseJson importExcel(HttpServletRequest req, MultipartFile file) throws Exception{
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-	    MultipartHttpServletRequest multiReq = multipartResolver.resolveMultipart(req);
-	    
-	    String pageUri = multiReq.getParameter("pageUri");
-	    String tableId = multiReq.getParameter("tableId");
-	    
-		String tableConfig = getTableConfig(pageUri, tableId);
-		//如果没有查询到表格的配置，则不进行下载
-		if (StringUtil.isEmpty(tableConfig)) {
-			return null;
-		}
-		
-		//列头
-		List<Map> excelHeaders = JSON.parseArray(tableConfig, Map.class);
-		//解析Excel文件
-		List<Map> datas = ExcelUtil.readExcel(file.getInputStream(), excelHeaders);
-		
-		return new ResponseJson(0,datas);
-	}
 }

@@ -11,10 +11,15 @@ import org.slf4j.LoggerFactory;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.common.constant.BaseStateConstants;
 import ${basePackage}.common.persists.BaseEntity;
-import ${basePackage}.common.persists.IdWorker;
 import ${basePackage}.common.utils.DateUtil;
 import ${basePackage}.common.utils.EntityUtil;
 import ${basePackage}.common.utils.StringUtil;
+<#if idGenerateType=="idWorker">
+import ${basePackage}.common.persists.IdWorker;
+</#if>
+<#if idGenerateType=="uuid">
+import java.util.UUID;
+</#if>
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,17 +51,31 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 	private ${sub.entityCamelName}Dao ${sub.entityName}Dao;
 	</#list>
 	</#if>
+	<#if idGenerateType=="idWorker">
 	@Autowired
 	private IdWorker idWorker;
+	</#if>
+	
 
 	@Override
 	public void save${entityCamelName}(${entityCamelName} ${entityName}) {
+		<#if idGenerateType=="idWorker">
+		${entityName}.setId(idWorker.nextId());
+		</#if>
+		<#if idGenerateType=="uuid">
+		${entityName}.setId(UUID.randomUUID().toString());
+		</#if>
 		${entityName}Dao.save${entityCamelName}(${entityName});
 		<#if subTables??>
 		<#list subTables as sub>
 		if (${entityName}.get${sub.entityCamelName}List() != null && ${entityName}.get${sub.entityCamelName}List().size()>0) {
 			for (${sub.entityCamelName} dt : ${entityName}.get${sub.entityCamelName}List()) {
+				<#if idGenerateType=="idWorker">
 				dt.setId(idWorker.nextId());
+				</#if>
+				<#if idGenerateType=="uuid">
+				dt.setId(UUID.randomUUID().toString());
+				</#if>
 				dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 				dt.setComId(${entityName}.getComId());
 				dt.setCreateUser(${entityName}.getCreateUser());
@@ -81,7 +100,12 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			//新增列表
 			if (newList.size()>0) {
 				for (${sub.entityCamelName} dt : newList) {
+					<#if idGenerateType="idWorker">
 					dt.setId(idWorker.nextId());
+					</#if>
+					<#if idGenerateType=="uuid">
+					dt.setId(UUID.randomUUID().toString());
+					</#if>
 					dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
 					dt.setComId(${entityName}.getComId());
 					dt.setCreateUser(${entityName}.getCreateUser());

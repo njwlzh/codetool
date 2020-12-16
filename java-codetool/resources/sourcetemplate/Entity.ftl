@@ -21,6 +21,10 @@ import javax.persistence.Transient;
 import ${imp!};
 </#list>
 </#if>
+<#if supportSwagger!false>
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+</#if>
 
 import ${basePackage}.common.persists.BaseEntity;
 import ${basePackage}.common.persists.ColumnInfo;
@@ -30,6 +34,9 @@ import ${basePackage}.common.persists.TableInfo;
 * ${caption!}
 * ${remark!}
 */
+<#if supportSwagger?exists && supportSwagger>
+@ApiModel(value="${caption!}对象", description="${caption!}实体信息")
+</#if>
 <#if module.persistance=="hibernate" || module.persistance=="jpa">
 @Entity
 @Table(name="${tableFullName!}")
@@ -67,6 +74,9 @@ public class ${entityCamelName!} extends BaseEntity {
 		<#else>
 	@NotNull(message="${col.remark!}不能为空")	
 		</#if>
+	</#if>
+	<#if supportSwagger!false>
+	@ApiModelProperty(value = "${col.remark!}")
 	</#if>
 	@ColumnInfo(name="${col.columnName}",nullable=${col.nullable?string("true","false")})
 	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};

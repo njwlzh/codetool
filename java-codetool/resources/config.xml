@@ -9,6 +9,11 @@
 	<pageType>html</pageType>
 	<!-- 是否生成移动端H5页面，true=生成，默认为false，设置为true，必须要有对应的wap模板文件 -->
 	<supportWap>false</supportWap>
+	
+	<!-- 是否生成swagger注解 -->
+	<supportSwagger>false</supportSwagger>
+	<!-- 表主键值生成方式：idWorker=雪花算法生成, auto=自增长, uuid=uuid字符串 -->
+	<idGenerateType>auto</idGenerateType>
 	<!-- 数据库连接配置 -->
 	<db>
 		<!-- 数据库类型：mysql(默认), oracle, sqlserver -->

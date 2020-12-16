@@ -125,6 +125,9 @@ public class DataBase2File {
     	obj.put("actionPackage", module.getActionPackage());
     	obj.put("viewPackage", module.getViewPackage());
     	obj.put("mapperPackage", module.getMapperPackage());
+    	obj.put("supportWap", config.isSupportWap());
+    	obj.put("supportSwagger", config.isSupportSwagger());
+    	obj.put("idGenerateType", config.getIdGenerateType());
     }
     
     /**
