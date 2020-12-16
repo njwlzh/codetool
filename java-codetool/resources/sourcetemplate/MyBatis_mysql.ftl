@@ -25,6 +25,7 @@
 	  	</#if>
   		<#if !col.identity! && col_index lt columns?size-1>,</#if>
   	</#list>)
+  	<#if idGenerateType=="auto">
   	<#if primaryKeyList?size&gt;0>
   		<#list primaryKeyList as col>
   		<#if col.identity>
@@ -34,9 +35,10 @@
 	    </#if>
 	    </#list>
     </#if>
+    </#if>
   </insert>
   
-  <insert id="batchSave${entityCamelName}" parameterType="java.util.List">
+  <insert id="batchSave${entityCamelName}" parameterType="java.util.List" <#if idGenerateType=="auto">useGeneratedKeys="true" keyProperty="id"</#if>>
   	insert into ${tableFullName} (<#list columns as col><#if !col.identity>${col.columnName}</#if><#if !col.identity && col_index lt columns?size-1>,</#if></#list>) 
   	values 
   	<foreach collection="list" item="item" index="index" separator=",">
