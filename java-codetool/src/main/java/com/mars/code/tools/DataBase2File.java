@@ -89,7 +89,7 @@ public class DataBase2File {
     private StringBuffer genFile(Table tb,Module module) {
     	generateEntityFile(tb, module);//生成entity
         generateServiceFile(tb, module);//生成service
-        generateActionFile(tb,module);//生成action
+        generateControllerFile(tb,module);//生成action
         generateDaoFile(tb, module);//生成dao
         if ("dorado".equals(module.getFramework())) {
         	generateViewFile(tb,module);//生成view
@@ -122,7 +122,7 @@ public class DataBase2File {
     	obj.put("serviceImplPackage", module.getServiceImplPackage());
     	obj.put("daoPackage", module.getDaoPackage());
     	obj.put("daoImplPackage", module.getDaoImplPackage());
-    	obj.put("actionPackage", module.getActionPackage());
+    	obj.put("actionPackage", module.getControllerPackage());
     	obj.put("viewPackage", module.getViewPackage());
     	obj.put("mapperPackage", module.getMapperPackage());
     	obj.put("supportWap", config.isSupportWap());
@@ -276,19 +276,19 @@ public class DataBase2File {
     } 
     
     /**
-     * 生成Action
+     * 生成Controller
      * @param table
      * @param module
      */
-    private void generateActionFile(Table table,Module module) {
+    private void generateControllerFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,module.getActionPackage());
-    	File saveFile = new File(saveDir,table.getEntityCamelName()+"Action.java");
+    	File saveDir=getSaveFilePath(module,module.getControllerPackage());
+    	File saveFile = new File(saveDir,table.getEntityCamelName()+"Controller.java");
     	
-    	String templateName="Action";
+    	String templateName="Controller";
     	if (module.getFramework().equals("mvc") || module.getFramework().equals("rest") || module.getFramework().equals("ajax")) {
-    		templateName="Action_"+module.getFramework();
+    		templateName="Controller_"+module.getFramework();
     	}
     	String savePath =saveFile.getAbsolutePath();
     	FreemarkerUtil.createDoc(obj, templateName, savePath);

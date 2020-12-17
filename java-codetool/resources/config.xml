@@ -35,7 +35,7 @@
 	
 	<!-- 包名配置 -->
 	<packageSetting>
-		<actionPackage>action</actionPackage>
+		<actionPackage>controller</actionPackage>
 		<daoPackage>dao</daoPackage>
 		<daoImplPackage>impl</daoImplPackage>
 		<servicePackage>service</servicePackage>

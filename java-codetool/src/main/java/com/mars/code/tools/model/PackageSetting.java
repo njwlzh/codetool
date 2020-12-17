@@ -50,10 +50,10 @@ public class PackageSetting {
 	public void setMapperPackage(String mapperPackage) {
 		this.mapperPackage = mapperPackage;
 	}
-	public String getActionPackage() {
+	public String getControllerPackage() {
 		return actionPackage;
 	}
-	public void setActionPackage(String actionPackage) {
+	public void setControllerPackage(String actionPackage) {
 		this.actionPackage = actionPackage;
 	}
 	public String getViewPackage() {

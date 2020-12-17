@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ${basePackage}.base.BaseAction;
+import ${basePackage}.base.BaseController;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
@@ -35,14 +35,14 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
  */
 @Controller
 @RequestMapping("/${moduleName}/${entityName}")
-public class ${entityCamelName}Action extends BaseAction {
+public class ${entityCamelName}Controller extends BaseController {
 	
 	@Resource(name=${entityCamelName}Service.BEAN_ID)
 	private ${entityCamelName}Service ${entityName}Service;
 	<#if subTables??>
 		<#list subTables as sub>
-	@Resource(name="${sub.entityName}Action")
-	private ${sub.entityCamelName}Action ${sub.entityName}Action;
+	@Resource(name="${sub.entityName}Controller")
+	private ${sub.entityCamelName}Controller ${sub.entityName}Controller;
 		</#list>
 	</#if>
 	

@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import ${basePackage}.base.BaseAction;
+import ${basePackage}.base.BaseController;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
@@ -30,14 +30,14 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
  *
  */
 @Component
-public class ${entityCamelName}Action extends BaseAction {
+public class ${entityCamelName}Controller extends BaseController {
 	
 	@Resource(name=${entityCamelName}Service.BEAN_ID)
 	private ${entityCamelName}Service ${entityName}Service;
 	<#if subTables??>
 		<#list subTables as sub>
-	@Resource(name="${sub.entityName}Action")
-	private ${sub.entityCamelName}Action ${sub.entityName}Action;
+	@Resource(name="${sub.entityName}Controller")
+	private ${sub.entityCamelName}Controller ${sub.entityName}Controller;
 		</#list>
 	</#if>
 	
@@ -88,12 +88,12 @@ public class ${entityCamelName}Action extends BaseAction {
 				List<${sub.entityCamelName}> subList = new ArrayList<${sub.entityCamelName}>();
 				${sub.entityName}.set${sub.parentProperty?cap_first}(${entityName}.get${sub.parentProperty?cap_first}());
 				subList.add(${sub.entityName});
-				${sub.entityName}Action.save${sub.entityCamelName}(subList);
+				${sub.entityName}Controller.save${sub.entityCamelName}(subList);
 			}
 				<#else>
 			List<${sub.entityCamelName}> ${sub.entityName}List=${entityName}.get${sub.entityCamelName}List();
 			if (${sub.entityName}List!=null && !${sub.entityName}List.isEmpty()){
-				${sub.entityName}Action.save${sub.entityCamelName}(${sub.entityName}List);
+				${sub.entityName}Controller.save${sub.entityCamelName}(${sub.entityName}List);
 			}
 				</#if>
 				</#list>

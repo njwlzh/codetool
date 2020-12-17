@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import ${basePackage}.base.BaseAction;
+import ${basePackage}.base.BaseController;
 import ${basePackage}.base.ResponseJson;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.common.utils.ExcelUtil;
@@ -57,7 +57,7 @@ import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Serv
 </#if>
 @RestController
 @RequestMapping("/${moduleName}/${entityName}")
-public class ${entityCamelName}Action extends BaseAction {
+public class ${entityCamelName}Controller extends BaseController {
 	
 	@Resource(name=${entityCamelName}Service.BEAN_ID)
 	private ${entityCamelName}Service ${entityName}Service;

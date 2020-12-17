@@ -214,7 +214,7 @@ public class Config {
 		//加载包名设置
 		Element pkg = XmlUtil.getChild(root, "packageSetting");
 		PackageSetting pkgSetting=new PackageSetting();
-		pkgSetting.setActionPackage(XmlUtil.getChild(pkg, "actionPackage").getTextTrim());
+		pkgSetting.setControllerPackage(XmlUtil.getChild(pkg, "actionPackage").getTextTrim());
 		pkgSetting.setViewPackage(XmlUtil.getChild(pkg, "viewPackage").getTextTrim());
 		pkgSetting.setEntityPackage(XmlUtil.getChild(pkg, "entityPackage").getTextTrim());
 		pkgSetting.setMapperPackage(XmlUtil.getChild(pkg, "mapperPackage").getTextTrim());
@@ -240,7 +240,7 @@ public class Config {
 			m.setFramework(XmlUtil.getChild(e, "framework").getTextTrim());
 			
 			Element elePkg = XmlUtil.getChild(e, "actionPackage");
-			m.setActionPackage(elePkg==null?pkgSetting.getActionPackage():elePkg.getTextTrim());
+			m.setControllerPackage(elePkg==null?pkgSetting.getControllerPackage():elePkg.getTextTrim());
 			elePkg = XmlUtil.getChild(e, "isDeleteTablePrefix");
 			m.setDeleteTablePrefix(elePkg==null?pkgSetting.getIsDeleteTablePrefix():Boolean.valueOf(elePkg.getTextTrim()));
 			elePkg=XmlUtil.getChild(e, "daoImplPackage");

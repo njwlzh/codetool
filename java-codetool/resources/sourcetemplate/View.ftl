@@ -21,9 +21,9 @@
           </Entity>
         </Property>
         <#if sub.refType=="OneToOne">
-        <Property name="dataProvider">${sub.entityName}Action${'#'}load${sub.entityCamelName}</Property>
+        <Property name="dataProvider">${sub.entityName}Controller${'#'}load${sub.entityCamelName}</Property>
         <#else>
-        <Property name="dataProvider">${sub.entityName}Action${'#'}load${sub.entityCamelName}List</Property>
+        <Property name="dataProvider">${sub.entityName}Controller${'#'}load${sub.entityCamelName}List</Property>
         <Property name="pageSize">20</Property>
         </#if>
       </Reference>
@@ -35,7 +35,7 @@
   <View>
     <DataSet id="ds${entityCamelName}">
       <Property name="dataType">[dt${entityCamelName}]</Property>
-      <Property name="dataProvider">${entityName}Action#load${entityCamelName}List</Property>
+      <Property name="dataProvider">${entityName}Controller#load${entityCamelName}List</Property>
       <Property name="pageSize">20</Property>
       <Property name="parameter">
         <Entity/>
@@ -140,12 +140,12 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
       </Children>
       <Tools/>
     </Dialog>
-    <UpdateAction id="actionSave">
-      <Property name="dataResolver">${entityName}Action#save${entityCamelName}</Property>
+    <UpdateController id="actionSave">
+      <Property name="dataResolver">${entityName}Controller#save${entityCamelName}</Property>
       <UpdateItem>
         <Property name="dataSet">ds${entityCamelName}</Property>
       </UpdateItem>
-    </UpdateAction>
+    </UpdateController>
     
     <#if subTables??>
 		<#list subTables as sub>

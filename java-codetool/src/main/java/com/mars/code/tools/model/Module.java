@@ -78,10 +78,10 @@ public class Module {
 	public void setEntityPackage(String entityPackage) {
 		this.entityPackage = entityPackage;
 	}
-	public String getActionPackage() {
+	public String getControllerPackage() {
 		return actionPackage;
 	}
-	public void setActionPackage(String actionPackage) {
+	public void setControllerPackage(String actionPackage) {
 		this.actionPackage = actionPackage;
 	}
 	public String getViewPackage() {
