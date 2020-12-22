@@ -2,21 +2,21 @@ package ${basePackage}.${moduleName}.${daoPackage};
 
 import java.util.Map;
 
-import ${basePackage}.common.Pagination;
+import com.ynby.common.info.Pagination;
 <#if module.persistance == 'mybatis'>
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 </#if>
 
-import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
+import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
 
 /**
  * ${caption!}操作相关
  * ${remark!}
  */
-public interface ${entityCamelName}Dao {
+public interface ${entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')} {
 	
-	public final static String BEAN_ID="${entityName}Dao";
+	public final static String BEAN_ID="${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}";
 	
 	/**
 	 * 保存新增的${caption!}

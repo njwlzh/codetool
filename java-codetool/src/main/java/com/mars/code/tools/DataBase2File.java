@@ -153,7 +153,7 @@ public class DataBase2File {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	obj.put("serializeValue", getIntString(9,18));
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,"common/dataobj/"+module.getEntityPackage());
+    	File saveDir=getSaveFilePath(module,"api/pojo/"+module.getEntityPackage());
     	if (!saveDir.exists()) {
     		saveDir.mkdirs();
     	}
@@ -209,7 +209,13 @@ public class DataBase2File {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
     	File saveDir=getSaveFilePath(module,module.getDaoPackage());
-    	File saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
+    	
+    	File saveFile;
+    	if (!module.getPersistance().equals("mybatis") && !module.getPersistance().equals("jpa")){
+    		saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
+    	} else {
+    		saveFile = new File(saveDir,table.getEntityCamelName()+"Mapper.java");
+    	}
     	String savePath =saveFile.getAbsolutePath();
     	String templateName="DaoInterface";
     	if ("jpa".equals(module.getPersistance())) {

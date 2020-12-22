@@ -1,5 +1,6 @@
-package ${basePackage}.${moduleName}.common.dataobj.${entityPackage};
+package ${basePackage}.api.pojo.${entityPackage};
 
+import java.io.Serializable;
 <#if subTables?size gt 0>
 import java.util.List;
 </#if>
@@ -26,9 +27,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 </#if>
 
-import ${basePackage}.common.persists.BaseEntity;
-import ${basePackage}.common.persists.ColumnInfo;
-import ${basePackage}.common.persists.TableInfo;
 
 /**
 * ${caption!}
@@ -41,8 +39,7 @@ import ${basePackage}.common.persists.TableInfo;
 @Entity
 @Table(name="${tableFullName!}")
 </#if>
-@TableInfo(name="${tableFullName!}")
-public class ${entityCamelName!} extends BaseEntity {
+public class ${entityCamelName!} implements Serializable {
 	
 	private static final long serialVersionUID = ${serializeValue}L;
 	
@@ -78,7 +75,6 @@ public class ${entityCamelName!} extends BaseEntity {
 	<#if supportSwagger!false>
 	@ApiModelProperty(value = "${col.remark!}")
 	</#if>
-	@ColumnInfo(name="${col.columnName}",nullable=${col.nullable?string("true","false")})
 	private ${type!} ${col.propertyName}${(defaultValue?length>0)?string("="+defaultValue,"")};
 	</#list>
 	<#-- 生成子表属性 -->
