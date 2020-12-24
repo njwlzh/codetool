@@ -214,17 +214,20 @@ public class DataBase2File {
     	if (!module.getPersistance().equals("mybatis") && !module.getPersistance().equals("jpa")){
     		saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
     	} else {
-    		saveFile = new File(saveDir,table.getEntityCamelName()+"Mapper.java");
+    		saveFile = new File(saveDir,table.getEntityCamelName()+"Dao.java");
     	}
     	String savePath =saveFile.getAbsolutePath();
     	String templateName="DaoInterface";
     	if ("jpa".equals(module.getPersistance())) {
     		templateName="DaoInterface_"+module.getPersistance();
     	}
+    	else if ("mybatisplus".equals(module.getPersistance())) {
+    		templateName="DaoInterface_"+module.getPersistance();
+    	}
     	FreemarkerUtil.createDoc(obj, templateName, savePath);
     	System.out.println("生成文件："+savePath);
     	//实现文件
-    	if (!module.getPersistance().equals("mybatis") && !module.getPersistance().equals("jpa")){
+    	if (!module.getPersistance().equals("mybatis") && !module.getPersistance().equals("jpa") && !module.getPersistance().equals("mybatisplus")){
         	File implDir=getSaveFilePath(module,module.getDaoPackage()+File.separator+module.getDaoImplPackage());
 	    	templateName = "HibernateDaoImpl";
 	    	generateMapperFile(table, module);
@@ -255,6 +258,22 @@ public class DataBase2File {
 	    	FreemarkerUtil.createDoc(obj, "MyBatis_"+config.getDb().getDbType(), implPath);
 	    	System.out.println("生成文件："+implPath);
     	}
+    	else if (module.getPersistance().equals("mybatisplus")) {
+    		if (!CodeUtil.isEmpty(module.getSavePath())){ //配置了模块文件保存，则把文件全部生成到此目录下
+    			saveDir = new File(module.getSavePath());
+    		} else {
+    			saveDir = new File(config.getBaseDir(),"resources");
+    			//saveDir = saveDir.getParentFile();
+    			saveDir = new File(saveDir, "mapper" + File.separator+module.getName());
+    		}
+    		if (!saveDir.exists()) {
+        		saveDir.mkdirs();
+        	}
+    		File implFile = new File(saveDir,table.getEntityCamelName()+"Mapper.xml");
+	    	String implPath =implFile.getAbsolutePath();
+	    	FreemarkerUtil.createDoc(obj, "MyBatisplus_"+config.getDb().getDbType(), implPath);
+	    	System.out.println("生成文件："+implPath);
+    	}
     }
     
     /**
@@ -276,6 +295,9 @@ public class DataBase2File {
     	String templateName="ServiceImpl";
     	if (module.getPersistance().equals("jpa")) {
     		templateName="ServiceImpl_jpa";
+    	}
+    	else if (module.getPersistance().equals("mybatisplus")) {
+    		templateName="ServiceImpl_mybatisplus";
     	}
     	FreemarkerUtil.createDoc(obj, templateName, implPath);
     	System.out.println("生成文件："+implPath);

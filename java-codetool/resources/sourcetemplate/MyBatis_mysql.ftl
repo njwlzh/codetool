@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Mapper" >
+<mapper namespace="${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao" >
   <resultMap id="BaseResultMap" type="${basePackage}.api.pojo.${entityPackage}.${entityCamelName}" >
     <#list primaryKeyList as col>
     <id column="${col.columnName}" property="${col.propertyName}" jdbcType="${col.columnType}" />

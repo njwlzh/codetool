@@ -23,10 +23,10 @@ import javax.annotation.Resource;
 
 import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
 import ${basePackage}.api.${servicePackage}.${entityCamelName}Service;
-import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')};
+import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 <#if subTables??>
 <#list subTables as sub>
-import ${basePackage}.${moduleName}.${daoPackage}.${sub.entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')};
+import ${basePackage}.${moduleName}.${daoPackage}.${sub.entityCamelName}Dao;
 import ${basePackage}.api.pojo.${entityPackage}.${sub.entityCamelName};
 </#list>
 </#if>
@@ -39,12 +39,12 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 
 	Logger logger = LoggerFactory.getLogger(${entityCamelName}ServiceImpl.class);
 
-	@Resource(name=${entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.BEAN_ID)
-	private ${entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')} ${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')};
+	@Resource(name=${entityCamelName}Dao.BEAN_ID)
+	private ${entityCamelName}Dao ${entityName}Dao;
 	<#if subTables??>
 	<#list subTables as sub>
-	@Resource(name="${sub.entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}")
-	private ${sub.entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')} ${sub.entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')};
+	@Resource(name="${sub.entityName}Dao")
+	private ${sub.entityCamelName}Dao ${sub.entityName}Dao;
 	</#list>
 	</#if>
 	<#if idGenerateType=="idWorker">
@@ -61,7 +61,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		<#if idGenerateType=="uuid">
 		${entityName}.setId(UUID.randomUUID().toString());
 		</#if>
-		${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.save${entityCamelName}(${entityName});
+		${entityName}Dao.save${entityCamelName}(${entityName});
 		<#if subTables??>
 		<#list subTables as sub>
 		if (${entityName}.get${sub.entityCamelName}List() != null && ${entityName}.get${sub.entityCamelName}List().size()>0) {
@@ -76,7 +76,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 				dt.setCreatedBy(${entityName}.getCreatedBy());
 				dt.setCreatedTime(DateUtil.date());
 			}
-			${sub.entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.batchSave${sub.entityCamelName}(${entityName}.get${sub.entityCamelName}List());
+			${sub.entityName}Dao.batchSave${sub.entityCamelName}(${entityName}.get${sub.entityCamelName}List());
 		}
 		</#list>
 		</#if>
@@ -84,7 +84,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 
 	@Override
 	public void update${entityCamelName}(${entityCamelName} ${entityName}) {
-		${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.update${entityCamelName}(${entityName});
+		${entityName}Dao.update${entityCamelName}(${entityName});
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		<#list primaryKeyList as col> 
 			<#if col_index lt 1>
 		for (int i=0; i<${col.propertyName}s.length; i++){
-			${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}s[i]</#list>,state);
+			${entityName}Dao.updateState(<#list primaryKeyList as col> <#if col_index gt 0>,</#if>${col.propertyName}s[i]</#list>,state);
 		}
 			</#if>
 		</#list>
@@ -100,7 +100,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 
 	@Override
 	public ${entityCamelName} loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
-		return ${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.findByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
+		return ${entityName}Dao.findByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 			Map<String, Object> params) {
 		<#if module.persistance=="mybatis">
 		if (page.getPageSize()>0){
-			Map<String,Object>  countData = ${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.count${entityCamelName}(params);
+			Map<String,Object>  countData = ${entityName}Dao.count${entityCamelName}(params);
 			page.setCountData(countData);
 			if (!countData.containsKey("total")){
 				Long total = StringUtil.getLong(countData.get("total"));
@@ -117,12 +117,12 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 				}
 			}
 		}
-		List<${entityCamelName}> list = ${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.find${entityCamelName}List(page,params);
+		List<${entityCamelName}> list = ${entityName}Dao.find${entityCamelName}List(page,params);
 		page.setEntities(list);
 		<#elseif module.persistance=="hibernate">
-		${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.find${entityCamelName}List(page,params);
+		${entityName}Dao.find${entityCamelName}List(page,params);
 		<#else>
-		${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}.find${entityCamelName}ListByJdbc(page,params);
+		${entityName}Dao.find${entityCamelName}ListByJdbc(page,params);
 		</#if>
 	}
 

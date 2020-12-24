@@ -39,7 +39,7 @@
 	<!-- 流向数据抓取相关配置 -->
 	
 	<module>
-		<persistance>mybatis</persistance>
+		<persistance>mybatisplus</persistance>
 		<name>biz</name>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 		<savePath></savePath>

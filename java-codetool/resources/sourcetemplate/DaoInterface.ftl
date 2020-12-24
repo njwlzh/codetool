@@ -14,9 +14,9 @@ import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
  * ${caption!}操作相关
  * ${remark!}
  */
-public interface ${entityCamelName}${(module.persistance=="mybatis")?string('Mapper','Dao')} {
+public interface ${entityCamelName}Dao {
 	
-	public final static String BEAN_ID="${entityName}${(module.persistance=="mybatis")?string('Mapper','Dao')}";
+	public final static String BEAN_ID="${entityName}Dao";
 	
 	/**
 	 * 保存新增的${caption!}

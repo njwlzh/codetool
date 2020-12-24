@@ -47,7 +47,7 @@
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
 	<module>
-		<!-- 数据持久层框架，可选：mybatis,hibernate,jdbc,jpa -->
+		<!-- 数据持久层框架，可选：mybatis,hibernate,jdbc,jpa, mybatisplus -->
 		<persistance>mybatis</persistance>
 		<!-- 模块名称，该模块会根据自动生成一个包，相关的dao, service,entity,action等都会生成在该包里面 -->
 		<name>user</name>
