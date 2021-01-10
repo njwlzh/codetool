@@ -36,7 +36,7 @@
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
 	
-	<!-- 流向数据抓取相关配置 -->
+	
 	
 	<module>
 		<persistance>mybatisplus</persistance>
