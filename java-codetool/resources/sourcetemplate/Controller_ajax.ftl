@@ -18,12 +18,12 @@ import ${basePackage}.base.BaseController;
 import ${basePackage}.common.Pagination;
 import ${basePackage}.common.utils.RequestUtil;
 import ${basePackage}.common.constant.BaseStateConstants;
-import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${entityCamelName};
+import ${basePackage}.common.dataobj.${entityPackage}.${entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
 <#if subTables??>
 	<#list subTables as sub>
-import ${basePackage}.${moduleName}.common.dataobj.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.common.dataobj.${entityPackage}.${sub.entityCamelName};
 import ${basePackage}.${moduleName}.${servicePackage}.${sub.entityCamelName}Service;
 	</#list>
 </#if>

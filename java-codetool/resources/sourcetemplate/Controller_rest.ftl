@@ -31,19 +31,19 @@ import io.swagger.annotations.ApiOperation;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import ${basePackage}.${moduleName}.controller.BaseController;
-import com.ynby.common.info.Response;
-import com.ynby.common.info.Pagination;
-import com.ynby.common.tools.StringUtil;
-import com.ynby.common.tools.ListUtil;
-import com.ynby.common.constants.BaseStateConstants;
-import ${basePackage}.${moduleName}.common.RequestUtil;
-import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
-import ${basePackage}.api.${servicePackage}.${entityCamelName}Service;
+import ${basePackage}.common.info.Response;
+import ${basePackage}.common.info.Pagination;
+import ${basePackage}.common.tools.StringUtil;
+import ${basePackage}.common.tools.ListUtil;
+import ${basePackage}.common.constants.BaseStateConstants;
+import ${basePackage}.common.RequestUtil;
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
+import ${basePackage}.api.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
 <#if subTables??>
 	<#list subTables as sub>
-import ${basePackage}.api.pojo.${entityPackage}.${sub.entityCamelName};
-import ${basePackage}.api.${servicePackage}.${sub.entityCamelName}Service;
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.api.${moduleName}.${servicePackage}.${sub.entityCamelName}Service;
 	</#list>
 </#if>
 

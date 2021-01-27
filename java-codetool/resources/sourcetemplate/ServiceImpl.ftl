@@ -8,8 +8,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ynby.common.info.Pagination;
-import com.ynby.common.tools.StringUtil;
+import ${basePackage}.common.info.Pagination;
+import ${basePackage}.common.tools.StringUtil;
 <#if idGenerateType=="idWorker">
 import ${basePackage}.common.persists.IdWorker;
 </#if>
@@ -21,13 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
-import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
-import ${basePackage}.api.${servicePackage}.${entityCamelName}Service;
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
+import ${basePackage}.api.${moduleName}.${servicePackage}.${entityCamelName}Service;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 <#if subTables??>
 <#list subTables as sub>
 import ${basePackage}.${moduleName}.${daoPackage}.${sub.entityCamelName}Dao;
-import ${basePackage}.api.pojo.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${sub.entityCamelName};
 </#list>
 </#if>
 import cn.hutool.core.date.DateUtil;

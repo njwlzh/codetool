@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import ${basePackage}.common.Pagination;
 
 import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
-import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
+import ${basePackage}.api.${moduleName}.${servicePackage}.${entityCamelName}Service;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 
 /**

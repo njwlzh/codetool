@@ -1,4 +1,4 @@
-package ${basePackage}.api.pojo.${entityPackage};
+package ${basePackage}.api.${moduleName}.pojo.${entityPackage};
 
 import java.io.Serializable;
 <#if subTables?size gt 0>

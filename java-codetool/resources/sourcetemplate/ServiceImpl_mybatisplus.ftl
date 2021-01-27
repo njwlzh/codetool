@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ynby.common.info.Pagination;
+import ${basePackage}.common.info.Pagination;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -17,13 +17,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
-import ${basePackage}.api.${servicePackage}.${entityCamelName}Service;
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
+import ${basePackage}.api.${moduleName}.${servicePackage}.${entityCamelName}Service;
 import ${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao;
 <#if subTables??>
 <#list subTables as sub>
 import ${basePackage}.${moduleName}.${daoPackage}.${sub.entityCamelName}Dao;
-import ${basePackage}.api.pojo.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${sub.entityCamelName};
 </#list>
 </#if>
 

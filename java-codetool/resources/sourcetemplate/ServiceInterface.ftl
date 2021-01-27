@@ -1,9 +1,9 @@
-package ${basePackage}.api.${servicePackage};
+package ${basePackage}.api.${moduleName}.${servicePackage};
 
 import java.util.Map;
 
-import com.ynby.common.info.Pagination;
-import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
+import ${basePackage}.common.info.Pagination;
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
 
 /**
  * ${caption!}操作相关

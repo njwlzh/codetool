@@ -153,7 +153,7 @@ public class DataBase2File {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	obj.put("serializeValue", getIntString(9,18));
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,"api/pojo/"+module.getEntityPackage());
+    	File saveDir=getApiSaveFilePath(module,"pojo/"+module.getEntityPackage());
     	if (!saveDir.exists()) {
     		saveDir.mkdirs();
     	}
@@ -180,6 +180,20 @@ public class DataBase2File {
     		//saveDir = new File(config.getBaseDir()+ File.separator + "java"+File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+"common/dataobj"+File.separator+packageName);
     	} else {
     		saveDir = new File(module.getSavePath(),"java"+File.separator +moduleName+File.separator+packageName);
+    	}
+    	if (!saveDir.exists()) {
+    		saveDir.mkdirs();
+    	}
+    	return saveDir;
+    }
+    private File getApiSaveFilePath(Module module,String packageName){
+    	String moduleName=module.getName().replace(".", "/");
+    	File saveDir;
+    	if (CodeUtil.isEmpty(module.getSavePath())) {
+    		saveDir = new File(config.getBaseDir()+ File.separator + "java"+File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+"api"+File.separator+moduleName+File.separator+packageName);
+    		//saveDir = new File(config.getBaseDir()+ File.separator + "java"+File.separator + config.getBasePackage().replace(".", File.separator)+File.separator+moduleName+File.separator+"common/dataobj"+File.separator+packageName);
+    	} else {
+    		saveDir = new File(module.getSavePath(),"java"+File.separator+"api"+File.separator +moduleName+File.separator+packageName);
     	}
     	if (!saveDir.exists()) {
     		saveDir.mkdirs();
@@ -283,8 +297,8 @@ public class DataBase2File {
     private void generateServiceFile(Table table,Module module) {
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
-    	File saveDir=getSaveFilePath(module,module.getServicePackage());
-    	File saveFile = new File(saveDir,table.getEntityCamelName()+"Service.java");
+    	File saveDir=getApiSaveFilePath(module,module.getServicePackage());
+    	File saveFile = new File(saveDir, table.getEntityCamelName()+"Service.java");
     	String savePath =saveFile.getAbsolutePath();
     	System.out.println("生成文件："+savePath);
     	FreemarkerUtil.createDoc(obj, "ServiceInterface", savePath);

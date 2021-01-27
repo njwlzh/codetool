@@ -2,13 +2,13 @@ package ${basePackage}.${moduleName}.${daoPackage};
 
 import java.util.Map;
 
-import com.ynby.common.info.Pagination;
+import ${basePackage}.common.info.Pagination;
 <#if module.persistance == 'mybatis'>
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 </#if>
 
-import ${basePackage}.api.pojo.${entityPackage}.${entityCamelName};
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
 
 /**
  * ${caption!}操作相关
