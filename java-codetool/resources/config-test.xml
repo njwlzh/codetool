@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configure>
+	<basedir>f:\code\ynbynew</basedir>
+	<basePackage>com.ynby</basePackage>
+	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin,ElementUI，默认为beyondAdmin -->
+	<!-- rest-->
+	<theme>ElementUI</theme>
+	<!-- 生成的模板文件类型，可选择jsp, html,vue，默认为jsp -->
+	<pageType>vue</pageType>
+	<!-- 是否生成wap页面 -->
+	<supportWap>false</supportWap>
+	<!-- 是否生成swagger注解 -->
+	<supportSwagger>true</supportSwagger>
+	<!-- 表主键值生成方式：idWorker=雪花算法生成, auto=自增长, uuid=uuid字符串 -->
+	<idGenerateType>auto</idGenerateType>
+	<db>
+		<dbType>mysql</dbType>
+		<dbName>bywj_develop</dbName>
+		<user>root</user>
+		<pwd>123456</pwd>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<url>jdbc:mysql://localhost/washing_mis</url>
+	</db>
+	
+	<ignoreColumns></ignoreColumns>
+	
+	<packageSetting>
+		<actionPackage>controller</actionPackage>
+		<daoPackage>dao</daoPackage>
+		<daoImplPackage>impl</daoImplPackage>
+		<servicePackage>service</servicePackage>
+		<serviceImplPackage>impl</serviceImplPackage>
+		<entityPackage>entity</entityPackage>
+		<mapperPackage>mapper</mapperPackage>
+		<viewPackage>view</viewPackage>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+	</packageSetting>
+	
+	
+	
+	<module>
+		<persistance>mybatisplus</persistance>
+		<name>activity</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>rest</framework>
+		<table name="work_order_info"/>
+		
+	</module>
+	
+	 
+</configure>
