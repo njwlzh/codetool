@@ -3,11 +3,11 @@
 	<basedir>F:/code/babyshop</basedir>
 	<basePackage>com.mars</basePackage>
 	<db>
-		<dbName>babyshop</dbName>
+		<dbName>babyshop_server</dbName>
 		<user>babyshop</user>
 		<pwd>babyshop</pwd>
 		<driver>com.mysql.jdbc.Driver</driver>
-		<url>jdbc:mysql://localhost:3306/babyshop?useUnicode=true&amp;characterEncoding=utf-8</url>
+		<url>jdbc:mysql://localhost:3306/babyshop_server?useUnicode=true&amp;characterEncoding=utf-8</url>
 	</db>
 	<packageSetting>
 		<actionPackage>controller</actionPackage>
@@ -20,7 +20,7 @@
 		<viewPackage>view</viewPackage>
 		<isDeleteTablePrefix>true</isDeleteTablePrefix>
 	</packageSetting>
-	
+	<!-- 
 	<module>
 		<persistance>mybatis</persistance>
 		<name>shop</name>
@@ -31,7 +31,7 @@
 		<table name="order_hungup"/>
 		
 	</module>
-	
+	 -->
 	 <!-- 
 	<module>
 		<persistance>mybatis</persistance>
@@ -65,4 +65,18 @@
 		
 	</module>
 	 -->
+	 
+	 
+	<module>
+		<persistance>mybatis</persistance>
+		<name>stock</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>dorado</framework>
+		
+		<table name="shop_stock_order_info">
+			<table name="shop_stock_order_detail"  parentField="order_id" refType="OneToMany"/>
+		</table>
+		
+	</module>
 </configure>

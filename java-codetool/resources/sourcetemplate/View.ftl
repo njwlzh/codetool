@@ -140,12 +140,12 @@ view.get(&quot;#dlgEdit&quot;).show();&#xD;
       </Children>
       <Tools/>
     </Dialog>
-    <UpdateController id="actionSave">
+    <UpdateAction id="actionSave">
       <Property name="dataResolver">${entityName}Controller#save${entityCamelName}</Property>
       <UpdateItem>
         <Property name="dataSet">ds${entityCamelName}</Property>
       </UpdateItem>
-    </UpdateController>
+    </UpdateAction>
     
     <#if subTables??>
 		<#list subTables as sub>

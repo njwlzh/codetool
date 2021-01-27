@@ -2,9 +2,9 @@
 <configure>
 	<basedir>f:\code\ynbynew</basedir>
 	<basePackage>com.ynby.activity</basePackage>
-	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin，默认为beyondAdmin -->
+	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin,ElementUI，默认为beyondAdmin -->
 	<!-- rest-->
-	<theme>adminLTE</theme>
+	<theme>ElementUI</theme>
 	<!-- 生成的模板文件类型，可选择jsp, html，默认为jsp -->
 	<pageType>html</pageType>
 	<!-- 是否生成wap页面 -->

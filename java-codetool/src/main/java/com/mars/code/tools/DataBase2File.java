@@ -324,7 +324,7 @@ public class DataBase2File {
     }
     
     /**
-     * 生成指定表对象对应的视图文件 
+     * 生成指定表对象对应的视图文件，适用于dorado7 
      * @param table 
      */  
     private void generateViewFile(Table table,Module module) {
@@ -360,6 +360,9 @@ public class DataBase2File {
     	}
     	
     	String[] actions = {"add","edit","list","show","print"};
+    	if (config.getTheme().equals("ElementUI")) {
+    		actions= new String[]{"list"};
+    	}
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
     	File saveDir= new File(config.getBaseDir(),"webapp/"+module.getName());

@@ -3,7 +3,7 @@
 <configure>
 	<basedir>F:/code</basedir>
 	<basePackage>com.mars</basePackage>
-	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin，默认为beyondAdmin -->
+	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin, ElementUI，默认为adminLTE -->
 	<theme>adminLTE</theme>
 	<!-- 生成的模板文件类型，可选择jsp, html，默认为jsp -->
 	<pageType>html</pageType>
