@@ -7,10 +7,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import ${basePackage}.base.BaseController;
+import ${basePackage}.base.BaseAction;
 import ${basePackage}.common.Pagination;
-import ${basePackage}.${moduleName}.${entityPackage}.${entityCamelName};
-import ${basePackage}.${moduleName}.${servicePackage}.${entityCamelName}Service;
+import ${basePackage}.common.BaseStateConstants;
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
+import ${basePackage}.api.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
 import com.bstek.dorado.annotation.DataProvider;
 import com.bstek.dorado.annotation.DataResolver;
@@ -20,7 +21,7 @@ import com.bstek.dorado.data.provider.Page;
 
 <#if subTables??>
 	<#list subTables as sub>
-import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
+import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${sub.entityCamelName};
 	</#list>
 </#if>
 
@@ -30,7 +31,7 @@ import ${basePackage}.${moduleName}.${entityPackage}.${sub.entityCamelName};
  *
  */
 @Component
-public class ${entityCamelName}Controller extends BaseController {
+public class ${entityCamelName}Controller extends BaseAction {
 	
 	@Resource(name=${entityCamelName}Service.BEAN_ID)
 	private ${entityCamelName}Service ${entityName}Service;
@@ -78,26 +79,9 @@ public class ${entityCamelName}Controller extends BaseController {
 			} else if (EntityState.MODIFIED.equals(state)) {
 				${entityName}Service.update${entityCamelName}(${entityName});
 			} else if (EntityState.DELETED.equals(state)) {
-				${entityName}Service.remove${entityCamelName}(${entityName});
+				${entityName}Service.updateState(new Long[] {${entityName}.getComId()}, new Long[] {${entityName}.getId()}, BaseStateConstants.DELETED.getIntCode());
 			}
-			<#if subTables??>
-				<#list subTables as sub>
-				<#if sub.refType=="OneToOne">
-			${sub.entityCamelName} ${sub.entityName}=${entityName}.get${sub.entityCamelName}();
-			if (${sub.entityName}!=null){
-				List<${sub.entityCamelName}> subList = new ArrayList<${sub.entityCamelName}>();
-				${sub.entityName}.set${sub.parentProperty?cap_first}(${entityName}.get${sub.parentProperty?cap_first}());
-				subList.add(${sub.entityName});
-				${sub.entityName}Controller.save${sub.entityCamelName}(subList);
-			}
-				<#else>
-			List<${sub.entityCamelName}> ${sub.entityName}List=${entityName}.get${sub.entityCamelName}List();
-			if (${sub.entityName}List!=null && !${sub.entityName}List.isEmpty()){
-				${sub.entityName}Controller.save${sub.entityCamelName}(${sub.entityName}List);
-			}
-				</#if>
-				</#list>
-			</#if>
+			
 		}
 	}
 

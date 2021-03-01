@@ -16,7 +16,9 @@
         <Property name="parameter">
           <Entity>
           	<#list primaryKeyList as col>
-            <Property name="${col.propertyName}">${'$'}${'$'}{this.${sub.parentProperty!}}</Property>
+          	<#if col.propertyName!="comId">
+            <Property name="${sub.parentProperty}">${'$'}${'$'}{this.${col.propertyName!}}</Property>
+            </#if>
             </#list>
           </Entity>
         </Property>

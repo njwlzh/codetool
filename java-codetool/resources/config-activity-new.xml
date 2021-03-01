@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configure>
 	<basedir>f:\code\ynbynew</basedir>
-	<basePackage>com.ynby.activity</basePackage>
+	<basePackage>com.ynby</basePackage>
 	<!-- 使用的模板框架，可以选择adminLTE,beyoneAdmin,ElementUI，默认为beyondAdmin -->
 	<!-- rest-->
 	<theme>ElementUI</theme>

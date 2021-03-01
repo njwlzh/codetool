@@ -430,6 +430,21 @@ public class DataBase2File {
      * @return
      */
     private String generateDoradoModelString(Table table,Module module) {
+    	//这里应该把过滤的字段取出来，并在table中把相关的column删除后，再生成
+    	List<Column> columns = new ArrayList<Column>();
+    	for (Column col : table.getColumns()){
+    		columns.add(col);
+    	}
+    	
+    	for (String name : config.getIgnoreColumns()){
+    		for (Column col : table.getColumns()){
+    			if (col.getColumnName().toLowerCase().equals(name.toLowerCase())){
+    				table.getColumns().remove(col);
+    				break;
+    			}
+    		}
+    	}
+    	
     	JSONObject obj = (JSONObject)JSON.toJSON(table);
     	setBaseInfo(obj,module);
     	String str = FreemarkerUtil.createString(obj,"DoradoModel");

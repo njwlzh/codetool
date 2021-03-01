@@ -4,6 +4,9 @@ import java.io.Serializable;
 <#if subTables?size gt 0>
 import java.util.List;
 </#if>
+
+import ${basePackage}.common.persists.BaseEntity;
+
 <#if module.persistance=="hibernate" || module.persistance=="jpa">
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +42,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name="${tableFullName!}")
 </#if>
-public class ${entityCamelName!} implements Serializable {
+public class ${entityCamelName!} extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = ${serializeValue}L;
 	

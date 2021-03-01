@@ -9,6 +9,9 @@
 		<driver>com.mysql.jdbc.Driver</driver>
 		<url>jdbc:mysql://localhost:3306/babyshop_server?useUnicode=true&amp;characterEncoding=utf-8</url>
 	</db>
+	
+	<ignoreColumns>id, com_id, com_code, create_user, create_time, update_user, update_time, state, note,extra_data, inst_id, sys_time</ignoreColumns>
+	
 	<packageSetting>
 		<actionPackage>controller</actionPackage>
 		<daoPackage>dao</daoPackage>
@@ -65,7 +68,7 @@
 		
 	</module>
 	 -->
-	 
+	 <!-- 
 	 
 	<module>
 		<persistance>mybatis</persistance>
@@ -77,6 +80,23 @@
 		<table name="shop_stock_order_info">
 			<table name="shop_stock_order_detail"  parentField="order_id" refType="OneToMany"/>
 		</table>
+		
+	</module>
+	 -->
+	 
+	 <module>
+		<persistance>mybatis</persistance>
+		<name>act</name>
+		<isDeleteTablePrefix>true</isDeleteTablePrefix>
+		<savePath></savePath>
+		<framework>dorado</framework>
+		
+		<table name="act_activity_info">
+			<table name="act_activity_detail"  parentField="activity_id" refType="OneToMany"/>
+		</table>
+		
+		<table name="act_coupon_info"/>
+		<table name="act_coupon_record"/>
 		
 	</module>
 </configure>

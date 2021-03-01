@@ -123,7 +123,7 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-b2c.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-back.xml"));
-		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop.xml"));
+		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-babyshop.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kmair-questionaire.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-kmair-insurance.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-pubinfo.xml"));
@@ -145,7 +145,7 @@ public class Config {
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-collectflowdata.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-activity.xml"));
 		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-activity-new.xml"));
-		Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-test.xml"));
+		//Document doc = XmlUtil.getDocument(Config.class.getClassLoader().getResourceAsStream("config-test.xml"));
 		Element root = XmlUtil.getRootNode(doc);
 		
 		cfg.setBaseDir(XmlUtil.getChild(root, "baseDir").getTextTrim());

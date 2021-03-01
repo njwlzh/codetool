@@ -2,7 +2,7 @@ package ${basePackage}.api.${moduleName}.${servicePackage};
 
 import java.util.Map;
 
-import ${basePackage}.common.info.Pagination;
+import ${basePackage}.common.Pagination;
 import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
 
 /**

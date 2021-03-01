@@ -8,8 +8,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ${basePackage}.common.info.Pagination;
-import ${basePackage}.common.tools.StringUtil;
+import ${basePackage}.common.Pagination;
+import ${basePackage}.utils.StringUtil;
+import ${basePackage}.utils.DateUtil;
 <#if idGenerateType=="idWorker">
 import ${basePackage}.common.persists.IdWorker;
 </#if>
@@ -17,7 +18,6 @@ import ${basePackage}.common.persists.IdWorker;
 import java.util.UUID;
 </#if>
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -30,7 +30,7 @@ import ${basePackage}.${moduleName}.${daoPackage}.${sub.entityCamelName}Dao;
 import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${sub.entityCamelName};
 </#list>
 </#if>
-import cn.hutool.core.date.DateUtil;
+
 /**
  * ${caption!}操作相关
  */
@@ -73,8 +73,8 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 				dt.setId(UUID.randomUUID().toString());
 				</#if>
 				dt.set${sub.parentProperty?cap_first}(${entityName}.getId());
-				dt.setCreatedBy(${entityName}.getCreatedBy());
-				dt.setCreatedTime(DateUtil.date());
+				dt.setCreateUser(${entityName}.getCreateUser());
+				dt.setCreateTime(DateUtil.getDate());
 			}
 			${sub.entityName}Dao.batchSave${sub.entityCamelName}(${entityName}.get${sub.entityCamelName}List());
 		}
