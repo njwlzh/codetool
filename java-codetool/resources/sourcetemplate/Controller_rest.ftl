@@ -30,13 +30,13 @@ import io.swagger.annotations.ApiOperation;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import ${basePackage}.${moduleName}.controller.BaseController;
-import ${basePackage}.common.info.Response;
-import ${basePackage}.common.info.Pagination;
-import ${basePackage}.common.tools.StringUtil;
-import ${basePackage}.common.tools.ListUtil;
-import ${basePackage}.common.constants.BaseStateConstants;
-import ${basePackage}.common.RequestUtil;
+import ${basePackage}.${moduleName}.controller.BaseAction;
+import ${basePackage}.common.ResponseJson;
+import ${basePackage}.common.Pagination;
+import ${basePackage}.utils.StringUtil;
+import ${basePackage}.utils.ListUtil;
+import ${basePackage}.consts.BaseStateConstants;
+import ${basePackage}.utils.RequestUtil;
 import ${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName};
 import ${basePackage}.api.${moduleName}.${servicePackage}.${entityCamelName}Service;
 
@@ -56,7 +56,7 @@ import ${basePackage}.api.${moduleName}.${servicePackage}.${sub.entityCamelName}
 </#if>
 @RestController
 @RequestMapping("/${moduleName}/${entityName}")
-public class ${entityCamelName}Controller extends BaseController {
+public class ${entityCamelName}Controller extends BaseAction {
 	
 	@Resource(name=${entityCamelName}Service.BEAN_ID)
 	private ${entityCamelName}Service ${entityName}Service;
@@ -77,7 +77,7 @@ public class ${entityCamelName}Controller extends BaseController {
 	@ApiOperation(value = "查询${caption!}列表", notes = "查询${caption!}列表，根据 entity属性作为键值传入查询参数，以条件组合方式查询", response = Response.class)
 	</#if>
 	@GetMapping(value = "/load${entityCamelName}List")
-	public Response<Pagination<${entityCamelName}>> load${entityCamelName}List(HttpServletRequest req){
+	public ResponseJson load${entityCamelName}List(HttpServletRequest req){
 		Integer pageNo = getPageNo();
 		Integer pageSize = getPageSize();
 		Pagination<${entityCamelName}> paging = new Pagination<${entityCamelName}>(pageSize, pageNo);
@@ -86,7 +86,7 @@ public class ${entityCamelName}Controller extends BaseController {
 		params.put("status", BaseStateConstants.NORMAL.getIntCode());
 		${entityName}Service.load${entityCamelName}List(paging,params);
 		
-		return Response.success(paging);
+		return ResponseJson.success(paging);
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class ${entityCamelName}Controller extends BaseController {
 	@ApiOperation(value = "根据主键ID查询${caption!}", notes = "根据主键ID查询单个${caption!}", response = Response.class)
 	</#if>
 	@GetMapping(value = "/load${entityCamelName}")
-	public Response<${entityCamelName}> load${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
+	public ResponseJson load${entityCamelName}(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyType} ${col.propertyName}</#list>){
 		${entityCamelName} ${entityName} = ${entityName}Service.loadByKey(<#list primaryKeyList as col> <#if col_index gt 0> , </#if>${col.propertyName}</#list>);
 		
 	<#if subTables??>
@@ -117,7 +117,7 @@ public class ${entityCamelName}Controller extends BaseController {
 		
 		</#list>
 	</#if>
-		return Response.success(${entityName});
+		return ResponseJson.success(${entityName});
 	}
 	
 	/**
@@ -133,10 +133,10 @@ public class ${entityCamelName}Controller extends BaseController {
 	<#assign validate="@Valid ">
 	</#if>
 	@PostMapping(value = "/save${entityCamelName}")
-	public Response<${entityCamelName}> save${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
+	public ResponseJson save${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.save${entityCamelName}(${entityName});
 		
-		return Response.success(${entityName});
+		return ResponseJson.success(${entityName});
 	}
 	
 	/**
@@ -152,10 +152,10 @@ public class ${entityCamelName}Controller extends BaseController {
 	<#assign validate="@Valid ">
 	</#if>
 	@PostMapping(value = "/update${entityCamelName}")
-	public Response<${entityCamelName}> update${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
+	public ResponseJson update${entityCamelName}(@RequestBody ${validate}${entityCamelName} ${entityName}){
 		${entityName}Service.update${entityCamelName}(${entityName});
 		
-		return Response.success(null);
+		return ResponseJson.success(null);
 	}
 	/**
 	 * 修改${caption!}状态
@@ -166,10 +166,10 @@ public class ${entityCamelName}Controller extends BaseController {
 	@ApiOperation(value = "更新${caption!}数据状态", notes = "更新${caption!}数据状态，一般用于逻辑删除数据，支持传入ID列表进行更新", response = Response.class)
 	</#if>
 	@GetMapping(value = "/updateState")
-	public Response<${entityCamelName}> updateState(HttpServletRequest req,@RequestParam(value="state") Integer state,@RequestParam(value="id[]") Long[] ids){
+	public ResponseJson updateState(HttpServletRequest req,@RequestParam(value="state") Integer state,@RequestParam(value="id[]") Long[] ids){
 		${entityName}Service.updateState(ids,state);
 		
-		return Response.success(null);
+		return ResponseJson.success(null);
 	}
 
 }

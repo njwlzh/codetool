@@ -187,8 +187,8 @@ public abstract class AbstractTableService {
 	}
 	
 	public static void main(String[] args) {
-		//String remark="测试内容||{'editorType':select,'dictKey':sex}";
-		String remark="测试内容";
+		String remark="测试内容||{'editorType':select,'dictKey':sex}";
+		//String remark="测试内容";
 		String[] arr = getColumnDict(remark);
 		System.out.println(Arrays.toString(arr));
 	}

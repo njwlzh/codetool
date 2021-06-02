@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="${basePackage}.${moduleName}.${daoPackage}.${entityCamelName}Dao" >
-  <resultMap id="BaseResultMap" type="${basePackage}.common.dataobj.${entityPackage}.${entityCamelName}" >
+  <resultMap id="BaseResultMap" type="${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName}" >
     <id column="${primaryKey!}" property="${primaryProperty}" jdbcType="${primaryKeyType}" />
     <#list columns as col>
     <#if !col.primaryKey>
@@ -14,7 +14,7 @@
     <#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>
   </sql>
   
-  <insert id="save${entityCamelName}" parameterType="${basePackage}.common.dataobj.${entityPackage}.${entityCamelName}">
+  <insert id="save${entityCamelName}" parameterType="${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName}">
   	insert into ${tableFullName} (<#list columns as col>${col.columnName}<#if col_index lt columns?size-1>,</#if></#list>) 
   	values (<#list columns as col>
   	${'#'}{${col.propertyName},jdbcType=${col.columnType}}
@@ -39,7 +39,7 @@
   	select 1 from dual
   </insert>
   
-  <update id="update${entityCamelName}" parameterType="${basePackage}.common.dataobj.${entityPackage}.${entityCamelName}">
+  <update id="update${entityCamelName}" parameterType="${basePackage}.api.${moduleName}.pojo.${entityPackage}.${entityCamelName}">
   	update ${tableFullName} 
   	<set>
   	<#list columns as col>

@@ -104,11 +104,11 @@ export default {
             initProps: {},
             formRules: {
             	<#list columns as col>
-            	${col.propertyName}:[
-            		required:${(col.nullable)?string('false','true')},
+            	${col.propertyName}: {
+            		required: ${(col.nullable)?string('false','true')},
             		message: '请输入${col.caption!}',
                     trigger: 'blur'
-            	],
+            	},
             	</#list>
             }
         };
@@ -117,7 +117,7 @@ export default {
         formData() {
             return {
             	<#list columns as col>
-            	${col.propertyName}:{
+            	${col.propertyName}: {
             		type: 'input',
             		label: '${col.caption!}',
                     width: '100%'

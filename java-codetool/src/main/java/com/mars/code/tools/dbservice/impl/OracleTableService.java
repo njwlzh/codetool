@@ -185,7 +185,7 @@ public class OracleTableService extends AbstractTableService {
 	        	col.setRemark(remarkArr[1]);
 
 	            //获取定义的数据字典项
-	            String[] dictDef = getColumnDict(col.getRemark());
+	            String[] dictDef = getColumnDict(remark);
 	            if (dictDef != null && dictDef[0].length()>0) {
 	            	col.setDictKey(dictDef[0]);
 	            	col.setEditorType(dictDef[1]);
