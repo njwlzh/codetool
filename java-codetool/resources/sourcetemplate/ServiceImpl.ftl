@@ -110,8 +110,9 @@ public class ${entityCamelName}ServiceImpl implements ${entityCamelName}Service 
 		if (page.getPageSize()>0){
 			Map<String,Object>  countData = ${entityName}Dao.count${entityCamelName}(params);
 			page.setCountData(countData);
-			if (!countData.containsKey("total")){
-				Long total = StringUtil.getLong(countData.get("total"));
+			String totalField = "${(dbType=="oracle")?string("TOTAL", "total")}";
+			if (!countData.containsKey(totalField)){
+				Long total = StringUtil.getLong(countData.get(totalField));
 				if (total==null || total<1l) {
 					return;
 				}

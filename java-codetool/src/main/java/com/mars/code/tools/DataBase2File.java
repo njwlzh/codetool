@@ -115,6 +115,7 @@ public class DataBase2File {
      * @param module
      */
     private void setBaseInfo(JSONObject obj,Module module) {
+    	obj.put("dbType", config.getDb().getDbType());
     	obj.put("basePackage", config.getBasePackage());
     	obj.put("moduleName", module.getName().replace("/", "."));
     	obj.put("entityPackage", module.getEntityPackage());
